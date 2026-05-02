@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmy_playwright_tutorial=self.webpackChunkmy_playwright_tutorial||[]).push([["488"],{7386(t){t.exports=JSON.parse('{"metadata":{"permalink":"/my-playwright-tutorial/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
