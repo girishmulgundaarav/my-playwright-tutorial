@@ -104,11 +104,11 @@ const config: Config = {
           items: [
             {
               label: 'Getting Started',
-              to: '/docs/getting-started',
+              to: '/docs/Introduction/getting-started',
             },
             {
               label: 'Playwright Kick Start',
-              to: '/docs/playwright-kickstart',
+              to: '/docs/Introduction/playwright-kickstart',
             },
           ],
         },
