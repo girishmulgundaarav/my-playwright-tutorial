@@ -79,7 +79,7 @@ const config: Config = {
     navbar: {
       title: 'Playwright Tutorial',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'Playwright Tutorial Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -87,12 +87,11 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Documentation',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
+          href: 'https://playwright.dev/',
+          label: 'Official Docs',
           position: 'right',
         },
       ],
@@ -101,11 +100,15 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Documentation',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'Getting Started',
+              to: '/docs/getting-started',
+            },
+            {
+              label: 'Playwright Kick Start',
+              to: '/docs/playwright-kickstart',
             },
           ],
         },
@@ -113,34 +116,17 @@ const config: Config = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {
-              label: 'Blog',
-              to: '/blog',
+              label: 'Playwright Discord',
+              href: 'https://discord.com/invite/playwright-807756831384403968',
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/microsoft/playwright',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Playwright Tutorial. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

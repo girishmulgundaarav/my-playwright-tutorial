@@ -14,16 +14,16 @@ function HomepageHeader() {
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
         <Heading as="h1" className="hero__title">
-          Master Playwright in 7 Days 🎭
+          Modern Web Automation with Playwright
         </Heading>
         <p className="hero__subtitle">
-          The definitive guide to modern web automation from zero to hero.
+          The comprehensive guide to building stable, reliable end-to-end tests for modern web applications.
         </p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/getting-started">
-            Start Learning 🚀
+            to="/docs/Introduction/getting-started">
+            Get Started
           </Link>
         </div>
       </div>
