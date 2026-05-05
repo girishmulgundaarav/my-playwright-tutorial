@@ -163,7 +163,8 @@ button[title="Expand sidebar"] svg {
 /* --- Base: SVG icon slot for category labels and standalone top-level items --- */
 .sidebar-item-advanced-tools > .menu__link::before,
 .sidebar-category-introduction > .menu__list-item-collapsible > .menu__link::before,
-.sidebar-category-locators > .menu__list-item-collapsible > .menu__link::before {
+.sidebar-category-locators > .menu__list-item-collapsible > .menu__link::before,
+.sidebar-category-actions > .menu__list-item-collapsible > .menu__link::before {
   content: '';
   display: inline-block;
   width: 1rem;
@@ -188,6 +189,11 @@ button[title="Expand sidebar"] svg {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FA5A28' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Ccircle cx='12' cy='12' r='6'/%3E%3Ccircle cx='12' cy='12' r='2'/%3E%3C/svg%3E");
 }
 
+/* Playwright Actions Category — Mouse icon */
+.sidebar-category-actions > .menu__list-item-collapsible > .menu__link::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FA5A28' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='2' width='14' height='20' rx='7'/%3E%3Cline x1='12' y1='6' x2='12' y2='10'/%3E%3C/svg%3E");
+}
+
 /* Advanced Tools — Wrench/Tool icon */
 .sidebar-item-advanced-tools > .menu__link::before {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/%3E%3C/svg%3E");
@@ -208,13 +214,15 @@ button[title="Expand sidebar"] svg {
 
 /* Reset counter at the start of each category's child list */
 .sidebar-category-introduction > .menu__list,
-.sidebar-category-locators > .menu__list {
+.sidebar-category-locators > .menu__list,
+.sidebar-category-actions > .menu__list {
   counter-reset: sidebar-item-counter;
 }
 
 /* Increment counter for every direct child item */
 .sidebar-category-introduction > .menu__list > .menu__list-item,
-.sidebar-category-locators > .menu__list > .menu__list-item {
+.sidebar-category-locators > .menu__list > .menu__list-item,
+.sidebar-category-actions > .menu__list > .menu__list-item {
   counter-increment: sidebar-item-counter;
 }
 
@@ -223,7 +231,9 @@ button[title="Expand sidebar"] svg {
 .sidebar-item-kickstart > .menu__link::before,
 .sidebar-item-locators > .menu__link::before,
 .sidebar-item-css-selectors > .menu__link::before,
-.sidebar-item-xpath-locators > .menu__link::before {
+.sidebar-item-xpath-locators > .menu__link::before,
+.sidebar-item-handle-actions > .menu__link::before,
+.sidebar-item-handle-dropdown-1 > .menu__link::before {
   content: counter(sidebar-item-counter, decimal-leading-zero);
   display: inline-flex;
   align-items: center;
@@ -250,7 +260,9 @@ button[title="Expand sidebar"] svg {
 .sidebar-item-kickstart > .menu__link--active::before,
 .sidebar-item-locators > .menu__link--active::before,
 .sidebar-item-css-selectors > .menu__link--active::before,
-.sidebar-item-xpath-locators > .menu__link--active::before {
+.sidebar-item-xpath-locators > .menu__link--active::before,
+.sidebar-item-handle-actions > .menu__link--active::before,
+.sidebar-item-handle-dropdown-1 > .menu__link--active::before {
   background-color: #FA5A28;
   color: #ffffff;
 }
@@ -260,7 +272,9 @@ button[title="Expand sidebar"] svg {
 [data-theme='dark'] .sidebar-item-kickstart > .menu__link::before,
 [data-theme='dark'] .sidebar-item-locators > .menu__link::before,
 [data-theme='dark'] .sidebar-item-css-selectors > .menu__link::before,
-[data-theme='dark'] .sidebar-item-xpath-locators > .menu__link::before {
+[data-theme='dark'] .sidebar-item-xpath-locators > .menu__link::before,
+[data-theme='dark'] .sidebar-item-handle-actions > .menu__link::before,
+[data-theme='dark'] .sidebar-item-handle-dropdown-1 > .menu__link::before {
   background-color: rgba(250, 90, 40, 0.2);
   color: #fb7348;
 }

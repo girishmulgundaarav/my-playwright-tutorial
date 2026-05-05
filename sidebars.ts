@@ -54,6 +54,26 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
+    {
+      type: 'category',
+      label: 'Playwright Actions',
+      className: 'sidebar-category-actions',
+      collapsed: false,
+      items: [
+        {
+          type: 'doc',
+          id: 'Playwright Actions/handle-actions',
+          label: 'Handle Actions',
+          className: 'sidebar-item-handle-actions',
+        },
+        {
+          type: 'doc',
+          id: 'Playwright Actions/handle-dropdown-1',
+          label: 'Handle Dropdowns - Part 1',
+          className: 'sidebar-item-handle-dropdown-1',
+        },
+      ],
+    },
   ],
 };
 
