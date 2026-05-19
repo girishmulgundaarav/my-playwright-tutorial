@@ -50,7 +50,7 @@ export const SemanticSearch: React.FC = () => {
       // Gather all document contents
       const documents: { id: string, title: string, content: string }[] = [];
       for (const path in mdFiles) {
-        const content = await mdFiles[path]();
+        const content = (await mdFiles[path]()) as string;
         // extract id from path: ../../docs/Introduction/getting-started.md -> Introduction/getting-started
         const id = path.replace('../../docs/', '').replace('.md', '');
         // extract a title from the first heading, or fallback to id

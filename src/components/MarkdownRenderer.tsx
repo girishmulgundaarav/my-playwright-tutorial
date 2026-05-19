@@ -154,7 +154,7 @@ export const MarkdownRenderer: React.FC = () => {
         const expectedPath = `../../docs/${docId}.md`;
         let fileContent = '';
         if (mdFiles[expectedPath]) {
-          fileContent = await mdFiles[expectedPath]();
+          fileContent = (await mdFiles[expectedPath]()) as string;
         } else {
           fileContent = '# 404 Not Found\n\nThe requested document could not be found.';
         }
