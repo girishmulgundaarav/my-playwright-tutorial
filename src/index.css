@@ -18,7 +18,7 @@
   --sidebar-text-active: #ffffff;
   --sidebar-item-hover: rgba(255, 255, 255, 0.1);
   --sidebar-border-active: #A5B4FC;
-  --sidebar-category: rgba(255, 255, 255, 0.4);
+  --sidebar-category: rgba(255, 255, 255, 0.85);
   
   --sidebar-width: 280px;
   --header-height: 64px;
@@ -44,7 +44,7 @@
   --sidebar-text-active: #ffffff;
   --sidebar-item-hover: rgba(255, 255, 255, 0.05);
   --sidebar-border-active: #A5B4FC;
-  --sidebar-category: rgba(248, 249, 255, 0.4);
+  --sidebar-category: rgba(248, 249, 255, 0.85);
 }
 
 * {
@@ -130,13 +130,27 @@ a:hover {
 }
 
 .nav-category-title {
-  font-size: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.95rem;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.05em;
   color: var(--sidebar-category);
   font-weight: 700;
   margin-bottom: 0.75rem;
-  padding-left: 1.5rem;
+  padding: 0.25rem 1.5rem;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.nav-category-title:hover {
+  color: #FFFFFF;
 }
 
 .nav-item {
@@ -1051,4 +1065,14 @@ a:hover {
 
 .toc-level-3 {
   padding-left: 1rem;
+}
+
+.footer-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: var(--accent-primary);
 }

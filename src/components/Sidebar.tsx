@@ -11,12 +11,48 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const closeSidebar = () => setIsOpen(false);
 
+  const [collapsedCategories, setCollapsedCategories] = React.useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    sidebars.tutorialSidebar.forEach(item => {
+      if (item.type === 'category' && item.collapsed !== undefined) {
+        initial[item.label] = item.collapsed;
+      }
+    });
+    return initial;
+  });
+
+  const toggleCategory = (label: string) => {
+    setCollapsedCategories(prev => ({
+      ...prev,
+      [label]: !prev[label]
+    }));
+  };
+
   const renderItem = (item: SidebarItem) => {
     if (item.type === 'category') {
+      const isCollapsed = collapsedCategories[item.label] ?? false;
       return (
         <div key={item.label} className="nav-category">
-          <div className="nav-category-title">{item.label}</div>
-          <div>
+          <button 
+            type="button"
+            className="nav-category-title" 
+            onClick={() => toggleCategory(item.label)}
+          >
+            <span>{item.label}</span>
+            <ChevronRight 
+              size={12} 
+              style={{ 
+                transform: isCollapsed ? 'rotate(0deg)' : 'rotate(90deg)',
+                transition: 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                marginLeft: 'auto'
+              }} 
+            />
+          </button>
+          <div 
+            style={{ 
+              display: isCollapsed ? 'none' : 'block',
+            }}
+          >
             {item.items?.map(subItem => renderItem(subItem))}
           </div>
         </div>

@@ -42,9 +42,6 @@ export const DocsLayout: React.FC = () => {
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-            <div className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
-              Playwright Tutorial &copy; 2026
-            </div>
           </div>
         </header>
         <div className="content-area">

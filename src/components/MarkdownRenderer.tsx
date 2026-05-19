@@ -404,6 +404,13 @@ export const MarkdownRenderer: React.FC = () => {
           )}
         </div>
       </div>
+      <footer className="footer" style={{ borderTop: '1px solid var(--border-glass)', padding: '2.5rem 1.5rem 3.5rem', marginTop: '5rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          <a href="https://github.com/girishmulgund/my-playwright-tutorial" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub Repository</a>
+          <a href="https://playwright.dev/" target="_blank" rel="noopener noreferrer" className="footer-link">Official Playwright Docs</a>
+        </div>
+        <p style={{ margin: '0' }}>Playwright Tutorial &copy; 2026. Made with ❤️ for automation engineering.</p>
+      </footer>
     </div>
   );
 };

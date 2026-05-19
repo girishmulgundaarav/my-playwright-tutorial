@@ -1,5 +1,5 @@
 ---
-title: Handle Dropdowns - Part 1
+title: Dropdowns - Part 1
 sidebar_position: 2
 ---
 
