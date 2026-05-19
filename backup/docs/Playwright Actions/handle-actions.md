@@ -122,7 +122,7 @@ for (const label of days) {
 
 ---
 
-## Extra: More Playwright Actions
+## 🚀 Extra: More Playwright Actions
 
 To build robust tests, you'll often need more than just basic input handling. Here are some extra actions you'll find useful:
 
@@ -190,7 +190,7 @@ await page.locator('#upload').setInputFiles(['file1.txt', 'file2.txt']);
 
 ---
 
-# Lab Assignment: Input Text, Radio Buttons & Checkboxes
+# 🧪 Lab Assignment: Input Text, Radio Buttons & Checkboxes
 
 Practice your skills using the following lab assignment.
 

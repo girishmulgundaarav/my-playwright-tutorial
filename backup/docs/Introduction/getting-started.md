@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Getting Started with Playwright
+# 🚀 Getting Started with Playwright
 
 Welcome to the complete Playwright tutorial! This guide will introduce you to Playwright, help you set up your environment, and run your first automated test.
 

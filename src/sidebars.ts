@@ -1,4 +1,15 @@
-import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+export type SidebarItem = {
+  type: 'doc' | 'category';
+  id?: string;
+  label: string;
+  className?: string;
+  collapsed?: boolean;
+  items?: SidebarItem[];
+};
+
+export type SidebarsConfig = {
+  tutorialSidebar: SidebarItem[];
+};
 
 const sidebars: SidebarsConfig = {
   tutorialSidebar: [

@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Playwright Setup and Kick Start
+# 🚀 Playwright Setup and Kick Start
 
 This guide covers the prerequisites, installation steps, and writing your very first test script in Playwright.
 

@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# CSS Selectors
+# 🎨 CSS Selectors
 
 ## What are CSS Selectors?
 
@@ -197,7 +197,7 @@ await page.locator('input#email + span.error').isVisible();
 | Using CSS when a semantic locator works | Prefer `getByRole('button', {name: 'Submit'})` |
 | Relying on `nth-child` for everything | Use unique `id` or `data-testid` when available |
 
-### Selector Specificity Order (Most to Least Reliable)
+### 🧪 Selector Specificity Order (Most to Least Reliable)
 1. `id` (`#unique-id`) — Most specific, fastest
 2. `[data-testid="..."]` — Stable, test-specific
 3. `[name="..."]` or `[type="..."]` — Semantic attributes

@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Playwright Locators
+# 🎯 Playwright Locators
 
 In Playwright, locators are a core concept that power its **auto-waiting** and **retry-ability** features.
 

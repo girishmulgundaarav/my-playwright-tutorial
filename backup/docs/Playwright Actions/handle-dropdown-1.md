@@ -147,7 +147,7 @@ const sortedList = [...options].sort(); // Sorted version, without modifying the
 
 ---
 
-# Assignment: Verify Product Sorting and Information Retrieval
+# 🧪 Assignment: Verify Product Sorting and Information Retrieval
 
 Practice your skills with this hands-on assignment.
 

@@ -22,7 +22,12 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
-
+    {
+      type: 'doc',
+      id: 'advanced-tools',
+      label: 'Advanced Tools & Assertions',
+      className: 'sidebar-item-advanced-tools',
+    },
     {
       type: 'category',
       label: 'Locators',

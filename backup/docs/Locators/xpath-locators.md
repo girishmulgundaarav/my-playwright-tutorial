@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# XPath Locators
+# 🎯 XPath Locators
 
 XPath (XML Path Language) is a powerful syntax for navigating through elements and attributes in an XML document. Since HTML is a form of XML, XPath is widely used in web automation to locate elements by their structure and attributes.
 
