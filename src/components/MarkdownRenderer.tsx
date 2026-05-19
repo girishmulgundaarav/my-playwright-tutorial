@@ -5,7 +5,6 @@ import remarkGfm from 'remark-gfm';
 import remarkDirective from 'remark-directive';
 import { visit } from 'unist-util-visit';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Check, Copy, Rocket, Palette, Target, MousePointer2, FlaskConical, BookOpen, ChevronRight, ChevronLeft, Lightbulb, AlertTriangle, Info } from 'lucide-react';
 import { Breadcrumbs } from './Breadcrumbs';
 import sidebars from '../sidebars';
@@ -25,28 +24,128 @@ function remarkAdmonitions() {
 // Import all markdown files in the docs directory as raw text
 const mdFiles = import.meta.glob('../../docs/**/*.md', { query: '?raw', import: 'default' });
 
-const Heading1 = ({ node, children, ...props }: any) => {
-  const text = String(children);
-  let Icon = BookOpen;
-  
-  if (text.includes('Getting Started') || text.includes('Kick Start') || text.includes('Setup')) {
-    Icon = Rocket;
-  } else if (text.includes('CSS')) {
-    Icon = Palette;
-  } else if (text.includes('Locator') || text.includes('XPath')) {
-    Icon = Target;
-  } else if (text.includes('Actions') || text.includes('Dropdown')) {
-    Icon = MousePointer2;
-  } else if (text.includes('Lab') || text.includes('Assignment')) {
-    Icon = FlaskConical;
-  }
-
-  return (
-    <h1 {...props} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-      <Icon size={32} style={{ color: 'var(--accent-primary)' }} />
-      {children}
-    </h1>
-  );
+const finalBookTheme: any = {
+  'code[class*="language-"]': {
+    color: '#A5F3FC',
+    background: 'none',
+    fontFamily: '"Courier New", Courier, monospace',
+    textAlign: 'left',
+    whiteSpace: 'pre',
+    wordSpacing: 'normal',
+    wordBreak: 'normal',
+    wordWrap: 'normal',
+    lineHeight: '1.75',
+    tabSize: '4',
+    hyphens: 'none',
+  },
+  'pre[class*="language-"]': {
+    color: '#A5F3FC',
+    background: '#1E1B4B',
+    fontFamily: '"Courier New", Courier, monospace',
+    textAlign: 'left',
+    whiteSpace: 'pre',
+    wordSpacing: 'normal',
+    wordBreak: 'normal',
+    wordWrap: 'normal',
+    lineHeight: '1.75',
+    tabSize: '4',
+    hyphens: 'none',
+    margin: '0',
+    overflow: 'auto',
+  },
+  comment: {
+    color: '#6B7280',
+    fontStyle: 'italic',
+  },
+  prolog: {
+    color: '#6B7280',
+  },
+  doctype: {
+    color: '#6B7280',
+  },
+  cdata: {
+    color: '#6B7280',
+  },
+  punctuation: {
+    color: '#A5F3FC',
+  },
+  property: {
+    color: '#34D399',
+  },
+  tag: {
+    color: '#F472B6',
+  },
+  boolean: {
+    color: '#FB923C',
+  },
+  number: {
+    color: '#FB923C',
+  },
+  constant: {
+    color: '#FB923C',
+  },
+  symbol: {
+    color: '#FCD34D',
+  },
+  deleted: {
+    color: '#F472B6',
+  },
+  selector: {
+    color: '#34D399',
+  },
+  'attr-name': {
+    color: '#34D399',
+  },
+  string: {
+    color: '#FCD34D',
+  },
+  char: {
+    color: '#FCD34D',
+  },
+  builtin: {
+    color: '#34D399',
+  },
+  inserted: {
+    color: '#34D399',
+  },
+  operator: {
+    color: '#A5F3FC',
+  },
+  entity: {
+    color: '#34D399',
+    cursor: 'help',
+  },
+  url: {
+    color: '#34D399',
+  },
+  variable: {
+    color: '#A5F3FC',
+  },
+  atrule: {
+    color: '#FCD34D',
+  },
+  'attr-value': {
+    color: '#FCD34D',
+  },
+  keyword: {
+    color: '#F472B6',
+  },
+  function: {
+    color: '#34D399',
+  },
+  regex: {
+    color: '#FCD34D',
+  },
+  important: {
+    color: '#F472B6',
+    fontWeight: 'bold',
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
+  italic: {
+    fontStyle: 'italic',
+  },
 };
 
 const CodeBlock = ({ inline, className, children, ...props }: any) => {
@@ -81,13 +180,13 @@ const CodeBlock = ({ inline, className, children, ...props }: any) => {
           PreTag="pre"
           children={codeString}
           language={language}
-          style={vscDarkPlus}
+          style={finalBookTheme}
           customStyle={{
             margin: '0',
             borderRadius: '0 0 8px 8px',
-            fontSize: '0.875rem',
+            fontSize: '0.95rem',
             padding: '1.25rem',
-            background: '#0d1117'
+            background: '#1E1B4B'
           }}
         />
       </div>
@@ -111,6 +210,39 @@ const flattenSidebar = (items: any[]): any[] => {
 };
 
 const flatSidebar = flattenSidebar(sidebars.tutorialSidebar);
+
+const Heading1 = ({ node, children, ...props }: any) => {
+  const { '*': path } = useParams();
+  const docId = path || 'Introduction/getting-started';
+  const activeIndex = flatSidebar.findIndex(item => item.id === docId);
+  const chapterNumber = activeIndex !== -1 ? activeIndex + 1 : 1;
+  const paddedChapterNumber = String(chapterNumber).padStart(2, '0');
+  
+  const text = String(children);
+  let Icon = BookOpen;
+  
+  if (text.includes('Getting Started') || text.includes('Kick Start') || text.includes('Setup')) {
+    Icon = Rocket;
+  } else if (text.includes('CSS')) {
+    Icon = Palette;
+  } else if (text.includes('Locator') || text.includes('XPath')) {
+    Icon = Target;
+  } else if (text.includes('Actions') || text.includes('Dropdown')) {
+    Icon = MousePointer2;
+  } else if (text.includes('Lab') || text.includes('Assignment')) {
+    Icon = FlaskConical;
+  }
+
+  return (
+    <div className="chapter-header" data-num={paddedChapterNumber}>
+      <div className="chapter-num">Chapter {paddedChapterNumber}</div>
+      <h1 {...props} className="chapter-title">
+        <Icon size={36} style={{ color: '#A5B4FC' }} />
+        {children}
+      </h1>
+    </div>
+  );
+};
 
 const extractToC = (md: string) => {
   const headings = [...md.matchAll(/^(##|###)\s+(.+)$/gm)];
