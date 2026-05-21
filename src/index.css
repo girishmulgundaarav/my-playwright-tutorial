@@ -1319,6 +1319,12 @@ a:hover {
   -webkit-text-fill-color: transparent;
 }
 
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.85rem;
+  }
+}
+
 .section-subtitle {
   text-align: center;
   color: rgba(255, 255, 255, 0.8);
@@ -1327,6 +1333,13 @@ a:hover {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .section-subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
 }
 
 /* Code Showcase */
@@ -1349,6 +1362,11 @@ a:hover {
 @media (max-width: 900px) {
   .showcase-container {
     flex-direction: column;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  .code-showcase-section {
+    margin: 3rem 0;
   }
 }
 
@@ -1412,6 +1430,13 @@ a:hover {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .editor-content, .browser-content {
+    padding: 1rem;
+  }
 }
 
 .editor-content {
@@ -1591,10 +1616,25 @@ a:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
+@media (max-width: 768px) {
+  .newsletter-card {
+    padding: 2.5rem 1.25rem;
+  }
+  .newsletter-section {
+    margin: 2rem 0;
+  }
+}
+
 .newsletter-content h3 {
   font-size: 2rem;
   margin: 0 0 1rem 0;
   color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .newsletter-content h3 {
+    font-size: 1.5rem;
+  }
 }
 
 .newsletter-content p {

@@ -50,7 +50,7 @@ export const CodeShowcase: React.FC = () => {
               cursor={true}
               repeat={Infinity}
               className="typing-code"
-              style={{ whiteSpace: 'pre', fontSize: '0.9rem', lineHeight: 1.6, color: '#A5F3FC' }}
+              style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontSize: '0.9rem', lineHeight: 1.6, color: '#A5F3FC' }}
             />
           </div>
         </div>
