@@ -81,3 +81,20 @@ test('has title', async ({ page }) => {
   // 2. Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Playwright/);
 });
+```
+
+---
+
+```quiz
+{
+  "question": "Which of the following browsers does Playwright NOT support out of the box?",
+  "options": [
+    "Chromium (Chrome/Edge)",
+    "Firefox",
+    "Internet Explorer 11",
+    "WebKit (Safari)"
+  ],
+  "answer": 2,
+  "explanation": "Playwright supports modern rendering engines (Chromium, Firefox, WebKit). It does not support legacy browsers like Internet Explorer."
+}
+```

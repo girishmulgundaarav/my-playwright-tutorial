@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PlayCircle, Code, BookOpen, Terminal } from 'lucide-react';
+import { CodeShowcase } from './CodeShowcase';
+import { Newsletter } from './Newsletter';
 
 export const LandingPage: React.FC = () => {
   return (
@@ -64,6 +66,10 @@ export const LandingPage: React.FC = () => {
             <p>Cover everything from basic locators to advanced CI/CD integration and API testing.</p>
           </div>
         </div>
+
+        <CodeShowcase />
+        <Newsletter />
+        
       </div>
     </div>
   );

@@ -173,3 +173,18 @@ Practice your skills with this hands-on assignment.
 - [ ] Access the last element of the product prices list and the last element of the product names list.
 - [ ] Print the highest priced product name and its price in the console.
 
+---
+
+```quiz
+{
+  "question": "Why is it important to use the spread operator [...options] before sorting an array of dropdown options?",
+  "options": [
+    "To convert HTML elements into strings",
+    "Because .sort() is not available on standard arrays",
+    "Because .sort() modifies the original array in-place, which loses the original order",
+    "To automatically remove duplicate options"
+  ],
+  "answer": 2,
+  "explanation": "The .sort() method in JavaScript modifies the array in-place. Using the spread operator creates a shallow copy, allowing you to compare the original sorted order with a new sorted version."
+}
+```

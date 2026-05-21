@@ -218,4 +218,18 @@ Practice your skills using the following lab assignment.
 - [ ] Check the last 2 days (Friday and Saturday) using a loop.
 - [ ] Check the first 3 days (Monday, Tuesday, Wednesday) using a loop.
 
+---
 
+```quiz
+{
+  "question": "Which Playwright method is used to select an option from a standard HTML <select> dropdown?",
+  "options": [
+    ".click()",
+    ".selectOption()",
+    ".check()",
+    ".fill()"
+  ],
+  "answer": 1,
+  "explanation": "You use .selectOption() to select an option in a <select> element. .check() is for checkboxes and radio buttons, and .fill() is for text inputs."
+}
+```

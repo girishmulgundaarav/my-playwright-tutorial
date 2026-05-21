@@ -497,3 +497,19 @@ Here is a complete, working HTML page that you can save locally as `app.html` an
 </html>
 ```
 </details>
+
+---
+
+```quiz
+{
+  "question": "Which Playwright locator should you prioritize for locating interactive elements like buttons, checkboxes, and links?",
+  "options": [
+    "page.locator('css=...')",
+    "page.getByTestId()",
+    "page.getByRole()",
+    "page.getByText()"
+  ],
+  "answer": 2,
+  "explanation": "Playwright strongly recommends using getByRole() because it relies on accessibility roles, which is exactly how assistive technologies and real users perceive the page."
+}
+```

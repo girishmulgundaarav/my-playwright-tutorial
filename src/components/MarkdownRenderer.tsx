@@ -8,6 +8,9 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { Check, Copy, Rocket, Palette, Target, MousePointer2, FlaskConical, BookOpen, ChevronRight, ChevronLeft, Lightbulb, AlertTriangle, Info } from 'lucide-react';
 import { Breadcrumbs } from './Breadcrumbs';
 import sidebars from '../sidebars';
+import { QuizWidget } from './QuizWidget';
+import { FeedbackWidget } from './FeedbackWidget';
+import { useProgress } from '../context/ProgressContext';
 
 function remarkAdmonitions() {
   return (tree: any) => {
@@ -154,6 +157,15 @@ const CodeBlock = ({ inline, className, children, ...props }: any) => {
   const language = match ? match[1] : '';
   const codeString = String(children).replace(/\n$/, '');
 
+  if (!inline && language === 'quiz') {
+    try {
+      const data = JSON.parse(codeString);
+      return <QuizWidget data={data} />;
+    } catch (e) {
+      return <div style={{ color: '#ef4444' }}>Error parsing quiz data: Invalid JSON</div>;
+    }
+  }
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(codeString);
     setIsCopied(true);
@@ -276,8 +288,11 @@ export const MarkdownRenderer: React.FC = () => {
   const { '*': path } = useParams();
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [activeId, setActiveId] = useState<string>('');
+  const { isCompleted, markAsCompleted } = useProgress();
 
   const docId = path || 'Introduction/getting-started';
+  const completed = isCompleted(docId);
 
   useEffect(() => {
     const loadContent = async () => {
@@ -303,6 +318,25 @@ export const MarkdownRenderer: React.FC = () => {
     loadContent();
   }, [docId]);
 
+  useEffect(() => {
+    if (loading) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-10% 0px -80% 0px' }
+    );
+
+    const headings = document.querySelectorAll('.markdown-body h2, .markdown-body h3');
+    headings.forEach((heading) => observer.observe(heading));
+
+    return () => observer.disconnect();
+  }, [content, loading]);
+
   const toc = useMemo(() => extractToC(content), [content]);
 
   const currentIndex = flatSidebar.findIndex(item => item.id === docId);
@@ -326,6 +360,16 @@ export const MarkdownRenderer: React.FC = () => {
             <Markdown
               remarkPlugins={[remarkGfm, remarkDirective, remarkAdmonitions]}
               components={{ 
+                pre: ({ node, children, ...props }: any) => {
+                  const childArray = React.Children.toArray(children);
+                  if (childArray.length === 1) {
+                    const child: any = childArray[0];
+                    if (child.props && child.props.className === 'language-quiz') {
+                      return <div className="quiz-wrapper">{children}</div>;
+                    }
+                  }
+                  return <pre {...props}>{children}</pre>;
+                },
                 code: CodeBlock, 
                 h1: Heading1,
                 h2: Heading2,
@@ -362,6 +406,41 @@ export const MarkdownRenderer: React.FC = () => {
             >
               {content}
             </Markdown>
+            
+            <div style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid var(--border-glass)' }}>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button 
+                  onClick={() => markAsCompleted(docId)}
+                  disabled={completed}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.875rem 1.75rem',
+                    backgroundColor: completed ? 'rgba(16, 185, 129, 0.1)' : 'var(--accent-primary)',
+                    color: completed ? '#10b981' : 'white',
+                    border: completed ? '2px solid #10b981' : '2px solid var(--accent-primary)',
+                    borderRadius: '8px',
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    cursor: completed ? 'default' : 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: completed ? 'none' : '0 4px 14px rgba(79, 70, 229, 0.3)'
+                  }}
+                  onMouseOver={(e) => {
+                    if (!completed) e.currentTarget.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseOut={(e) => {
+                    if (!completed) e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <Check size={20} />
+                  {completed ? 'Completed' : 'Mark as Complete'}
+                </button>
+              </div>
+            </div>
+
+            <FeedbackWidget docId={docId} />
           </div>
 
           <div className="pagination-container">
@@ -394,7 +473,11 @@ export const MarkdownRenderer: React.FC = () => {
               <ul className="toc-list">
                 {toc.map((item, idx) => (
                   <li key={idx} className={`toc-item ${item.level === 3 ? 'toc-level-3' : ''}`}>
-                    <a href={`#${item.id}`} className="toc-link">
+                    <a 
+                      href={`#${item.id}`} 
+                      className={`toc-link ${activeId === item.id ? 'active' : ''}`}
+                      style={{ fontWeight: activeId === item.id ? 600 : 400 }}
+                    >
                       {item.text}
                     </a>
                   </li>
