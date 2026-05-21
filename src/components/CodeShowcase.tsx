@@ -46,7 +46,7 @@ export const CodeShowcase: React.FC = () => {
                 "import { test, expect } from '@playwright/test';\n\ntest('user login flow', async ({ page }) => {\n  await page.goto('https://myapp.com/login');\n  await page.getByPlaceholder('Email').fill('user@demo.com');\n  await page.getByPlaceholder('Password').fill('secret');\n  await page.getByRole('button', { name: 'Sign in' }).click();\n  await expect(page.getByText('Welcome back!')).toBeVisible();\n});",
                 5000,
               ]}
-              wrapper="pre"
+              wrapper="div"
               cursor={true}
               repeat={Infinity}
               className="typing-code"
