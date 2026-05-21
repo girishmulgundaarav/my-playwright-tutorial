@@ -33,7 +33,7 @@ export const DocsLayout: React.FC = () => {
             </button>
             <SemanticSearch />
           </div>
-          <div className="header-right" style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+          <div className="header-right">
             <a 
               href="https://github.com/girishmulgundaarav/my-playwright-tutorial" 
               target="_blank" 
