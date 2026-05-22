@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import sidebars, { SidebarItem } from '../sidebars';
-import { Terminal, ChevronRight, FileText, X, CheckCircle, BookOpen } from 'lucide-react';
+import { Terminal, ChevronRight, FileText, X, CheckCircle } from 'lucide-react';
 import { useProgress } from '../context/ProgressContext';
 
 interface SidebarProps {
@@ -119,41 +119,39 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         onClick={closeSidebar} 
       />
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
-        <div className="sidebar-header" style={{ justifyContent: 'space-between' }}>
+        <div className="sidebar-header">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            <a 
+              href="https://app.thetestingacademy.com/playright-cli" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="complete-guide-badge"
+            >
+              COMPLETE GUIDE
+            </a>
+            <button className="mobile-toggle" onClick={closeSidebar} style={{ display: isOpen ? 'block' : '' }}>
+              <X size={20} />
+            </button>
+          </div>
           <div className="brand">
             <Terminal size={28} color="#A5B4FC" />
             Playwright
           </div>
-          <button className="mobile-toggle" onClick={closeSidebar} style={{ display: isOpen ? 'block' : '' }}>
-            <X size={20} />
-          </button>
         </div>
         
-        <div style={{ padding: '1.25rem 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <a 
-            href="https://app.thetestingacademy.com/playright-cli" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="complete-guide-btn"
-          >
-            <BookOpen size={16} />
-            <span>Complete Guide</span>
-          </a>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 600, color: 'var(--sidebar-text)' }}>
-              <span>PROGRESS</span>
-              <span>{progressPercent}%</span>
-            </div>
-            <div style={{ height: '6px', backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: '3px', overflow: 'hidden' }}>
-              <div style={{ 
-                height: '100%', 
-                width: `${progressPercent}%`, 
-                backgroundColor: '#10b981', 
-                borderRadius: '3px',
-                transition: 'width 0.3s ease'
-              }} />
-            </div>
+        <div style={{ padding: '1.25rem 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 600, color: 'var(--sidebar-text)' }}>
+            <span>PROGRESS</span>
+            <span>{progressPercent}%</span>
+          </div>
+          <div style={{ height: '6px', backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+            <div style={{ 
+              height: '100%', 
+              width: `${progressPercent}%`, 
+              backgroundColor: '#10b981', 
+              borderRadius: '3px',
+              transition: 'width 0.3s ease'
+            }} />
           </div>
         </div>
 

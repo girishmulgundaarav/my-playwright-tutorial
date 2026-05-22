@@ -134,10 +134,14 @@ a:hover {
 }
 
 .sidebar-header {
-  height: var(--header-height);
+  height: auto;
+  min-height: 105px;
   display: flex;
-  align-items: center;
-  padding: 0 1.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.25rem 1.5rem;
+  gap: 0.75rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -1803,35 +1807,32 @@ a:hover {
   margin: 0;
 }
 
-/* Complete Guide Button */
-.complete-guide-btn {
-  display: flex;
+/* Complete Guide Badge */
+.complete-guide-badge {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 0.65rem 1rem;
+  padding: 0.25rem 0.75rem;
   background: var(--accent-gradient);
   color: #ffffff !important;
-  border: none;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 9999px;
   text-decoration: none;
-  cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.complete-guide-btn:hover {
+.complete-guide-badge:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   color: #ffffff !important;
   filter: brightness(1.08);
 }
 
-.complete-guide-btn:active {
+.complete-guide-badge:active {
   transform: translateY(0);
 }
 
