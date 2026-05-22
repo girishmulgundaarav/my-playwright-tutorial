@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import sidebars, { SidebarItem } from '../sidebars';
-import { Terminal, ChevronRight, FileText, X, CheckCircle } from 'lucide-react';
+import { ChevronRight, FileText, X, CheckCircle } from 'lucide-react';
 import { useProgress } from '../context/ProgressContext';
 
 interface SidebarProps {
@@ -120,22 +120,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       />
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <a 
-              href="https://app.thetestingacademy.com/playright-cli" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="complete-guide-badge"
-            >
-              COMPLETE GUIDE
-            </a>
-            <button className="mobile-toggle" onClick={closeSidebar} style={{ display: isOpen ? 'block' : '' }}>
+          {isOpen && (
+            <button className="mobile-toggle sidebar-close-btn" onClick={closeSidebar}>
               <X size={20} />
             </button>
-          </div>
+          )}
+          <a 
+            href="https://app.thetestingacademy.com/playright-cli" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="complete-guide-badge"
+          >
+            COMPLETE GUIDE
+          </a>
           <div className="brand">
-            <Terminal size={28} color="#A5B4FC" />
             Playwright
+          </div>
+          <div className="sidebar-tagline">
+            Tutorial QA/SDET
           </div>
         </div>
         
