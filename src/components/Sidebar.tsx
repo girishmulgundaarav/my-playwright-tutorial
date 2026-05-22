@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import sidebars, { SidebarItem } from '../sidebars';
-import { Terminal, ChevronRight, FileText, X, CheckCircle } from 'lucide-react';
+import { Terminal, ChevronRight, FileText, X, CheckCircle, BookOpen } from 'lucide-react';
 import { useProgress } from '../context/ProgressContext';
 
 interface SidebarProps {
@@ -129,25 +129,44 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           </button>
         </div>
         
-        <div style={{ padding: '1.5rem 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 600, color: 'var(--sidebar-text)' }}>
-            <span>PROGRESS</span>
-            <span>{progressPercent}%</span>
-          </div>
-          <div style={{ height: '6px', backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ 
-              height: '100%', 
-              width: `${progressPercent}%`, 
-              backgroundColor: '#10b981', 
-              borderRadius: '3px',
-              transition: 'width 0.3s ease'
-            }} />
+        <div style={{ padding: '1.25rem 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <a 
+            href="https://app.thetestingacademy.com/playright-cli" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="complete-guide-btn"
+          >
+            <BookOpen size={16} />
+            <span>Complete Guide</span>
+          </a>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 600, color: 'var(--sidebar-text)' }}>
+              <span>PROGRESS</span>
+              <span>{progressPercent}%</span>
+            </div>
+            <div style={{ height: '6px', backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+              <div style={{ 
+                height: '100%', 
+                width: `${progressPercent}%`, 
+                backgroundColor: '#10b981', 
+                borderRadius: '3px',
+                transition: 'width 0.3s ease'
+              }} />
+            </div>
           </div>
         </div>
 
         <nav className="sidebar-nav">
           {sidebars.tutorialSidebar.map(item => renderItem(item))}
         </nav>
+
+        <div className="sidebar-footer">
+          <div className="user-profile">
+            <span className="user-name">Girish Mulgund</span>
+            <span className="user-tagline">Test with playwright</span>
+          </div>
+        </div>
       </aside>
     </>
   );

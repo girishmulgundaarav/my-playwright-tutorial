@@ -1802,3 +1802,65 @@ a:hover {
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
 }
+
+/* Complete Guide Button */
+.complete-guide-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background: var(--accent-gradient);
+  color: #ffffff !important;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.complete-guide-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  color: #ffffff !important;
+  filter: brightness(1.08);
+}
+
+.complete-guide-btn:active {
+  transform: translateY(0);
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(0, 0, 0, 0.15);
+  margin-top: auto;
+}
+
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.user-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--sidebar-text-active);
+  letter-spacing: 0.02em;
+}
+
+.user-tagline {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--sidebar-category);
+  opacity: 0.85;
+}
+
