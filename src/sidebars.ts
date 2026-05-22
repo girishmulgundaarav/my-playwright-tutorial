@@ -148,6 +148,32 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
+    {
+      type: 'category',
+      label: 'Playwright CLI',
+      className: 'sidebar-category-cli',
+      collapsed: true,
+      items: [
+        {
+          type: 'doc',
+          id: 'Playwright CLI/intro-and-two-clis',
+          label: 'Introduction & The Two CLIs',
+          className: 'sidebar-item-intro-two-clis',
+        },
+        {
+          type: 'doc',
+          id: 'Playwright CLI/codegen-and-locator-strategies',
+          label: 'Codegen & Locator Strategies',
+          className: 'sidebar-item-codegen-locators',
+        },
+        {
+          type: 'doc',
+          id: 'Playwright CLI/ai-agents-and-skills',
+          label: 'AI Agent CLI & Skills Integration',
+          className: 'sidebar-item-ai-agents-skills',
+        },
+      ],
+    },
   ],
 };
 
