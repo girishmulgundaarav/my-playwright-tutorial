@@ -981,6 +981,19 @@ a:hover {
   -webkit-text-fill-color: transparent;
 }
 
+/* Ensure the landing page wordmark is always high-contrast against the dark background */
+.landing-container .gradient-text {
+  background: linear-gradient(135deg, #A5B4FC 0%, #C7D2FE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-color-theme='orange'] .landing-container .gradient-text {
+  background: linear-gradient(135deg, #FDBA74 0%, #FFD8A8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .hero-subtitle {
   font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.72);
