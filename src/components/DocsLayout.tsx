@@ -12,6 +12,11 @@ export const DocsLayout: React.FC = () => {
     return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
   });
 
+  const [colorTheme, setColorTheme] = useState(() => {
+    const saved = localStorage.getItem('color-theme') || 'blue';
+    return saved === 'red' ? 'orange' : saved;
+  });
+
   useEffect(() => {
     if (isDark) {
       document.documentElement.setAttribute('data-theme', 'dark');
@@ -21,6 +26,11 @@ export const DocsLayout: React.FC = () => {
       localStorage.setItem('theme', 'light');
     }
   }, [isDark]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-color-theme', colorTheme);
+    localStorage.setItem('color-theme', colorTheme);
+  }, [colorTheme]);
 
   return (
     <>
@@ -58,6 +68,42 @@ export const DocsLayout: React.FC = () => {
             >
               <Book size={20} />
             </a>
+            <div className="color-switcher" style={{ display: 'flex', gap: '8px', alignItems: 'center', marginRight: '4px' }}>
+              <button
+                onClick={() => setColorTheme('blue')}
+                className={`color-dot blue-dot ${colorTheme === 'blue' ? 'active' : ''}`}
+                style={{
+                  width: '14px',
+                  height: '14px',
+                  borderRadius: '50%',
+                  backgroundColor: '#4F46E5',
+                  border: colorTheme === 'blue' ? '2px solid var(--bg-secondary)' : 'none',
+                  boxShadow: colorTheme === 'blue' ? '0 0 0 2px #4F46E5' : '0 0 0 1px rgba(255,255,255,0.1)',
+                  cursor: 'pointer',
+                  padding: 0,
+                  transition: 'all 0.2s ease',
+                }}
+                title="Indigo/Blue Theme"
+                aria-label="Switch to Blue Theme"
+              />
+              <button
+                onClick={() => setColorTheme('orange')}
+                className={`color-dot orange-dot ${colorTheme === 'orange' ? 'active' : ''}`}
+                style={{
+                  width: '14px',
+                  height: '14px',
+                  borderRadius: '50%',
+                  backgroundColor: '#E65F2B',
+                  border: colorTheme === 'orange' ? '2px solid var(--bg-secondary)' : 'none',
+                  boxShadow: colorTheme === 'orange' ? '0 0 0 2px #E65F2B' : '0 0 0 1px rgba(255,255,255,0.1)',
+                  cursor: 'pointer',
+                  padding: 0,
+                  transition: 'all 0.2s ease',
+                }}
+                title="Orange/Coral Theme"
+                aria-label="Switch to Orange Theme"
+              />
+            </div>
             <button 
               onClick={() => setIsDark(!isDark)}
               className="theme-toggle"

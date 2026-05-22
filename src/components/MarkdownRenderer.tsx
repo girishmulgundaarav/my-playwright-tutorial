@@ -249,7 +249,7 @@ const Heading1 = ({ node, children, ...props }: any) => {
     <div className="chapter-header" data-num={paddedChapterNumber}>
       <div className="chapter-num">Chapter {paddedChapterNumber}</div>
       <h1 {...props} className="chapter-title">
-        <Icon size={36} style={{ color: '#A5B4FC' }} />
+        <Icon size={36} style={{ color: 'var(--sidebar-border-active)' }} />
         {children}
       </h1>
     </div>

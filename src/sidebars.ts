@@ -120,6 +120,18 @@ const sidebars: SidebarsConfig = {
           label: 'Mouse Actions & Scrolling',
           className: 'sidebar-item-mouse-scrolling',
         },
+        {
+          type: 'doc',
+          id: 'Playwright Actions/keyboard-upload-download',
+          label: 'Keyboard, Uploads & Downloads',
+          className: 'sidebar-item-keyboard-upload-download',
+        },
+        {
+          type: 'doc',
+          id: 'Playwright Actions/shadow-dom-cookies',
+          label: 'Shadow DOM & Cookies',
+          className: 'sidebar-item-shadow-dom-cookies',
+        },
       ],
     },
   ],
