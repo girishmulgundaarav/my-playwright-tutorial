@@ -134,6 +134,20 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
+    {
+      type: 'category',
+      label: 'Playwright Advanced',
+      className: 'sidebar-category-advanced',
+      collapsed: true,
+      items: [
+        {
+          type: 'doc',
+          id: 'Playwright Advanced/assertions-timeouts-codegen',
+          label: 'Assertions, Timeouts & Codegen',
+          className: 'sidebar-item-assertions-timeouts-codegen',
+        },
+      ],
+    },
   ],
 };
 
