@@ -14,11 +14,11 @@
   
   /* Sidebar custom variables (Dark Indigo matching final_book.html) */
   --sidebar-bg: #4F46E5;
-  --sidebar-text: rgba(255, 255, 255, 0.75);
+  --sidebar-text: rgba(255, 255, 255, 0.85);
   --sidebar-text-active: #ffffff;
   --sidebar-item-hover: rgba(255, 255, 255, 0.1);
   --sidebar-border-active: #A5B4FC;
-  --sidebar-category: rgba(255, 255, 255, 0.85);
+  --sidebar-category: rgba(255, 255, 255, 0.55);
   
   --sidebar-width: 280px;
   --header-height: 64px;
@@ -52,11 +52,11 @@
   
   /* Sidebar custom variables (Dark Mode) */
   --sidebar-bg: #1E1B4B;
-  --sidebar-text: rgba(248, 249, 255, 0.75);
+  --sidebar-text: rgba(248, 249, 255, 0.85);
   --sidebar-text-active: #ffffff;
   --sidebar-item-hover: rgba(255, 255, 255, 0.05);
   --sidebar-border-active: #A5B4FC;
-  --sidebar-category: rgba(248, 249, 255, 0.85);
+  --sidebar-category: rgba(248, 249, 255, 0.55);
 }
 
 [data-theme='dark'][data-color-theme='orange'] {
@@ -75,6 +75,8 @@
   
   --sidebar-bg: #241814;
   --sidebar-border-active: #FDBA74;
+  --sidebar-text: rgba(255, 247, 237, 0.85);
+  --sidebar-category: rgba(255, 247, 237, 0.55);
 }
 
 * {
