@@ -312,11 +312,11 @@ export const SemanticSearch: React.FC = () => {
                       marginBottom: '0.25rem'
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-                      {result.matchedSection ? <Hash size={14} style={{ color: 'var(--accent-primary)' }} /> : <FileText size={14} style={{ color: 'var(--text-muted)' }} />}
-                      <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>{result.title}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem', minWidth: 0 }}>
+                      {result.matchedSection ? <Hash size={14} style={{ color: 'var(--accent-primary)', flexShrink: 0 }} /> : <FileText size={14} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />}
+                      <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1 }}>{result.title}</span>
                       {result.category && (
-                        <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '4px', background: 'var(--border-glass)', color: 'var(--text-muted)', marginLeft: 'auto' }}>
+                        <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '4px', background: 'var(--border-glass)', color: 'var(--text-muted)', marginLeft: 'auto', flexShrink: 0 }}>
                           {result.category}
                         </span>
                       )}
@@ -369,7 +369,7 @@ export const SemanticSearch: React.FC = () => {
             </div>
           )}
 
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-glass)', paddingTop: '0.5rem', marginTop: '0.5rem', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+          <div className="search-footer-hints" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-glass)', paddingTop: '0.5rem', marginTop: '0.5rem', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
               <kbd style={{ display: 'inline-block', padding: '1px 3px', border: '1px solid var(--border-glass)', borderRadius: '3px' }}>↓↑</kbd> to navigate
             </span>

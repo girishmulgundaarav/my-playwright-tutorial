@@ -1089,8 +1089,21 @@ a:hover {
     display: none !important;
   }
   .search-results-modal {
-    width: 300px;
-    left: -20px;
+    position: fixed !important;
+    top: calc(var(--header-height) + 8px) !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-height: calc(100vh - var(--header-height) - 24px) !important;
+    margin: 0 !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important;
+    z-index: 1000;
+  }
+  .search-results-list {
+    max-height: 240px !important;
+  }
+  .search-footer-hints {
+    display: none !important;
   }
   .markdown-body {
     padding: 1.25rem 1rem;
