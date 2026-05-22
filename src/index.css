@@ -135,34 +135,32 @@ a:hover {
 
 .sidebar-header {
   height: auto;
-  min-height: 125px;
+  min-height: 120px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   padding: 1.5rem;
-  gap: 0.5rem;
+  gap: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
 }
 
 .brand {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.65rem;
+  font-size: 2.0rem;
   font-weight: 800;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--sidebar-text-active);
+  display: block;
   text-align: left;
   width: auto;
-  justify-content: flex-start;
   letter-spacing: -0.02em;
-  margin-top: 0.25rem;
+  margin-top: 0;
 }
 
 .sidebar-tagline {
   font-family: 'Fira Code', 'Courier New', monospace;
-  font-size: 0.65rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--sidebar-text);
   opacity: 0.55;
@@ -1836,15 +1834,15 @@ a:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.25rem 0.65rem;
+  padding: 0.35rem 0.9rem;
   background: rgba(16, 185, 129, 0.1);
   color: #10b981 !important;
   border: 1px solid rgba(16, 185, 129, 0.35);
-  font-size: 0.65rem;
+  font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  border-radius: 9999px;
+  letter-spacing: 0.08em;
+  border-radius: 4px;
   text-decoration: none;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1877,14 +1875,14 @@ a:hover {
 
 .user-name {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.95rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--sidebar-text-active);
   letter-spacing: 0.02em;
 }
 
 .user-tagline {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: var(--sidebar-category);
   opacity: 0.85;
