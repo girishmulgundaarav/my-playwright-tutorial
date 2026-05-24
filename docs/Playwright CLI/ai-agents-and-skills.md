@@ -15,27 +15,7 @@ This guide explores the new **`@playwright/cli`** package, which provides a clie
 
 Unlike standard test runners, `@playwright/cli` uses a **client-daemon architecture** communicating over Unix sockets or named pipes.
 
-```
-       ┌────────────────────────┐
-       │   AI Coding Agent      │
-       │ (e.g., Claude Code)    │
-       └──────────┬─────────────┘
-                  │
-                  ▼ CLI Commands
-       ┌────────────────────────┐
-       │   playwright-cli       │ (Client)
-       └──────────┬─────────────┘
-                  │ Unix Socket / Pipe
-                  ▼
-       ┌────────────────────────┐
-       │   Browser Daemon       │ (Server Process)
-       └──────────┬─────────────┘
-                  │
-                  ▼ Controls
-       ┌────────────────────────┐
-       │    Chromium Instance   │
-       └────────────────────────┘
-```
+![Playwright AI Agent CLI Architecture](/img/playwright_agent_architecture.png)
 
 This design provides two main benefits:
 1.  **Persistent Browser Sessions**: The browser daemon keeps the browser instance active across separate CLI commands. State, cookies, pages, and context are preserved without relaunch overhead.

@@ -40,6 +40,9 @@ You can customize the recording environment using command-line flags:
 | **`--color-scheme`** | Emulates light or dark mode themes. | `npx playwright codegen --color-scheme=dark https://example.com` |
 | **`--save-storage`** | Saves cookies, tokens, and storage state to a JSON file. | `npx playwright codegen --save-storage=auth.json https://example.com` |
 | **`--load-storage`** | Loads a saved authentication state to bypass login screens. | `npx playwright codegen --load-storage=auth.json https://example.com` |
+| **`--timezone`** | Emulates a localized timezone. | `npx playwright codegen --timezone="Europe/London" https://example.com` |
+| **`--locale`** | Emulates user localization/locale settings. | `npx playwright codegen --locale="fr-FR" https://example.com` |
+| **`--geolocation`** | Emulates physical GPS coordinates. | `npx playwright codegen --geolocation="48.8584,2.2945" https://example.com` |
 
 ---
 
@@ -47,31 +50,25 @@ You can customize the recording environment using command-line flags:
 
 Playwright generates locators based on a resilient selection priority. It avoids brittle CSS selectors or complex XPath hierarchies in favor of user-facing attributes.
 
-```
-       Locator Priority Order
-                 │
-       1. Role (getByRole)
-                 ▼
-       2. Text (getByText)
-                 ▼
-     3. Test ID (getByTestId)
-                 ▼
-    4. Placeholder (getByPlaceholder)
-                 ▼
-       5. CSS Selector
-```
+![Playwright Locator Priority Hierarchy](/img/playwright_locator_priority.png)
 
 ### Locator Selection Strategy
 
-1.  **`getByRole()`**: Checks HTML semantics (e.g. `button`, `link`, `heading`) and filters by accessible names (e.g., labels, aria-labels).
+1.  **`getByRole()`**: Checks HTML semantics (e.g. `button`, `link`, `heading`, `checkbox`) and filters by accessible names (e.g., labels, aria-labels).
     *   *Example*: `page.getByRole('button', { name: 'Log in' })`
-2.  **`getByText()`**: Finds elements by visible text strings.
-    *   *Example*: `page.getByText('Welcome back, User!')`
-3.  **`getByTestId()`**: Looks for custom test identifiers (e.g. `data-testid`). You can configure your custom test-id attribute name in `playwright.config.ts`.
-    *   *Example*: `page.getByTestId('submit-btn')`
-4.  **`getByPlaceholder()`**: Matches form inputs by their placeholder text.
+2.  **`getByLabel()`**: Locates form input elements by their associated `<label>` element text.
+    *   *Example*: `page.getByLabel('Username')`
+3.  **`getByPlaceholder()`**: Matches input elements by their placeholder text.
     *   *Example*: `page.getByPlaceholder('Enter your email address')`
-5.  **CSS Selectors / XPath**: Falling back to standard DOM trees when no semantic attributes exist.
+4.  **`getByText()`**: Finds elements containing specific visible text strings.
+    *   *Example*: `page.getByText('Welcome back, User!')`
+5.  **`getByAltText()`**: Matches images (`<img>` elements) by their `alt` text attribute.
+    *   *Example*: `page.getByAltText('Company logo')`
+6.  **`getByTitle()`**: Locates elements having a matching `title` tooltip attribute.
+    *   *Example*: `page.getByTitle('Close modal')`
+7.  **`getByTestId()`**: Looks for custom test identifiers (e.g. `data-testid`). You can configure your custom test-id attribute name in `playwright.config.ts`.
+    *   *Example*: `page.getByTestId('submit-btn')`
+8.  **CSS Selectors / XPath**: Falling back to standard DOM trees when no semantic attributes exist.
     *   *Example*: `page.locator('#login-form .btn-submit')`
 
 ---

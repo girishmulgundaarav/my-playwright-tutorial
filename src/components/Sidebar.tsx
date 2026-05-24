@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import sidebars, { SidebarItem } from '../sidebars';
 import { ChevronRight, FileText, X, CheckCircle } from 'lucide-react';
 import { useProgress } from '../context/ProgressContext';
@@ -9,9 +9,24 @@ interface SidebarProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
+const isCategoryActive = (categoryItem: SidebarItem, currentPathname: string): boolean => {
+  if (!categoryItem.items) return false;
+  return categoryItem.items.some(subItem => {
+    if (subItem.type === 'doc') {
+      const targetPath = `/docs/${subItem.id}`;
+      return decodeURIComponent(currentPathname) === decodeURIComponent(targetPath);
+    }
+    if (subItem.type === 'category') {
+      return isCategoryActive(subItem, currentPathname);
+    }
+    return false;
+  });
+};
+
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const closeSidebar = () => setIsOpen(false);
   const { completedDocs, isCompleted } = useProgress();
+  const location = useLocation();
 
   const [collapsedCategories, setCollapsedCategories] = React.useState<Record<string, boolean>>(() => {
     const initial: Record<string, boolean> = {};
@@ -22,6 +37,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     });
     return initial;
   });
+
+  React.useEffect(() => {
+    const activePath = decodeURIComponent(location.pathname);
+    setCollapsedCategories(prev => {
+      const updated = { ...prev };
+      let changed = false;
+      sidebars.tutorialSidebar.forEach(item => {
+        if (item.type === 'category') {
+          const isActive = isCategoryActive(item, activePath);
+          if (isActive && updated[item.label] !== false) {
+            updated[item.label] = false;
+            changed = true;
+          }
+        }
+      });
+      return changed ? updated : prev;
+    });
+  }, [location.pathname]);
 
   const toggleCategory = (label: string) => {
     setCollapsedCategories(prev => ({

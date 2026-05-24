@@ -24,33 +24,22 @@ The Playwright CLI is the unified entry point for configuring and executing brow
 
 While standard CLI commands are optimized for human developers and CI/CD pipelines, modern AI coding agents (such as Claude Code, Cursor, Copilot, and Windsurf) interact with browsers differently. For this reason, Playwright has introduced a second CLI package specifically optimized for AI-driven automation.
 
-```
-                     ┌──────────────────────────────────┐
-                     │          Playwright CLI          │
-                     └────────────────┬─────────────────┘
-                                      │
-             ┌────────────────────────┴────────────────────────┐
-             ▼                                                 ▼
-┌──────────────────────────┐                      ┌──────────────────────────┐
-│   npx playwright (Std)   │                      │  @playwright/cli (Agent) │
-├──────────────────────────┤                      ├──────────────────────────┤
-│ • Runs Test Suites       │                      │ • Controls Live Browser  │
-│ • Launches Codegen       │                      │ • Takes Disk Snapshots   │
-│ • Generates Reports      │                      │ • Token-Efficient for AI │
-│ • Headless CI Focus      │                      │ • Persistent Sessions    │
-└──────────────────────────┘                      └──────────────────────────┘
-```
+![Playwright CLI Systems Comparison](/img/playwright_cli_comparison.png)
 
 ### A. The Standard CLI (`npx playwright`)
 *   **Purpose**: Traditional test execution, code generation (Codegen), report generation, and debugging.
 *   **Under the Hood**: Ships directly inside the `@playwright/test` package.
 *   **Execution Model**: One-shot execution. When you run `npx playwright test`, a test runner process starts, runs the suite, and exits.
+*   **Command Line Utilities**: Bypasses the need to write full spec files to perform basic automation chores:
+    *   **Direct Page Open**: `npx playwright open https://playwright.dev` (Opens browser on the page instantly)
+    *   **Direct PDF Export**: `npx playwright pdf https://playwright.dev docs-site.pdf` (Generates a clean PDF render of the page)
+    *   **Direct Page Screenshot**: `npx playwright screenshot --device="iPhone 13" https://playwright.dev mobile-view.png` (Saves a device-emulated screenshot immediately)
 
 ### B. The AI Agent CLI (`@playwright/cli`)
 *   **Purpose**: Interactive browser control designed specifically for AI coding agents.
 *   **Under the Hood**: Installed as a separate package (`@playwright/cli`).
 *   **Execution Model**: Client-daemon architecture communicating over Unix sockets. It starts a persistent browser daemon session that remains active across multiple separate command executions, saving launch times and preserving page states.
-*   **Token Efficiency**: Traditional browser integration feeds entire DOM trees into AI contexts (often ~115,000 tokens for 30 actions). `@playwright/cli` outputs compressed accessibility snapshots and writes larger payloads to local disk, decreasing context sizes to ~25,000 tokens (a **4.6x token reduction**).
+*   **Token Efficiency**: Traditional browser integration feeds entire DOM trees into AI contexts (often ~115,000 tokens for 30 actions). `@playwright/cli` outputs compressed accessibility snapshots and writes larger HTML payloads to local disk, decreasing context sizes to ~25,000 tokens (a **4.6x token reduction**).
 
 ---
 
@@ -117,19 +106,12 @@ AI assistants can interact with browser environments in three main ways: the Mod
 
 Use this checklist to choose the right Playwright tool for your workflow:
 
-```
-                  Which Playwright Tool is Best?
-                                │
-        ┌───────────────────────┴───────────────────────┐
-        ▼                                               ▼
-Are you a Human Developer?                     Are you an AI Agent?
-        │                                               │
-  [Standard CLI]                               ┌────────┴────────┐
-                                               ▼                 ▼
-                                        Need Token Savings?   Need Raw DOM?
-                                               │                 │
-                                        [@playwright/cli]   [MCP Server]
-```
+:::tip Decision Strategy
+*   **Are you a Human Developer?** ➔ Use the **Standard CLI (`npx playwright`)** for manual tests and debugging.
+*   **Are you an AI Agent?**
+    *   **Need token savings & persistent sessions?** ➔ Use **`@playwright/cli`** (Optimized AI Tooling).
+    *   **Need live raw DOM trees & direct socket streams?** ➔ Use the **Playwright MCP Server**.
+:::
 
 ### Choose the Standard CLI (`npx playwright`) when:
 *   You are manually writing, editing, or running test suites.

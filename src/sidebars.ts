@@ -176,6 +176,18 @@ const sidebars: SidebarsConfig = {
           label: 'Reporters & Custom Reporting',
           className: 'sidebar-item-reporters-custom-reporting',
         },
+        {
+          type: 'doc',
+          id: 'Playwright Advanced/visual-accessibility-testing',
+          label: 'Visual & Accessibility Testing',
+          className: 'sidebar-item-visual-accessibility-testing',
+        },
+        {
+          type: 'doc',
+          id: 'Playwright Advanced/page-object-model',
+          label: 'Page Object Model (POM)',
+          className: 'sidebar-item-page-object-model',
+        },
       ],
     },
     {
