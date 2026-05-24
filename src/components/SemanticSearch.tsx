@@ -175,12 +175,39 @@ export const SemanticSearch: React.FC = () => {
         dangerouslyAllowBrowser: true
       });
 
+      // Filter and score documents to select only the top 2 most relevant ones.
+      // This prevents rate limits (429 TPM) and optimizes response speed and cost.
+      const stopWords = new Set(['how', 'do', 'i', 'a', 'the', 'an', 'to', 'for', 'with', 'in', 'on', 'at', 'by', 'of', 'and', 'or', 'is', 'are', 'was', 'were', 'be', 'can', 'should', 'would', 'could', 'what', 'where', 'when', 'why']);
+      const terms = query.toLowerCase().split(/\s+/).filter(word => word && !stopWords.has(word));
+      const activeTerms = terms.length > 0 ? terms : query.toLowerCase().split(/\s+/).filter(Boolean);
+
+      const scoredDocs = documents.map(doc => {
+        let score = 0;
+        const titleLower = doc.title.toLowerCase();
+        const contentLower = doc.content.toLowerCase();
+        const categoryLower = doc.category.toLowerCase();
+        
+        activeTerms.forEach(term => {
+          if (titleLower.includes(term)) score += 30;
+          if (categoryLower.includes(term)) score += 10;
+          const occurrences = contentLower.split(term).length - 1;
+          score += occurrences * 1;
+        });
+        return { doc, score };
+      });
+
+      // Sort descending by score and pick top 2
+      const topDocs = scoredDocs
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 2)
+        .map(item => item.doc);
+
       const prompt = `
         You are an AI assistant for a documentation site.
         A user is asking: "${query}"
         
-        Here are the available documents:
-        ${documents.map(d => `--- START DOC: ${d.id} ---\n${d.content}\n--- END DOC ---`).join('\n\n')}
+        Here are the most relevant document chapters retrieved:
+        ${topDocs.map(d => `--- START DOC: ${d.id} ---\n${d.content}\n--- END DOC ---`).join('\n\n')}
         
         Find the most relevant document that answers the user's question.
         Provide a concise, helpful answer based ONLY on that document.

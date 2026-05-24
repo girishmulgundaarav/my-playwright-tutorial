@@ -146,6 +146,36 @@ const sidebars: SidebarsConfig = {
           label: 'Assertions, Timeouts & Codegen',
           className: 'sidebar-item-assertions-timeouts-codegen',
         },
+        {
+          type: 'doc',
+          id: 'Playwright Advanced/screenshots-videos-tracing',
+          label: 'Screenshots, Videos & Tracing',
+          className: 'sidebar-item-screenshots-videos-tracing',
+        },
+        {
+          type: 'doc',
+          id: 'Playwright Advanced/grouping-hooks-tags-annotations',
+          label: 'Grouping, Hooks, Tags & Annotations',
+          className: 'sidebar-item-grouping-hooks-tags-annotations',
+        },
+        {
+          type: 'doc',
+          id: 'Playwright Advanced/parallel-testing',
+          label: 'Parallelism & Parallel Testing',
+          className: 'sidebar-item-parallel-testing',
+        },
+        {
+          type: 'doc',
+          id: 'Playwright Advanced/parameterization-data-driven-testing',
+          label: 'Parameterization & Data-Driven Testing',
+          className: 'sidebar-item-parameterization-data-driven-testing',
+        },
+        {
+          type: 'doc',
+          id: 'Playwright Advanced/reporters-custom-reporting',
+          label: 'Reporters & Custom Reporting',
+          className: 'sidebar-item-reporters-custom-reporting',
+        },
       ],
     },
     {

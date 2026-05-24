@@ -85,6 +85,14 @@ Now, let's create the necessary Playwright folders and files:
 
 ---
 
+## 🚀 Playwright Test Execution Lifecycle
+
+Understanding how Playwright boots, runs, and reports on tests helps you write better scripts. Here is the visual step-by-step lifecycle of a test execution:
+
+![Playwright Test Execution Lifecycle](/img/playwright_test_lifecycle.png)
+
+---
+
 ## 🧩 Anatomy of a Playwright Test
 Every basic Playwright test is written using the same simple structure. Let's look at this skeleton code:
 

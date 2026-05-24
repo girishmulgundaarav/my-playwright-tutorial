@@ -55,26 +55,9 @@ Your `playwright.config.ts` file manages settings for the test runner. Here are 
 
 ## 🏛️ Playwright Architecture: Deep Dive
 
-Understanding Playwright's simple architecture helps explain why it is faster and more reliable than older tools.
+Understanding Playwright's system architecture helps explain why it is faster and more reliable than older tools. Here is the visual layout of Playwright's client-server structure:
 
-```
-┌─────────────────────────────────┐
-│     Client (Test Runner)        │
-│  Java / JS / TS / Python / C#   │
-└────────────────┬────────────────┘
-                 │
-                 │ WebSocket Connection (Fast, Bi-directional)
-                 ▼
-┌─────────────────────────────────┐
-│        Playwright Server        │
-└────────────────┬────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────┐
-│        Browser Instance         │
-│  Chromium  │  Firefox  │ WebKit  │
-└─────────────────────────────────┘
-```
+![Playwright System Architecture](/img/playwright_architecture.png)
 
 ### 1. Client-Server Architecture (WebSockets vs. HTTP)
 Older automation tools (like Selenium) communicate by sending individual **HTTP requests** for every single action (e.g., one request to click, one to type). 
@@ -89,6 +72,10 @@ Playwright structures browser execution in three distinct layers:
   * **The Incognito Analogy:** Think of a Browser Context as opening a new **Incognito Window**. It has its own isolated cookies, local storage, and cache.
   * **Why they are awesome:** Contexts take milliseconds to open and use almost zero memory. This allows Playwright to run tests in parallel across separate contexts without them interfering with each other (e.g., logging in as an Admin in one window and a Guest in another).
 * **Page:** Represents a single browser tab or window inside a Browser Context.
+
+Here is a visual hierarchy showing how these execution layers are organized:
+
+![Playwright Context Hierarchy](/img/playwright_context_hierarchy.png)
 
 ---
 

@@ -191,6 +191,10 @@ npx playwright codegen https://example.com
 
 This launches a chromium browser alongside the **Playwright Inspector**, which displays the generated code live as you click, type, or navigate.
 
+Here is the Playwright Codegen interface showing a live browser and the Inspector side-by-side:
+
+![Playwright Codegen](/img/codegen_inspector.png)
+
 ### Essential Codegen Commands
 
 #### A. Record and Save Directly to File
@@ -232,6 +236,10 @@ npx playwright codegen --browser=chromium --output=tests/mytest.spec.ts --viewpo
 ## 6. Debugging Playwright Tests
 
 Playwright provides the **Playwright Inspector**, a graphical utility designed to step through your automated scripts step-by-step.
+
+Here is what the Playwright Inspector looks like while paused on a breakpoint during debugging:
+
+![Playwright Inspector Debugger](/img/playwright_inspector_debug.png)
 
 ### Starting Debug Mode
 Run your test script with the `--debug` flag to launch the Inspector:

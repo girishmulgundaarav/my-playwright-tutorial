@@ -1367,6 +1367,28 @@ a:hover {
   top: calc(var(--header-height) + 2rem);
   max-height: calc(100vh - var(--header-height) - 4rem);
   overflow-y: auto;
+  
+  /* Support Firefox scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-glass) transparent;
+}
+
+/* Custom Scrollbar for ToC Navigation */
+.toc-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.toc-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.toc-container::-webkit-scrollbar-thumb {
+  background: var(--border-glass);
+  border-radius: 4px;
+}
+
+.toc-container::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
 }
 
 .toc-title {

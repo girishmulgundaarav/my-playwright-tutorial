@@ -125,14 +125,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
               <X size={20} />
             </button>
           )}
-          <a 
-            href="https://app.thetestingacademy.com/playright-cli" 
-            target="_blank" 
-            rel="noopener noreferrer"
+          <button 
+            type="button"
             className="complete-guide-badge"
+            style={{ cursor: 'default', fontFamily: 'inherit' }}
           >
             COMPLETE GUIDE
-          </a>
+          </button>
           <div className="brand">
             Playwright
           </div>
