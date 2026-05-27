@@ -331,7 +331,7 @@ export const SemanticSearch: React.FC = () => {
                     style={{
                       display: 'block',
                       padding: '0.75rem 1rem',
-                      borderRadius: '8px',
+                      borderRadius: '0',
                       textDecoration: 'none',
                       color: 'inherit',
                       background: selectedIndex === idx ? 'var(--sidebar-item-hover)' : 'transparent',
@@ -343,7 +343,7 @@ export const SemanticSearch: React.FC = () => {
                       {result.matchedSection ? <Hash size={14} style={{ color: 'var(--accent-primary)', flexShrink: 0 }} /> : <FileText size={14} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />}
                       <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1 }}>{result.title}</span>
                       {result.category && (
-                        <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '4px', background: 'var(--border-glass)', color: 'var(--text-muted)', marginLeft: 'auto', flexShrink: 0 }}>
+                        <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '0', background: 'var(--border-glass)', color: 'var(--text-muted)', marginLeft: 'auto', flexShrink: 0 }}>
                           {result.category}
                         </span>
                       )}
@@ -398,13 +398,13 @@ export const SemanticSearch: React.FC = () => {
 
           <div className="search-footer-hints" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-glass)', paddingTop: '0.5rem', marginTop: '0.5rem', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              <kbd style={{ display: 'inline-block', padding: '1px 3px', border: '1px solid var(--border-glass)', borderRadius: '3px' }}>↓↑</kbd> to navigate
+              <kbd style={{ display: 'inline-block', padding: '1px 3px', border: '1px solid var(--border-glass)', borderRadius: '0' }}>↓↑</kbd> to navigate
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              <kbd style={{ display: 'inline-block', padding: '1px 3px', border: '1px solid var(--border-glass)', borderRadius: '3px' }}>Enter</kbd> to select
+              <kbd style={{ display: 'inline-block', padding: '1px 3px', border: '1px solid var(--border-glass)', borderRadius: '0' }}>Enter</kbd> to select
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              <kbd style={{ display: 'inline-block', padding: '1px 3px', border: '1px solid var(--border-glass)', borderRadius: '3px' }}>Esc</kbd> to close
+              <kbd style={{ display: 'inline-block', padding: '1px 3px', border: '1px solid var(--border-glass)', borderRadius: '0' }}>Esc</kbd> to close
             </span>
           </div>
         </div>

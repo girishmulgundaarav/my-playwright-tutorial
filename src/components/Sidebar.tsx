@@ -152,25 +152,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         onClick={closeSidebar} 
       />
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
-          {isOpen && (
-            <button className="mobile-toggle sidebar-close-btn" onClick={closeSidebar}>
-              <X size={20} />
-            </button>
-          )}
-          <button 
-            type="button"
-            className="complete-guide-badge"
-            style={{ cursor: 'default', fontFamily: 'inherit' }}
-          >
-            COMPLETE GUIDE
+        {/* Mobile-only header to allow closing the drawer on small devices */}
+        <div className="sidebar-mobile-header">
+          <div className="brand">Playwright</div>
+          <button className="mobile-toggle sidebar-close-btn" onClick={closeSidebar} aria-label="Close sidebar">
+            <X size={20} />
           </button>
-          <div className="brand">
-            Playwright
-          </div>
-          <div className="sidebar-tagline">
-            Tutorial QA/SDET
-          </div>
         </div>
         
         <div style={{ padding: '1.25rem 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -178,13 +165,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             <span>PROGRESS</span>
             <span>{progressPercent}%</span>
           </div>
-          <div style={{ height: '6px', backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+          <div style={{ height: '6px', backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: '0', overflow: 'hidden' }}>
             <div style={{ 
               height: '100%', 
               width: `${progressPercent}%`, 
-              backgroundColor: '#10b981', 
-              borderRadius: '3px',
-              transition: 'width 0.3s ease'
+              backgroundColor: 'var(--accent-primary)', 
+              borderRadius: '0',
+              transition: 'width 0.3s ease',
+              boxShadow: '0 0 10px rgba(230, 95, 43, 0.3)'
             }} />
           </div>
         </div>

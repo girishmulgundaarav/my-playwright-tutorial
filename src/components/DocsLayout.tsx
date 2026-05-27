@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { MarkdownRenderer } from './MarkdownRenderer';
 import { SemanticSearch } from './SemanticSearch';
-import { Menu, Moon, Sun, Github, Book } from 'lucide-react';
+import { Menu, Moon, Sun, Github, Book, ChevronLeft, ChevronRight, Home } from 'lucide-react';
 
 export const DocsLayout: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    return localStorage.getItem('sidebar-collapsed') === 'true';
+  });
+
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem('theme');
     return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  });
-
-  const [colorTheme, setColorTheme] = useState(() => {
-    const saved = localStorage.getItem('color-theme') || 'blue';
-    return saved === 'red' ? 'orange' : saved;
   });
 
   useEffect(() => {
@@ -27,23 +26,76 @@ export const DocsLayout: React.FC = () => {
     }
   }, [isDark]);
 
+  const [scrollPercent, setScrollPercent] = useState(0);
+
   useEffect(() => {
-    document.documentElement.setAttribute('data-color-theme', colorTheme);
-    localStorage.setItem('color-theme', colorTheme);
-  }, [colorTheme]);
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight <= 0) {
+        setScrollPercent(0);
+        return;
+      }
+      const scrollPos = window.scrollY;
+      const percentage = (scrollPos / totalHeight) * 100;
+      setScrollPercent(Math.min(percentage, 100));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // run once initially
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleSidebarCollapse = () => {
+    setIsSidebarCollapsed(prev => {
+      const next = !prev;
+      localStorage.setItem('sidebar-collapsed', String(next));
+      return next;
+    });
+  };
 
   return (
-    <>
-      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-      <main className="main-content">
-        <header className="header">
+    <div className={`app-layout ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+      <header className="header">
+        <div className="header-logo-section">
+          <div className="brand">Playwright</div>
+          <button 
+            type="button"
+            className="complete-guide-badge"
+            style={{ cursor: 'default', fontFamily: 'inherit' }}
+          >
+            GUIDE
+          </button>
+          
+          <button
+            onClick={toggleSidebarCollapse}
+            className="sidebar-collapse-toggle"
+            title={isSidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+            aria-label={isSidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+          >
+            {isSidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+          </button>
+        </div>
+        
+        <div className="header-main-section">
           <div className="header-left">
             <button className="mobile-toggle" onClick={() => setIsSidebarOpen(true)}>
               <Menu size={24} />
             </button>
             <SemanticSearch />
           </div>
+          
           <div className="header-right">
+            <Link 
+              to="/" 
+              aria-label="Home"
+              className="header-link-icon"
+              style={{ display: 'flex', alignItems: 'center', color: 'var(--text-muted)', transition: 'color 0.2s', marginRight: '0.25rem' }}
+              onMouseOver={(e) => e.currentTarget.style.color = 'var(--accent-primary)'}
+              onMouseOut={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
+            >
+              <Home size={20} />
+            </Link>
             <a 
               href="https://github.com/girishmulgundaarav/my-playwright-tutorial" 
               target="_blank" 
@@ -68,42 +120,7 @@ export const DocsLayout: React.FC = () => {
             >
               <Book size={20} />
             </a>
-            <div className="color-switcher" style={{ display: 'flex', gap: '8px', alignItems: 'center', marginRight: '4px' }}>
-              <button
-                onClick={() => setColorTheme('blue')}
-                className={`color-dot blue-dot ${colorTheme === 'blue' ? 'active' : ''}`}
-                style={{
-                  width: '14px',
-                  height: '14px',
-                  borderRadius: '50%',
-                  backgroundColor: '#4F46E5',
-                  border: colorTheme === 'blue' ? '2px solid var(--bg-secondary)' : 'none',
-                  boxShadow: colorTheme === 'blue' ? '0 0 0 2px #4F46E5' : '0 0 0 1px rgba(255,255,255,0.1)',
-                  cursor: 'pointer',
-                  padding: 0,
-                  transition: 'all 0.2s ease',
-                }}
-                title="Indigo/Blue Theme"
-                aria-label="Switch to Blue Theme"
-              />
-              <button
-                onClick={() => setColorTheme('orange')}
-                className={`color-dot orange-dot ${colorTheme === 'orange' ? 'active' : ''}`}
-                style={{
-                  width: '14px',
-                  height: '14px',
-                  borderRadius: '50%',
-                  backgroundColor: '#E65F2B',
-                  border: colorTheme === 'orange' ? '2px solid var(--bg-secondary)' : 'none',
-                  boxShadow: colorTheme === 'orange' ? '0 0 0 2px #E65F2B' : '0 0 0 1px rgba(255,255,255,0.1)',
-                  cursor: 'pointer',
-                  padding: 0,
-                  transition: 'all 0.2s ease',
-                }}
-                title="Orange/Coral Theme"
-                aria-label="Switch to Orange Theme"
-              />
-            </div>
+
             <button 
               onClick={() => setIsDark(!isDark)}
               className="theme-toggle"
@@ -115,13 +132,22 @@ export const DocsLayout: React.FC = () => {
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
           </div>
-        </header>
-        <div className="content-area">
-          <Routes>
-            <Route path="*" element={<MarkdownRenderer />} />
-          </Routes>
         </div>
-      </main>
-    </>
+
+        {/* Scroll reading progress bar */}
+        <div className="scroll-progress-bar" style={{ width: `${scrollPercent}%` }}></div>
+      </header>
+      
+      <div className="app-body">
+        <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+        <main className="main-content">
+          <div className="content-area">
+            <Routes>
+              <Route path="*" element={<MarkdownRenderer />} />
+            </Routes>
+          </div>
+        </main>
+      </div>
+    </div>
   );
 };

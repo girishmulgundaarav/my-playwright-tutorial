@@ -30,7 +30,7 @@ export const QuizWidget: React.FC<QuizWidgetProps> = ({ data }) => {
       padding: '1.5rem', 
       backgroundColor: 'var(--bg-primary)', 
       border: '1px solid var(--border-glass)', 
-      borderRadius: '12px',
+      borderRadius: '0',
       whiteSpace: 'normal',
       fontFamily: 'var(--font-family, system-ui, -apple-system, sans-serif)',
       lineHeight: 1.5
@@ -68,7 +68,7 @@ export const QuizWidget: React.FC<QuizWidgetProps> = ({ data }) => {
                 padding: '1rem 1.25rem',
                 backgroundColor: bgColor,
                 border: `2px solid ${borderColor}`,
-                borderRadius: '8px',
+                borderRadius: '0',
                 color: 'var(--text-secondary)',
                 cursor: submitted ? 'default' : 'pointer',
                 transition: 'all 0.2s ease',
@@ -94,7 +94,7 @@ export const QuizWidget: React.FC<QuizWidgetProps> = ({ data }) => {
             backgroundColor: selected !== null ? 'var(--accent-primary)' : 'var(--border-glass)',
             color: 'white',
             border: 'none',
-            borderRadius: '6px',
+            borderRadius: '0',
             fontWeight: 600,
             cursor: selected !== null ? 'pointer' : 'not-allowed',
             transition: 'background-color 0.2s'
@@ -107,7 +107,7 @@ export const QuizWidget: React.FC<QuizWidgetProps> = ({ data }) => {
           padding: '1rem', 
           backgroundColor: isCorrect ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)', 
           borderLeft: `4px solid ${isCorrect ? '#10b981' : '#ef4444'}`,
-          borderRadius: '4px',
+          borderRadius: '0',
           color: 'var(--text-secondary)'
         }}>
           <div style={{ fontWeight: 600, color: isCorrect ? '#10b981' : '#ef4444', marginBottom: '0.5rem' }}>

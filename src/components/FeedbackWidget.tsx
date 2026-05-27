@@ -26,13 +26,13 @@ export const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({ docId }) => {
 
   if (feedback) {
     return (
-      <div style={{ 
+      <div className="feedback-widget-thankyou" style={{ 
         marginTop: '3rem', 
         padding: '1.5rem', 
         textAlign: 'center',
         backgroundColor: 'var(--bg-primary)',
         border: '1px solid var(--border-glass)',
-        borderRadius: '12px',
+        borderRadius: '0',
         color: 'var(--text-secondary)'
       }}>
         <div style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.5rem', color: 'var(--accent-primary)' }}>
@@ -44,13 +44,13 @@ export const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({ docId }) => {
   }
 
   return (
-    <div style={{ 
+    <div className="feedback-widget-container" style={{ 
       marginTop: '4rem', 
       padding: '2rem', 
       textAlign: 'center',
       backgroundColor: 'var(--bg-primary)',
       border: '1px solid var(--border-glass)',
-      borderRadius: '12px'
+      borderRadius: '0'
     }}>
       <h3 style={{ fontSize: '1.1rem', fontWeight: 600, margin: '0 0 1rem 0', color: 'var(--text-primary)' }}>
         Was this page helpful?
@@ -65,7 +65,7 @@ export const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({ docId }) => {
             padding: '0.6rem 1.25rem',
             backgroundColor: 'var(--bg-secondary)',
             border: '1px solid var(--border-glass)',
-            borderRadius: '20px',
+            borderRadius: '0',
             color: 'var(--text-secondary)',
             fontWeight: 500,
             cursor: 'pointer',
@@ -93,7 +93,7 @@ export const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({ docId }) => {
             padding: '0.6rem 1.25rem',
             backgroundColor: 'var(--bg-secondary)',
             border: '1px solid var(--border-glass)',
-            borderRadius: '20px',
+            borderRadius: '0',
             color: 'var(--text-secondary)',
             fontWeight: 500,
             cursor: 'pointer',

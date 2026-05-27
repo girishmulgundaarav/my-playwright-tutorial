@@ -188,6 +188,12 @@ const sidebars: SidebarsConfig = {
           label: 'Page Object Model (POM)',
           className: 'sidebar-item-page-object-model',
         },
+        {
+          type: 'doc',
+          id: 'Playwright Advanced/testing-payfast',
+          label: 'Fintech Payment Testing',
+          className: 'sidebar-item-testing-payfast',
+        },
       ],
     },
     {

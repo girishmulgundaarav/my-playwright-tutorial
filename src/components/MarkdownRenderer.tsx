@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 import remarkDirective from 'remark-directive';
 import { visit } from 'unist-util-visit';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { Check, Copy, Rocket, Palette, Target, MousePointer2, FlaskConical, BookOpen, ChevronRight, ChevronLeft, Lightbulb, AlertTriangle, Info } from 'lucide-react';
+import { Check, Copy, Rocket, Palette, Target, MousePointer2, FlaskConical, BookOpen, ChevronRight, ChevronLeft, Lightbulb, AlertTriangle, Info, AlertOctagon } from 'lucide-react';
 import { Breadcrumbs } from './Breadcrumbs';
 import sidebars from '../sidebars';
 import { QuizWidget } from './QuizWidget';
@@ -195,7 +195,7 @@ const CodeBlock = ({ inline, className, children, ...props }: any) => {
           style={finalBookTheme}
           customStyle={{
             margin: '0',
-            borderRadius: '0 0 8px 8px',
+            borderRadius: '0',
             fontSize: '0.95rem',
             padding: '1.25rem',
             background: '#1E1B4B'
@@ -281,6 +281,7 @@ const Heading3 = ({ node, children, ...props }: any) => {
 const AdmonitionIcon = ({ type }: { type: string }) => {
   if (type === 'tip') return <Lightbulb size={18} />;
   if (type === 'warning') return <AlertTriangle size={18} />;
+  if (type === 'caution') return <AlertOctagon size={18} />;
   return <Info size={18} />;
 };
 
@@ -420,7 +421,7 @@ export const MarkdownRenderer: React.FC = () => {
                     backgroundColor: completed ? 'rgba(16, 185, 129, 0.1)' : 'var(--accent-primary)',
                     color: completed ? '#10b981' : 'white',
                     border: completed ? '2px solid #10b981' : '2px solid var(--accent-primary)',
-                    borderRadius: '8px',
+                    borderRadius: '0',
                     fontWeight: 600,
                     fontSize: '1rem',
                     cursor: completed ? 'default' : 'pointer',
