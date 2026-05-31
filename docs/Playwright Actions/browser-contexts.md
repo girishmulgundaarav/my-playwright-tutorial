@@ -13,14 +13,7 @@ To build scalable, parallelized tests, you must understand Playwright's hierarch
 
 Playwright isolates test sessions using an architecture that mirrors modern browser profiles:
 
-```mermaid
-graph TD
-    Browser[Browser: Chromium, Firefox, WebKit] --> Context1[BrowserContext 1: User A Session]
-    Browser --> Context2[BrowserContext 2: User B Session]
-    Context1 --> Page1[Page 1: Tab 1]
-    Context1 --> Page2[Page 2: Tab 2]
-    Context2 --> Page3[Page 3: Tab 3]
-```
+![Playwright Browser Context and Page Session Hierarchy](/img/playwright_session_hierarchy.png)
 
 ### 1.1 Browser
 *   Represents an actual physical browser process (e.g., Chromium, Firefox, WebKit) running headed or headless.

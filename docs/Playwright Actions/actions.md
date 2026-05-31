@@ -17,28 +17,7 @@ Before Playwright clicks, fills, checks, or interacts with any locator, it runs 
 
 The following flowchart visualizes the sequence of actionability checks executed for a standard interaction (like a `.click()`):
 
-```mermaid
-graph TD
-    Start[Trigger Action: click/fill/check] --> A[1. Attached Check: Is element in DOM?]
-    A -- No --> Wait1[Wait & Retry]
-    Wait1 --> A
-    A -- Yes --> B[2. Visible Check: Is it styled visible & non-zero size?]
-    B -- No --> Wait2[Wait & Retry]
-    Wait2 --> B
-    B -- Yes --> C[3. Stable Check: Has animation finished moving?]
-    C -- No --> Wait3[Wait & Retry]
-    Wait3 --> C
-    C -- Yes --> D[4. Enabled Check: Is element active?]
-    D -- No --> Wait4[Wait & Retry]
-    Wait4 --> D
-    D -- Yes --> E[5. Editable Check: If input, is it writable?]
-    E -- No --> Wait5[Wait & Retry]
-    Wait5 --> E
-    E -- Yes --> F[6. Event Target Check: Is it not obscured by other overlays?]
-    F -- No --> Wait6[Wait & Retry]
-    Wait6 --> F
-    F -- Yes --> Execute[Execute native action on browser]
-```
+![Playwright Actionability Checks Pipeline](/img/playwright_actionability_checks.png)
 
 ### The 6 Actionability Checks Explained:
 

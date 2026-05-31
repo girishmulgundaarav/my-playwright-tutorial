@@ -182,18 +182,7 @@ An **Infinite Scroll** layout dynamically queries the backend and appends rows o
 
 To automate infinite scrolling in Playwright, we implement an **evaluation loop** that repeatedly scrolls to the page height limit, waits for content to load, and checks if new content was appended by comparing heights.
 
-```mermaid
-graph TD
-    A[Start Infinite Scroll Loop] --> B[Retrieve current scrollHeight]
-    B --> C[Scroll viewport to page bottom]
-    C --> D[Wait for AJAX/DOM paint timeout]
-    D --> E[Retrieve new scrollHeight]
-    E --> F{New Height == Previous Height?}
-    F -- No --> G[Update previous height]
-    G --> B
-    F -- Yes --> H[End of Page Reached]
-    H --> I[Execute Asserts & Counts]
-```
+![Playwright Infinite Scroll Loop Architecture](/img/playwright_infinite_scroll.png)
 
 ### Key Scrolling Methods
 1. **JavaScript Evaluation**:
