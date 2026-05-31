@@ -3,233 +3,336 @@ title: Playwright Actions
 sidebar_position: 1
 ---
 
-# Playwright Actions – Input box, Radio buttons, Check boxes
+# Element Interactions & Playwright Actionability
 
-This guide covers common user interactions in Playwright, including text inputs, radio buttons, and checkboxes.
+In modern web testing, automating user interactions requires more than simply triggering click or type events. Web pages are dynamic: buttons animate, overlays load asynchronously, and elements can be temporarily disabled or hidden.
 
-## 1. Text Input / Text Box Handling
-Text input boxes are used to enter user data. In Playwright, we use the `fill()` or `type()` methods to enter text.
+To handle these challenges, Playwright uses **Actionability Checks**—an automated check system that ensures elements are ready for interaction before any action is executed.
 
-### ✅ Key Actions:
-- **Check if visible or enabled** using `toBeVisible()` and `toBeEnabled()`
-- **Get attribute** like `maxlength` using `getAttribute()`
-- **Set value** using `fill()`
-- **Get entered value** using `inputValue()`
+---
 
-### 🔍 Example:
-```javascript
-const textBox = page.locator('#name');
-await expect(textBox).toBeVisible();
-await expect(textBox).toBeEnabled();
+## 1. Playwright Auto-Waiting & Actionability Pipeline
 
-const maxLength = await textBox.getAttribute("maxlength");
-expect(maxLength).toBe('15');
+Before Playwright clicks, fills, checks, or interacts with any locator, it runs an internal pipeline of checks. If any check fails, Playwright will continuously retry the pipeline until it passes or the action times out (default is 30 seconds).
 
-await textBox.fill("John Canedy");
+The following flowchart visualizes the sequence of actionability checks executed for a standard interaction (like a `.click()`):
 
-const enteredValue = await textBox.inputValue();
-expect(enteredValue).toBe("John Canedy");
+```mermaid
+graph TD
+    Start[Trigger Action: click/fill/check] --> A[1. Attached Check: Is element in DOM?]
+    A -- No --> Wait1[Wait & Retry]
+    Wait1 --> A
+    A -- Yes --> B[2. Visible Check: Is it styled visible & non-zero size?]
+    B -- No --> Wait2[Wait & Retry]
+    Wait2 --> B
+    B -- Yes --> C[3. Stable Check: Has animation finished moving?]
+    C -- No --> Wait3[Wait & Retry]
+    Wait3 --> C
+    C -- Yes --> D[4. Enabled Check: Is element active?]
+    D -- No --> Wait4[Wait & Retry]
+    Wait4 --> D
+    D -- Yes --> E[5. Editable Check: If input, is it writable?]
+    E -- No --> Wait5[Wait & Retry]
+    Wait5 --> E
+    E -- Yes --> F[6. Event Target Check: Is it not obscured by other overlays?]
+    F -- No --> Wait6[Wait & Retry]
+    Wait6 --> F
+    F -- Yes --> Execute[Execute native action on browser]
+```
+
+### The 6 Actionability Checks Explained:
+
+1. **Attached**: The element must be attached to the DOM or a ShadowRoot.
+2. **Visible**: The element must be visible. An element is considered visible if it has a non-empty bounding box and is not styled with `visibility: hidden` or `display: none`.
+3. **Stable**: The element must be stable, meaning its bounding box has finished moving (e.g., transitions or slide-in animations have completed). Playwright checks this by comparing position changes across multiple animation frames.
+4. **Enabled**: The element must be enabled (i.e. it does not have the `disabled` attribute).
+5. **Editable**: For input modifications (like `fill()`), the element must be editable (not `readonly`).
+6. **Receives Events**: The element must receive pointer events at its center point. If a modal overlay or loading spinner covers the target element, this check fails, preventing click actions on the wrong element.
+
+---
+
+## 2. Advanced Action Modifiers (Overriding Pipeline)
+
+Playwright lets you override or test the actionability checks directly inside your action calls using options:
+
+### A. Bypassing Checks: `{ force: true }`
+If you need to click an element that is technically obscured or hidden behind a dynamic overlay, you can force the click:
+```typescript
+await page.locator('#submit').click({ force: true });
+```
+> [!CAUTION]
+> Forcing actions bypasses visibility and event target checks. Use this sparingly as it does not reflect real user behavior and can hide genuine UI bugs.
+
+### B. Dry-Run Check: `{ trial: true }`
+You can verify if an element is ready to receive an action without actually triggering the action. This is perfect for asserting readystate without side effects:
+```typescript
+// Verifies if the button is visible, stable, and enabled, then returns
+await page.locator('#submit').click({ trial: true });
+```
+
+### C. Keyboard Modifier Clicks: `{ modifiers: [...] }`
+Simulate clicking an element while holding down keyboard keys (e.g., clicking a link to open in a new tab):
+```typescript
+// Click holding Shift key
+await page.locator('a.details-link').click({ modifiers: ['Shift'] });
+
+// Cross-platform Command (macOS) or Control (Windows/Linux) click
+await page.locator('a.tab-link').click({ modifiers: ['ControlOrMeta'] });
 ```
 
 ---
 
-## 2. Radio Button Handling
-Radio buttons let users choose **one option** from a set. Use `.check()` to select.
+## 3. Text Input Box Handling
 
-### ✅ Key Actions:
-- **Check visibility and enabled state**
-- **Use `.check()` to select**
-- **Verify selection** using `.isChecked()` or `.toBeChecked()`
+Handling text boxes involves checking their state, inserting text, and verifying values. Playwright offers two ways to type.
 
-### 🔍 Example:
-```javascript
-const maleRadio = page.locator('#male');
-await expect(maleRadio).toBeVisible();
-await expect(maleRadio).toBeEnabled();
+### A. `.fill()` vs `.pressSequentially()`
 
-expect(await maleRadio.isChecked()).toBe(false);
+* **`fill(text)` (Recommended)**: Clears the input and inserts the text instantly as a single value injection. It mimics a fast copy-paste action. It is fast and highly reliable.
+* **`pressSequentially(text, [options])` (Formerly `.type()`)**: Simulates typing character-by-character, firing `keydown`, `keypress`, and `keyup` browser events for every letter. Use this for testing autocomplete search boxes or text fields that trigger dynamic search-as-you-type API requests.
 
-await maleRadio.check();
-await expect(maleRadio).toBeChecked();
+```typescript
+import { test, expect } from '@playwright/test';
+
+test('Text Input Handling Demo', async ({ page }) => {
+  await page.goto('https://testautomationpractice.blogspot.com/');
+
+  const textBox = page.locator('#name');
+
+  // Verify initial states
+  await expect(textBox).toBeVisible();
+  await expect(textBox).toBeEnabled();
+  await expect(textBox).toBeEditable();
+
+  // Approach 1: Instant Fill (Best practice)
+  await textBox.fill("John Canedy");
+  await expect(textBox).toHaveValue("John Canedy");
+
+  // Clear input
+  await textBox.clear();
+  await expect(textBox).toBeEmpty();
+
+  // Approach 2: Sequential Typing (Simulating human delay)
+  // Types "Playwright" with a 100ms delay between keypresses
+  await textBox.pressSequentially("Playwright", { delay: 100 });
+  
+  // Read value back
+  const enteredValue = await textBox.inputValue();
+  expect(enteredValue).toBe("Playwright");
+});
 ```
 
 ---
 
-## 3. Checkbox Handling
-Checkboxes allow selecting **multiple options**. You can check, uncheck, or toggle them.
+## 4. Radio Button Handling
 
-### 📝 Scenarios Covered:
+Radio buttons allow users to select only **one option** from a predefined set.
 
-#### 1. Select a specific checkbox
-```javascript
-const sundayCheckbox = page.getByLabel('Sunday');
-await sundayCheckbox.check();
-await expect(sundayCheckbox).toBeChecked();
+* Use `.check()` to select the button.
+* Assert the state using `.isChecked()` (returns boolean) or the web-first assertion `toBeChecked()`.
+
+```typescript
+test('Radio Button Selection', async ({ page }) => {
+  await page.goto('https://testautomationpractice.blogspot.com/');
+
+  const maleRadio = page.locator('#male');
+  const femaleRadio = page.locator('#female');
+
+  // 1. Verify default state
+  expect(await maleRadio.isChecked()).toBe(false);
+  expect(await femaleRadio.isChecked()).toBe(false);
+
+  // 2. Select Option
+  await maleRadio.check();
+  await expect(maleRadio).toBeChecked();
+  expect(await femaleRadio.isChecked()).toBe(false);
+
+  // 3. Select Alternative Option
+  await femaleRadio.check();
+  await expect(femaleRadio).toBeChecked();
+  await expect(maleRadio).not.toBeChecked(); // Auto-unchecks because of group name
+});
 ```
 
-#### 2. Select all checkboxes
-```javascript
-const days = ['Sunday', 'Monday', 'Tuesday'];
-const checkboxes = days.map(day => page.getByLabel(day));
+---
 
-for (const checkbox of checkboxes) {
-  await checkbox.check();
-  await expect(checkbox).toBeChecked();
-}
-```
+## 5. Checkbox Handling
 
-#### 3. Uncheck last 3 checkboxes
-```javascript
-for (const checkbox of checkboxes.slice(-3)) {
-  await checkbox.uncheck();
-  await expect(checkbox).not.toBeChecked();
-}
-```
+Checkboxes allow users to select **multiple options** simultaneously. You can check, uncheck, and query states.
 
-#### 4. Toggle checkboxes
-```javascript
-for (const checkbox of checkboxes) {
-  if (await checkbox.isChecked()) {
-    await checkbox.uncheck();
-    await expect(checkbox).not.toBeChecked();
-  } else {
-    await checkbox.check();
-    await expect(checkbox).toBeChecked();
+```typescript
+test('Checkbox Multi-Selection Scenarios', async ({ page }) => {
+  await page.goto('https://testautomationpractice.blogspot.com/');
+
+  // Define checkboxes
+  const mondayCheckbox = page.getByLabel('Monday');
+  const sundayCheckbox = page.getByLabel('Sunday');
+  const daysArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+  // Scenario 1: Select a specific checkbox
+  await mondayCheckbox.check();
+  await expect(mondayCheckbox).toBeChecked();
+
+  // Scenario 2: Uncheck a checkbox
+  await mondayCheckbox.uncheck();
+  await expect(mondayCheckbox).not.toBeChecked();
+
+  // Scenario 3: Bulk Select All Checkboxes
+  for (const day of daysArray) {
+    const cb = page.getByLabel(day);
+    await cb.check();
+    await expect(cb).toBeChecked();
   }
-}
-```
 
-#### 5. Select by specific indexes (e.g. 1, 3, 6)
-```javascript
-const indexes = [1, 3, 5];
-for (const i of indexes) {
-  await checkboxes[i].check();
-  await expect(checkboxes[i]).toBeChecked();
-}
-```
-
-#### 6. Select checkbox by label name
-```javascript
-const weekname = "Friday";
-for (const label of days) {
-  if (label.toLowerCase() === weekname.toLowerCase()) {
-    const checkbox = page.getByLabel(label);
-    await checkbox.check();
-    await expect(checkbox).toBeChecked();
+  // Scenario 4: Toggle States (Uncheck if checked, Check if unchecked)
+  for (const day of daysArray) {
+    const cb = page.getByLabel(day);
+    if (await cb.isChecked()) {
+      await cb.uncheck();
+      await expect(cb).not.toBeChecked();
+    } else {
+      await cb.check();
+      await expect(cb).toBeChecked();
+    }
   }
-}
+
+  // Scenario 5: Selection by Indexes (Check first, third, and fifth)
+  const locators = daysArray.map(day => page.getByLabel(day));
+  const targetIndexes = [0, 2, 4]; // Monday, Wednesday, Friday
+  for (const index of targetIndexes) {
+    await locators[index].check();
+    await expect(locators[index]).toBeChecked();
+  }
+});
 ```
 
 ---
 
-## Extra: More Playwright Actions
+## 6. Dropdowns & Select Option Elements
 
-To build robust tests, you'll often need more than just basic input handling. Here are some extra actions you'll find useful:
+For standard HTML `<select>` elements, Playwright provides the `.selectOption()` API. You can select options by **value**, **label**, **index**, or clear selections.
 
-### 🖱️ Mouse Actions
-Playwright provides a simple API for common mouse interactions.
+```typescript
+test('Dropdown Interactions', async ({ page }) => {
+  await page.goto('https://testautomationpractice.blogspot.com/');
 
-- **Click:** `await page.click('#submit')`
-- **Double Click:** `await page.dblclick('#item')`
-- **Right Click:** `await page.click('#item', { button: 'right' })`
-- **Hover:** `await page.hover('#menu')`
-- **Drag and Drop:**
-  ```javascript
-  await page.locator('#source').dragTo(page.locator('#target'));
-  ```
+  const countryDropdown = page.locator('#country');
 
-### ⌨️ Keyboard Actions
-You can simulate keyboard presses for shortcuts or navigation.
+  // Option A: Select by value attribute
+  await countryDropdown.selectOption('usa');
+  await expect(countryDropdown).toHaveValue('usa');
 
-- **Press Enter:** `await page.press('#search', 'Enter')`
-- **Control + A:** `await page.keyboard.press('Control+A')`
+  // Option B: Select by visible label
+  await countryDropdown.selectOption({ label: 'United Kingdom' });
+  await expect(countryDropdown).toHaveValue('uk');
 
-### 📂 Dropdowns (Select Elements)
-For standard `<select>` elements, use `selectOption()`.
+  // Option C: Select by index
+  await countryDropdown.selectOption({ index: 3 }); // Selects the 4th option
 
-```javascript
-// By value
-await page.locator('#country').selectOption('usa');
+  // Option D: Multi-select dropdowns
+  const colorsDropdown = page.locator('#colors');
+  // Pass an array of values, indices, or labels
+  await colorsDropdown.selectOption(['red', 'blue', 'yellow']);
 
-// By label
-await page.locator('#country').selectOption({ label: 'United States' });
-
-// Multiple selection
-await page.locator('#colors').selectOption(['red', 'blue', 'green']);
-```
-
-### 📤 File Uploads
-Use `setInputFiles` to handle file upload inputs.
-
-```javascript
-await page.locator('#upload').setInputFiles('path/to/file.pdf');
-
-// Multiple files
-await page.locator('#upload').setInputFiles(['file1.txt', 'file2.txt']);
+  // Option E: Clear all selections
+  await colorsDropdown.selectOption([]);
+});
 ```
 
 ---
 
-## Summary Table
+## 7. Actions Reference Table
 
-| Element | Action | Playwright Method |
-| :--- | :--- | :--- |
-| **Text Input** | Enter text | `fill()`, `type()` |
-| | Get value | `inputValue()` |
-| **Radio Button** | Select option | `check()` |
-| **Checkbox** | Select | `check()` |
-| | Unselect | `uncheck()` |
-| | Check status | `isChecked()`, `toBeChecked()` |
-| **All Elements** | Visibility | `toBeVisible()`, `toBeEnabled()` |
-| **Dropdown** | Select option | `selectOption()` |
-| **Mouse** | Hover | `hover()` |
-| **Keyboard** | Key press | `press()` |
-
----
-*Reference: [Pavan Online Trainings](https://www.pavanonlinetrainings.com) | [SDET Pavan YouTube](https://www.youtube.com/@sdetpavan)*
+| Action / Element | Playwright API | Key Option Parameters | Web-First Assertion |
+| :--- | :--- | :--- | :--- |
+| **Input Box** | `.fill('text')` | `{ force: true }` | `await expect(loc).toHaveValue('text')` |
+| **Input Box (slow)**| `.pressSequentially('text')`| `{ delay: 100 }` | `await expect(loc).toBeFocused()` |
+| **Radio Button** | `.check()` | `{ force: true }` | `await expect(loc).toBeChecked()` |
+| **Checkbox** | `.check()`, `.uncheck()` | `{ trial: true }` | `await expect(loc).not.toBeChecked()` |
+| **Dropdown** | `.selectOption('val')` | `{ label: 'name' }`, `{ index: 1 }` | `await expect(loc).toHaveValue('val')` |
+| **All Elements** | `.click()` | `{ button: 'right' }`, `{ modifiers: ['Shift'] }` | `await expect(loc).toBeVisible()` |
 
 ---
 
-# Lab Assignment: Input Text, Radio Buttons & Checkboxes
+## 🏋️ Hands-on Lab Assignments
 
-Practice your skills using the following lab assignment.
+### Exercise 1: Form Registration Verification Spec
 
-**Web URL:** [Automation Practice Table](https://testautomationpractice.blogspot.com/)
+Write an automation script in a file named `tests/form-validation.spec.ts` that accomplishes the following tasks on `https://testautomationpractice.blogspot.com/`:
 
-### 1. Input Box Validation: "Name"
-**Tasks:**
-- [ ] Check if the input box is displayed.
-- [ ] Check if the input box is enabled.
-- [ ] Enter your name in the "Name" input box.
-- [ ] Retrieve and print the text from the input box.
+1. **Input Fields**:
+   - Check that the `#name` text box is editable.
+   - Enter your name. Verify the input value matches.
+   - Clear the input field and assert it is empty.
+2. **Radio Buttons**:
+   - Verify that the Male (`#male`) and Female (`#female`) radio buttons are unselected by default.
+   - Select the Female option.
+   - Verify that Female is selected and Male is unselected.
+3. **Checkbox Workflows**:
+   - Locate the checkboxes for days of the week.
+   - Loop and select all checkboxes. Assert all are checked.
+   - Loop and uncheck the last 3 days of the week. Assert those 3 are unchecked, while others remain checked.
+4. **Dropdown Selections**:
+   - Select "Japan" from the Country dropdown using the **value** locator.
+   - Select "Canada" from the Country dropdown using the **label** locator.
 
-### 2. Radio Button Validation: "Gender"
-**Tasks:**
-- [ ] Get the status of the "Male" radio button (is it selected by default?).
-- [ ] Select the "Female" radio button.
-- [ ] Verify that "Female" is selected and "Male" is unselected.
+#### Try this template code to get started:
+```typescript
+import { test, expect } from '@playwright/test';
 
-### 3. Checkbox Validation: "Days"
-**Tasks:**
-- [ ] Select the checkbox for "Sunday".
-- [ ] Capture all available days and print the count.
-- [ ] Check all days (Monday to Sunday) using a loop.
-- [ ] Uncheck all days using a loop.
-- [ ] Check the last 2 days (Friday and Saturday) using a loop.
-- [ ] Check the first 3 days (Monday, Tuesday, Wednesday) using a loop.
+test('Lab Assignment: User Inputs & Selection Validation', async ({ page }) => {
+  await page.goto('https://testautomationpractice.blogspot.com/');
+
+  // 1. Write input box code here...
+
+  // 2. Write radio button code here...
+
+  // 3. Write checkbox loops here...
+
+  // 4. Write dropdown select option code here...
+});
+```
 
 ---
 
 ```quiz
 {
-  "question": "Which Playwright method is used to select an option from a standard HTML <select> dropdown?",
+  "question": "Which click option allows you to verify that an element is visible, stable, and enabled without actually firing a click event?",
   "options": [
-    ".click()",
-    ".selectOption()",
-    ".check()",
-    ".fill()"
+    "await locator.click({ force: true })",
+    "await locator.click({ checkOnly: true })",
+    "await locator.click({ trial: true })",
+    "await locator.click({ verify: true })"
+  ],
+  "answer": 2,
+  "explanation": "The trial: true option runs all standard actionability checks (visibility, stability, and enabled status) but skips triggering the actual click action, allowing a 'dry-run' check."
+}
+```
+
+```quiz
+{
+  "question": "When should you use locator.pressSequentially() instead of locator.fill() in Playwright?",
+  "options": [
+    "To speed up text entry on slow-loading servers",
+    "To trigger dynamic page events (like autocomplete results or search-as-you-type) by mimicking actual keydown/keyup events",
+    "When entering passwords or sensitive credit card numbers",
+    "When inserting multi-line paragraph text into a textarea"
   ],
   "answer": 1,
-  "explanation": "You use .selectOption() to select an option in a <select> element. .check() is for checkboxes and radio buttons, and .fill() is for text inputs."
+  "explanation": "pressSequentially() types character-by-character and triggers individual browser keyboard events (keydown, keyup). This is useful for testing interactive fields like search autocomplete, whereas fill() is the standard and faster way to populate forms."
+}
+```
+
+```quiz
+{
+  "question": "Which of the following describes the 'Event Target Check' in Playwright's actionability pipeline?",
+  "options": [
+    "Verifying that the element is registered to an onClick listener in JavaScript",
+    "Checking that the element has correct ARIA accessibility tags",
+    "Ensuring the element is not covered or obscured by another element (like a modal or loading screen) at the click coordinate",
+    "Ensuring the element resides inside an active form block"
+  ],
+  "answer": 2,
+  "explanation": "The Event Target Check ensures the element is targetable at its center point. If another element (e.g. an overlay modal, tooltip, or sticky header) obscures the target, Playwright will wait until the overlay vanishes."
 }
 ```
