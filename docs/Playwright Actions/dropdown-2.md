@@ -3,192 +3,273 @@ title: Dropdowns - Part 2
 sidebar_position: 3
 ---
 
-# Dropdowns - Part 2
+# Dropdowns - Part 2: Custom & Dynamic Components
 
-Modern web applications often use advanced dropdown components that do not rely on standard HTML `<select>` tags. In this chapter, we will learn how to handle Hidden, Bootstrap, and Auto-Suggest dropdowns using Playwright.
+Modern web applications built with frameworks like React, Vue, Angular, or Tailwind UI rarely use standard HTML `<select>` tags. Instead, they implement custom dropdown components built using `<div>`, `<ul>`, `<li>`, and `<button>` elements to achieve custom styling.
 
----
-
-## 1. Types of Advanced Dropdowns
-
-### 1.1 Bootstrap Dropdowns
-Bootstrap dropdowns are built using standard HTML elements like `<div>`, `<button>`, `<ul>`, and `<li>` instead of `<select>` tags. 
-*   **Challenge:** The standard `selectOption()` method does not work on them.
-*   **Solution:** Click the dropdown button to expand the options, locate the list items, loop through them, and click the target option.
-
-### 1.2 Hidden Dropdowns
-Hidden dropdown elements are dynamically added or removed from the DOM when they are clicked. If you try to inspect them normally, they disappear as soon as focus is lost.
-*   **Challenge:** Hard to inspect or find selectors for the options.
-*   **Solution:** Freeze the browser using debugging tools to inspect the elements.
-
-### 1.3 Auto-Suggest / Auto-Complete
-Auto-suggest fields display list options dynamically as you type (e.g., Google Search, flight bookings like RedBus).
-*   **Challenge:** Options are populated asynchronously based on search query.
-*   **Solution:** Use `fill()` to type, wait for suggestion elements to appear, loop through elements, and click the matching item.
+This chapter covers how to automate these advanced dropdowns using web-first locating strategies, keyboard navigation, and debugging techniques.
 
 ---
 
-## 2. Techniques to Inspect Hidden Options
+## 1. Traditional vs. Custom Dropdowns
 
-To locate and interact with hidden dropdown elements, use one of the following methods in Chrome DevTools:
+Understanding the differences between standard select tags and custom UI dropdowns dictates which locator strategies you must use:
 
-### Technique 1: SelectorsHub Debugger
-1. Open the **SelectorsHub** tab in DevTools.
-2. Click the **Debugger** button (represented by a pause/debugger icon).
-3. Click the dropdown in your application within 5 seconds.
-4. The debugger will freeze the screen, allowing you to inspect the dropdown list items.
-
-### Technique 2: Focus Page Emulation in Chrome DevTools
-1. Press `F12` to open DevTools, then press `Ctrl + Shift + P` (or `Cmd + Shift + P` on Mac) to open the Command Menu.
-2. Type `emulate a focused page` and press Enter.
-3. Click on the dropdown in the UI. It will remain open even if you click away in the DOM pane to inspect selectors.
-4. To turn it off, open the command menu again and type `Do not emulate a focused page`.
+![Traditional vs. Custom Selection Sequences](/img/dropdown_sequence.png)
 
 ---
 
-## 3. Comparing Text Retrieval: `textContent()` vs `innerText()`
+## 2. Automating Custom Selects & Comboboxes (ARIA Roles)
 
-When selecting dynamically rendered dropdown text, choosing the right method is critical:
+Modern UI libraries (like Radix UI, Headless UI, React Select, and Material UI) add standard accessibility attributes called **ARIA roles** to make custom elements accessible.
 
-| Feature | `textContent()` | `innerText()` |
-| :--- | :--- | :--- |
-| **Visibility matters?** | No (Reads hidden text) | Yes (Reads visible text only) |
-| **Whitespace?** | Preserved exactly as-is | Normalized (Spaces and line breaks removed) |
-| **Hidden elements?** | Included | Excluded |
-| **Use case** | Parsing raw DOM text | Validating user-visible text |
+Instead of writing complex CSS paths to locate items in custom dropdown containers, you should use Playwright's **Web-First ARIA Locators** (e.g., `getByRole`).
 
-### Comparison Example
-Suppose we have the following HTML markup:
+### Standard HTML Example
 ```html
-<div id="demo">
-  Welcome
-  <span style="display:none">To Playwright</span>
+<div class="custom-select-wrapper">
+  <button id="select-btn" role="combobox" aria-expanded="false" aria-haspopup="listbox">Select Language</button>
+  <ul class="select-options-list" role="listbox">
+    <li role="option" aria-selected="false">TypeScript</li>
+    <li role="option" aria-selected="false">Python</li>
+  </ul>
 </div>
 ```
 
-*   `textContent()` returns: `"  Welcome\n  To Playwright\n"` (includes hidden text and whitespace).
-*   `innerText()` returns: `"Welcome"` (excludes hidden text).
-
----
-
-## 4. Code Implementation Examples
-
-### 4.1 Handling Bootstrap Dropdowns
-In this example, we click the dropdown button to display the options, locate the list, and select the item.
-
-```javascript
+### Playwright Web-First Script
+To automate this, click the combobox container to expand it, and click the option based on its role and name:
+```typescript
 import { test, expect } from '@playwright/test';
 
-test('Handle Bootstrap Dropdown', async ({ page }) => {
-  await page.goto('https://jquery-az.com/boots/demo.php?ex=63.0_2');
+test('Select option from custom ARIA combobox', async ({ page }) => {
+  await page.goto('https://my-custom-combobox-demo.com/');
 
-  // 1. Click the dropdown button to show options
-  await page.locator('.multiselect').click();
+  // 1. Locate and click the combobox button
+  const combobox = page.getByRole('combobox', { name: 'Select Language' });
+  await combobox.click();
 
-  // 2. Locate all options in the list
-  const options = await page.locator('ul.multiselect-container li label');
-  const count = await options.count();
-  console.log('Total options:', count);
+  // 2. Select option directly using role="option" and visible text
+  const targetOption = page.getByRole('option', { name: 'TypeScript' });
+  await targetOption.click();
 
-  // 3. Loop through and select 'Angular'
-  for (let i = 0; i < count; i++) {
-    const text = await options.nth(i).textContent();
-    console.log('Option text:', text);
-    
-    if (text?.includes('Angular') || text?.includes('Java')) {
-      await options.nth(i).click();
-    }
-  }
-  
-  await page.waitForTimeout(2000);
+  // 3. Assert the combobox value has updated
+  await expect(combobox).toHaveText('TypeScript');
 });
 ```
 
 ---
 
-### 4.2 Handling Hidden Dropdowns
-Here, we interact with a hidden dropdown where option lists disappear on blur (e.g., OrangeHRM dropdowns).
+## 3. Keyboard-Driven Selection
 
-```javascript
-test('Handle Hidden Dropdown', async ({ page }) => {
-  await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+In some applications, clicking custom dropdown options can be unstable because the dropdown menu immediately loses focus and closes (`blur` event) when the mouse pointer moves or clicks.
 
-  // Login
-  await page.locator('[name="username"]').fill('Admin');
-  await page.locator('[name="password"]').fill('admin123');
-  await page.locator('button[type="submit"]').click();
+A highly resilient alternative is to type the search query and use **keyboard emulation** to navigate and select options.
 
-  // Navigate to PIM
-  await page.locator('//span[text()="PIM"]').click();
+```typescript
+test('Keyboard Navigation on Auto-suggest dropdown', async ({ page }) => {
+  await page.goto('https://opensource-demo.orangehrmlive.com/');
 
-  // Click the hidden dropdown (e.g., Employment Status)
-  await page.locator('//label[text()="Employment Status"]/parent::div/following-sibling::div').click();
-  await page.waitForTimeout(1000);
+  // Type query inside the input field
+  const input = page.getByRole('textbox', { name: 'Employee Name' });
+  await input.fill('John');
 
-  // Locate the dynamically generated list items
-  const options = await page.locator('.oxd-select-dropdown .oxd-select-option');
+  // Wait for the dropdown options list to appear in the DOM
+  await page.locator('.oxd-autocomplete-dropdown').waitFor({ state: 'visible' });
+
+  // Navigate options list using arrow keys and select with Enter
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('ArrowDown'); // Move to second suggestion
+  await page.keyboard.press('Enter');      // Select the active option
+});
+```
+
+---
+
+## 4. Advanced Techniques to Inspect Vanishing Elements
+
+One of the biggest struggles in test automation is finding selectors for elements that disappear as soon as you click elsewhere in the browser to inspect them. Use these three professional Chrome DevTools techniques to freeze the UI:
+
+### Technique 1: Freeze via Sources Breakpoint (Recommended)
+1. Open Chrome DevTools (`F12`) and navigate to the **Sources** tab.
+2. Click the dropdown in your web application to display the options overlay.
+3. Press **`F8`** (on Mac: **`Cmd + \`** or **`F8`**) to freeze JavaScript execution immediately.
+4. The screen will pause, allowing you to return to the **Elements** panel and inspect the dropdown option tags.
+
+### Technique 2: DOM Breakpoint on Subtree Modifications
+Use this if the options list is appended or removed dynamically from the DOM:
+1. Open DevTools and go to the **Elements** panel.
+2. Locate the parent `div` or `body` element where the dropdown overlay is appended.
+3. Right-click the element and select **`Break on`** ➔ **`Subtree modifications`**.
+4. Click the dropdown in your app to trigger the menu. The debugger will pause on the line of code appending the elements, freezing the DOM in place.
+
+### Technique 3: Focus Page Emulation
+Prevents the browser tab from losing focus (useful when blur events close the dropdown):
+1. In DevTools, press **`Ctrl + Shift + P`** (Mac: **`Cmd + Shift + P`**) to open the Command Menu.
+2. Type **`Emulate a focused page`** and press Enter.
+3. The browser will behave as if it is always focused, keeping dynamic dropdowns open while you click around DevTools.
+4. Turn it off by running **`Do not emulate a focused page`**.
+
+---
+
+## 5. Real-World Automation Labs
+
+### 5.1 Lab A: Bootstrap Multi-Select Dropdowns
+Unlike standard selects, Bootstrap dropdowns are lists of checkboxes disguised as dropdown options.
+
+```typescript
+import { test, expect } from '@playwright/test';
+
+test('Automate Bootstrap Checkbox Dropdown', async ({ page }) => {
+  await page.goto('https://jquery-az.com/boots/demo.php?ex=63.0_2');
+
+  // Click the multiselect button container
+  await page.locator('button.multiselect').click();
+
+  // Query all option labels inside the container list
+  const options = page.locator('ul.multiselect-container li label');
   const count = await options.count();
-  console.log('Total statuses found:', count);
+  console.log(`Dropdown Options Found: ${count}`);
 
+  // Loop through items and select 'Angular' and 'Java'
   for (let i = 0; i < count; i++) {
     const text = await options.nth(i).textContent();
-    console.log('Status option:', text);
+    
+    if (text?.includes('Angular') || text?.includes('Java')) {
+      const checkbox = options.nth(i).locator('input[type="checkbox"]');
+      
+      // Only check if it is not checked already
+      if (!(await checkbox.isChecked())) {
+        await options.nth(i).click();
+      }
+    }
+  }
+
+  // Assert selections are correct
+  const activeSelections = page.locator('button.multiselect');
+  await expect(activeSelections).toContainText('Java, Angular');
+});
+```
+
+---
+
+### 5.2 Lab B: Handling Dynamic Auto-Suggest lists (RedBus Example)
+Auto-suggest dropdowns generate matches asynchronously as you type.
+
+```typescript
+test('Automate Flight/Bus Autocomplete Suggestions', async ({ page }) => {
+  await page.goto('https://www.redbus.in/');
+
+  const sourceInput = page.locator('#src');
+  
+  // 1. Type query in autocomplete input
+  await sourceInput.fill('Delhi');
+
+  // 2. Wait for autocomplete suggestions list container to appear
+  const listContainer = page.locator('.placeHolderText');
+  await expect(listContainer.first()).toBeVisible({ timeout: 5000 });
+
+  // 3. Fetch suggestions count
+  const count = await listContainer.count();
+  console.log(`Found ${count} location suggestions`);
+
+  // 4. Click specific matching destination
+  for (let i = 0; i < count; i++) {
+    const text = await listContainer.nth(i).textContent();
+    
+    if (text?.includes('Delhi Airport')) {
+      await listContainer.nth(i).click();
+      break;
+    }
+  }
+
+  // 5. Verify input value reflects selected value
+  await expect(sourceInput).toHaveValue(/Delhi Airport/i);
+});
+```
+
+---
+
+### 5.3 Lab C: Hidden Dropdowns (OrangeHRM Employee Search)
+OrangeHRM uses hidden selects where options are dynamically rendered outside the visible panel.
+
+```typescript
+test('Handle Hidden Dynamic Dropdowns', async ({ page }) => {
+  await page.goto('https://opensource-demo.orangehrmlive.com/');
+
+  // Login
+  await page.getByPlaceholder('Username').fill('Admin');
+  await page.getByPlaceholder('Password').fill('admin123');
+  await page.getByRole('button', { name: 'Login' }).click();
+
+  // Navigate to PIM
+  await page.getByRole('link', { name: 'PIM' }).click();
+
+  // Locate and click the Employment Status custom select box
+  const employmentStatusSelect = page.locator('//label[text()="Employment Status"]/parent::div/following-sibling::div');
+  await employmentStatusSelect.click();
+
+  // Locate options list
+  const options = page.locator('.oxd-select-dropdown .oxd-select-option');
+  await expect(options.first()).toBeVisible();
+
+  const count = await options.count();
+  console.log(`Found ${count} employment statuses`);
+
+  // Iterate to find and click target status
+  for (let i = 0; i < count; i++) {
+    const text = await options.nth(i).textContent();
     if (text === 'Full-Time Permanent') {
       await options.nth(i).click();
       break;
     }
   }
-  
-  await page.waitForTimeout(2000);
+
+  // Verify selections
+  await expect(employmentStatusSelect).toContainText('Full-Time Permanent');
 });
 ```
 
 ---
 
-### 4.3 Handling Auto-Suggest / Auto-Complete Dropdowns
-Here we type a keyword, wait for the search autocomplete suggestions to appear, and select the desired item.
+## 6. Text Retrieval Comparison
 
-```javascript
-test('Handle Auto-Suggest Dropdown', async ({ page }) => {
-  await page.goto('https://www.redbus.in/');
+When querying option contents programmatically, selecting the correct text method prevents flakiness:
 
-  // Type search input
-  await page.locator('#src').fill('Delhi');
-  
-  // Wait for suggestions to render
-  await page.waitForSelector('.placeHolderText');
-
-  // Retrieve suggestion list items
-  const suggestions = await page.locator('.placeHolderText');
-  const count = await suggestions.count();
-  console.log('Suggestions count:', count);
-
-  for (let i = 0; i < count; i++) {
-    const text = await suggestions.nth(i).textContent();
-    console.log('Suggestion:', text);
-    if (text?.includes('Delhi Airport')) {
-      await suggestions.nth(i).click();
-      break;
-    }
-  }
-  
-  await page.waitForTimeout(2000);
-});
-```
-
----
-
-## 5. Summary of Essential Selectors and Methods
-
-| Method / Property | Return Type | Description |
+| Property | `textContent()` | `innerText()` |
 | :--- | :--- | :--- |
-| `page.locator()` | `Locator` | Defines a Playwright locator to query elements. |
-| `click()` | `Promise<void>` | Simulates clicking on a element/item. |
-| `fill(text)` | `Promise<void>` | Inputs string text inside text elements. |
-| `count()` | `Promise<number>` | Returns count of matching elements. |
-| `nth(index)` | `Locator` | References element by index (0-based). |
-| `textContent()` | `Promise<string>` | Retrieves element's text content (includes hidden elements). |
-| `innerText()` | `Promise<string>` | Retrieves rendered text content (visible text only). |
+| **Visibility Requirement** | None (Retrieves hidden elements) | Strict (Visible text only) |
+| **Whitespace Handling** | Preserved exactly as declared in DOM | Normalized (Strips tabs & line-breaks) |
+| **Hidden Markup Text** | Yes (includes `<span style="display:none">`) | No (ignores hidden subtree nodes) |
+| **Common Use Case** | Fetching option attributes & list data | Asserting user-facing select displays |
 
 ---
-*Reference: [Pavan Online Trainings](https://www.pavanonlinetrainings.com) | [SDET Pavan YouTube](https://www.youtube.com/@sdetpavan)*
+
+## 🧠 Knowledge Check
+
+```quiz
+{
+  "question": "Which DevTools keyboard shortcut pauses JavaScript execution immediately to inspect vanishing elements?",
+  "options": [
+    "F5",
+    "F8 (or Cmd + \\ on Mac)",
+    "F12",
+    "Ctrl + Shift + P"
+  ],
+  "answer": 1,
+  "explanation": "Pressing F8 or Cmd + \\ in Chrome DevTools pauses JavaScript execution, preventing menus from closing when focus changes."
+}
+```
+
+```quiz
+{
+  "question": "What is the recommended web-first locator strategy to locate options inside custom modern combobox elements?",
+  "options": [
+    "page.locator('.select-options-list li')",
+    "page.getByRole('option', { name: 'Option Name' })",
+    "page.locator('//div[@class=\"option\"]')",
+    "page.getByLabel('Option Name')"
+  ],
+  "answer": 1,
+  "explanation": "getByRole('option', { name: '...' }) is the modern, web-first approach for testing custom accessible selects (like Radix, React Select) because it mirrors accessibility trees."
+}
+```

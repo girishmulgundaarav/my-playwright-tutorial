@@ -11,6 +11,14 @@ import sidebars from '../sidebars';
 import { QuizWidget } from './QuizWidget';
 import { FeedbackWidget } from './FeedbackWidget';
 import { useProgress } from '../context/ProgressContext';
+import mermaid from 'mermaid';
+
+// Initialize mermaid library
+mermaid.initialize({
+  startOnLoad: false,
+  securityLevel: 'loose',
+  theme: 'dark',
+});
 
 function remarkAdmonitions() {
   return (tree: any) => {
@@ -151,11 +159,64 @@ const finalBookTheme: any = {
   },
 };
 
+const Mermaid = ({ chart }: { chart: string }) => {
+  const [svg, setSvg] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const elementId = useMemo(() => `mermaid-${Math.random().toString(36).substring(2, 9)}`, []);
+
+  useEffect(() => {
+    const renderChart = async () => {
+      try {
+        setError(null);
+        // Render mermaid code to SVG
+        const { svg: renderedSvg } = await mermaid.render(elementId, chart);
+        setSvg(renderedSvg);
+      } catch (err: any) {
+        console.error("Mermaid render error:", err);
+        setError(err.message || 'Failed to parse mermaid diagram');
+        const badElement = document.getElementById(elementId);
+        if (badElement) badElement.remove();
+      }
+    };
+    renderChart();
+  }, [chart, elementId]);
+
+  if (error) {
+    return (
+      <div style={{ color: '#ef4444', padding: '1rem', border: '1px dashed #ef4444', margin: '1rem 0', borderRadius: '4px', background: 'rgba(239, 68, 68, 0.1)' }}>
+        <strong>Mermaid Error:</strong> <pre style={{ marginTop: '0.5rem', fontSize: '0.85rem', whiteSpace: 'pre-wrap' }}>{error}</pre>
+      </div>
+    );
+  }
+
+  return (
+    <div 
+      className="mermaid-diagram" 
+      style={{
+        background: 'rgba(30, 27, 75, 0.3)',
+        border: '1px solid var(--border-glass, rgba(255, 255, 255, 0.1))',
+        padding: '1.5rem',
+        borderRadius: '8px',
+        margin: '1.5rem 0',
+        display: 'flex',
+        justifyContent: 'center',
+        overflowX: 'auto',
+        boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.2)'
+      }}
+      dangerouslySetInnerHTML={{ __html: svg }} 
+    />
+  );
+};
+
 const CodeBlock = ({ inline, className, children, ...props }: any) => {
   const [isCopied, setIsCopied] = useState(false);
   const match = /language-(\w+)/.exec(className || '');
   const language = match ? match[1] : '';
   const codeString = String(children).replace(/\n$/, '');
+
+  if (!inline && language === 'mermaid') {
+    return <Mermaid chart={codeString} />;
+  }
 
   if (!inline && language === 'quiz') {
     try {
