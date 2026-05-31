@@ -154,9 +154,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
         {/* Mobile-only header to allow closing the drawer on small devices */}
         <div className="sidebar-mobile-header">
-          <div className="brand">Playwright</div>
-          <button className="mobile-toggle sidebar-close-btn" onClick={closeSidebar} aria-label="Close sidebar">
-            <X size={20} />
+          <span style={{ fontWeight: 600, fontSize: '1.1rem', color: 'var(--text-primary)', letterSpacing: '0.5px' }}>Documentation</span>
+          <button className="mobile-toggle sidebar-close-btn" onClick={closeSidebar} aria-label="Close sidebar" style={{ background: 'none', border: 'none', color: 'var(--text-muted)' }}>
+            <X size={24} />
           </button>
         </div>
         

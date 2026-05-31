@@ -18,7 +18,7 @@ export const LandingPage: React.FC = () => {
               <p className="hero-subtitle">
                 From zero to hero. Learn to build robust, reliable, and fast end-to-end tests for modern web applications.
               </p>
-              
+
               <div className="hero-actions">
                 <Link to="/docs/Introduction/getting-started" className="cta-button primary">
                   <PlayCircle size={20} />
@@ -33,9 +33,9 @@ export const LandingPage: React.FC = () => {
             <div className="hero-image-container">
               <div className="illustration-wrapper">
                 <div className="glowing-bg"></div>
-                <img 
-                  src="/img/autowait_resiliency.png" 
-                  alt="Playwright Auto-wait Resiliency Checklist" 
+                <img
+                  src="/img/autowait_resiliency.png"
+                  alt="Playwright Auto-wait Resiliency Checklist"
                   className="hero-illustration"
                 />
               </div>
@@ -63,7 +63,7 @@ export const LandingPage: React.FC = () => {
 
         <CodeShowcase />
         <Newsletter />
-        
+
       </div>
     </div>
   );

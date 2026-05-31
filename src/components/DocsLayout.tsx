@@ -3,7 +3,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { MarkdownRenderer } from './MarkdownRenderer';
 import { SemanticSearch } from './SemanticSearch';
-import { Menu, Moon, Sun, Github, Book, ChevronLeft, ChevronRight, Home } from 'lucide-react';
+import { Menu, Moon, Sun, Github, Book, ChevronLeft, Home } from 'lucide-react';
 
 export const DocsLayout: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -57,23 +57,30 @@ export const DocsLayout: React.FC = () => {
   return (
     <div className={`app-layout ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
       <header className="header">
-        <div className="header-logo-section">
-          <div className="brand">Playwright</div>
-          <button 
-            type="button"
-            className="complete-guide-badge"
-            style={{ cursor: 'default', fontFamily: 'inherit' }}
-          >
-            GUIDE
-          </button>
-          
+        <div className="header-logo-section" style={{ padding: 0 }}>
           <button
             onClick={toggleSidebarCollapse}
             className="sidebar-collapse-toggle"
+            style={{ 
+              width: '100%', 
+              height: '100%', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: isSidebarCollapsed ? 'center' : 'space-between',
+              padding: isSidebarCollapsed ? '0' : '0 1.5rem',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              color: 'var(--text-primary)',
+              fontWeight: 600,
+              fontSize: '1rem',
+              letterSpacing: '0.5px'
+            }}
             title={isSidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
             aria-label={isSidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
           >
-            {isSidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+            {!isSidebarCollapsed && <span>Documentation</span>}
+            {isSidebarCollapsed ? <Menu size={20} /> : <ChevronLeft size={20} color="var(--text-muted)" />}
           </button>
         </div>
         
@@ -131,6 +138,12 @@ export const DocsLayout: React.FC = () => {
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
+
+            <div style={{ width: '1px', height: '24px', background: 'var(--border-glass)', margin: '0 0.5rem' }}></div>
+            
+            <Link to="/" style={{ display: 'flex', alignItems: 'center', width: 'auto', height: 'auto', background: 'transparent' }}>
+              <img src="/img/logo-transparent-png.png?v=2" alt="Playwright Logo" style={{ height: '56px', width: 'auto', display: 'block' }} />
+            </Link>
           </div>
         </div>
 
