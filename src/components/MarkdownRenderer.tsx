@@ -168,14 +168,24 @@ const Mermaid = ({ chart }: { chart: string }) => {
     const renderChart = async () => {
       try {
         setError(null);
-        // Render mermaid code to SVG
-        const { svg: renderedSvg } = await mermaid.render(elementId, chart);
+        // Create a temporary sandboxed container to avoid DOM resolution conflicts
+        const container = document.createElement('div');
+        container.id = `container-${elementId}`;
+        container.style.display = 'none';
+        document.body.appendChild(container);
+
+        const { svg: renderedSvg } = await mermaid.render(elementId, chart, container);
         setSvg(renderedSvg);
+
+        // Remove temporary container
+        container.remove();
       } catch (err: any) {
         console.error("Mermaid render error:", err);
         setError(err.message || 'Failed to parse mermaid diagram');
         const badElement = document.getElementById(elementId);
         if (badElement) badElement.remove();
+        const badContainer = document.getElementById(`container-${elementId}`);
+        if (badContainer) badContainer.remove();
       }
     };
     renderChart();
