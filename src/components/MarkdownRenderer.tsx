@@ -171,7 +171,9 @@ const Mermaid = ({ chart }: { chart: string }) => {
         // Create a temporary sandboxed container to avoid DOM resolution conflicts
         const container = document.createElement('div');
         container.id = `container-${elementId}`;
-        container.style.display = 'none';
+        container.style.position = 'absolute';
+        container.style.left = '-9999px';
+        container.style.top = '-9999px';
         document.body.appendChild(container);
 
         const { svg: renderedSvg } = await mermaid.render(elementId, chart, container);
