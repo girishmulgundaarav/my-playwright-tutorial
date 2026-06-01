@@ -82,7 +82,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       }
 
       return (
-        <div key={item.label} className="nav-category">
+        <div key={item.label} className={`nav-category ${item.className || ''}`}>
           <button 
             type="button"
             className="nav-category-title" 
@@ -90,6 +90,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           >
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               {item.label}
+              {item.label === 'Labs' && (
+                <span className="labs-badge">HOT</span>
+              )}
               {allCompleted && <CheckCircle size={14} color="#10b981" />}
             </span>
             <ChevronRight 
@@ -119,7 +122,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           key={item.id} 
           to={`/docs/${item.id}`} 
           onClick={closeSidebar}
-          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''} ${item.className || ''}`}
         >
           {completed ? (
             <CheckCircle size={16} color="#10b981" />

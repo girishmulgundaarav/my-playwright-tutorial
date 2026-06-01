@@ -222,6 +222,20 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
+    {
+      type: 'category',
+      label: 'Labs',
+      className: 'sidebar-category-labs',
+      collapsed: false,
+      items: [
+        {
+          type: 'doc',
+          id: 'Labs/overview',
+          label: 'Labs Overview',
+          className: 'sidebar-item-labs-overview',
+        },
+      ],
+    },
   ],
 };
 

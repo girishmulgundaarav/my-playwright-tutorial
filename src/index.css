@@ -2854,4 +2854,77 @@ a:hover {
   cursor: not-allowed;
 }
 
+/* Highlight styling for the special "Labs" section */
+.sidebar-category-labs {
+  background: linear-gradient(135deg, rgba(230, 95, 43, 0.06) 0%, rgba(249, 115, 22, 0.02) 100%);
+  border: 1px solid rgba(230, 95, 43, 0.15);
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  margin: 1.25rem 0.75rem;
+  box-shadow: 0 4px 12px rgba(230, 95, 43, 0.02);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+[data-theme='dark'] .sidebar-category-labs {
+  background: linear-gradient(135deg, rgba(234, 91, 51, 0.1) 0%, rgba(234, 91, 51, 0.01) 100%);
+  border: 1px solid rgba(234, 91, 51, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 0 12px rgba(234, 91, 51, 0.03);
+}
+
+/* Subtle glow pulse effect on the special section border */
+@keyframes labs-glow {
+  0% { 
+    border-color: rgba(230, 95, 43, 0.15); 
+    box-shadow: 0 0 5px rgba(230, 95, 43, 0.04); 
+  }
+  50% { 
+    border-color: rgba(230, 95, 43, 0.35); 
+    box-shadow: 0 0 12px rgba(230, 95, 43, 0.12); 
+  }
+  100% { 
+    border-color: rgba(230, 95, 43, 0.15); 
+    box-shadow: 0 0 5px rgba(230, 95, 43, 0.04); 
+  }
+}
+
+.sidebar-category-labs {
+  animation: labs-glow 3s infinite ease-in-out;
+}
+
+.sidebar-category-labs .nav-category-title {
+  color: var(--accent-primary) !important;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.sidebar-category-labs .nav-item {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 4px;
+  padding-left: 0.75rem;
+}
+
+.labs-badge {
+  background: var(--accent-gradient);
+  color: white;
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 0.12rem 0.4rem;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 6px rgba(230, 95, 43, 0.4);
+  animation: badge-pulse 2s infinite ease-in-out;
+  line-height: 1;
+}
+
+@keyframes badge-pulse {
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 10px rgba(230, 95, 43, 0.7); }
+  100% { transform: scale(1); opacity: 0.9; }
+}
+
 
