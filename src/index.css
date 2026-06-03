@@ -179,12 +179,15 @@ a:hover {
 
 .sidebar-nav {
   flex: 1;
+  width: 100%;
+  max-width: 100%;
   overflow-y: auto;
   overflow-x: auto;
   padding: 1.5rem 0;
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
+  box-sizing: border-box;
   
   /* Support Firefox scrollbar styling */
   scrollbar-width: thin;
@@ -223,7 +226,9 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
+  box-sizing: border-box;
   background: none;
   border: none;
   font-family: inherit;
@@ -257,6 +262,9 @@ a:hover {
   margin-bottom: 0.15rem;
   border-left: 3px solid transparent;
   white-space: nowrap;
+  width: max-content;
+  min-width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-item:hover {
