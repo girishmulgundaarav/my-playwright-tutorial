@@ -29,16 +29,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
   const navRef = React.useRef<HTMLElement>(null);
 
-  const [sidebarWidth, setSidebarWidth] = React.useState(() => {
-    const saved = localStorage.getItem('sidebar-width');
-    return saved ? parseInt(saved, 10) : 280;
-  });
+  const [sidebarWidth, setSidebarWidth] = React.useState(280);
 
   const [isResizing, setIsResizing] = React.useState(false);
 
   React.useEffect(() => {
     document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
-    localStorage.setItem('sidebar-width', String(sidebarWidth));
+    return () => {
+      document.documentElement.style.removeProperty('--sidebar-width');
+    };
   }, [sidebarWidth]);
 
   const initResize = (e: React.MouseEvent) => {
