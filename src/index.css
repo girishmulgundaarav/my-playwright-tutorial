@@ -516,8 +516,8 @@ a:hover {
 }
 
 .content-area {
-  padding: 2rem 2rem;
-  max-width: 1400px;
+  padding: 2rem 2.5rem;
+  max-width: 1550px;
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
@@ -1971,8 +1971,8 @@ a:hover {
 /* --- Table of Contents --- */
 .docs-layout-container {
   display: flex;
-  gap: 2rem;
-  max-width: 1300px;
+  gap: 2.5rem;
+  max-width: 1450px;
   margin: 0 auto;
   transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1980,12 +1980,12 @@ a:hover {
 .docs-main-column {
   flex: 1;
   min-width: 0;
-  max-width: 950px;
+  max-width: 1050px;
   transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .docs-toc-column {
-  width: 200px;
+  width: 250px;
   flex-shrink: 0;
   display: none;
 }
@@ -1993,6 +1993,22 @@ a:hover {
 @media (min-width: 1280px) {
   .docs-toc-column {
     display: block;
+  }
+}
+
+@media (min-width: 1920px) {
+  .content-area {
+    max-width: 1700px;
+  }
+  .docs-layout-container {
+    max-width: 1600px;
+    gap: 3rem;
+  }
+  .docs-main-column {
+    max-width: 1150px;
+  }
+  .docs-toc-column {
+    width: 280px;
   }
 }
 
