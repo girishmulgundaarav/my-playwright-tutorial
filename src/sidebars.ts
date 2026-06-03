@@ -226,7 +226,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Labs',
       className: 'sidebar-category-labs',
-      collapsed: false,
+      collapsed: true,
       items: [
         {
           type: 'doc',

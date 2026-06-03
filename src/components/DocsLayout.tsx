@@ -141,8 +141,18 @@ export const DocsLayout: React.FC = () => {
 
             <div style={{ width: '1px', height: '24px', background: 'var(--border-glass)', margin: '0 0.5rem' }}></div>
             
-            <Link to="/" style={{ display: 'flex', alignItems: 'center', width: 'auto', height: 'auto', background: 'transparent' }}>
-              <img src="/img/logo-transparent-png.png?v=2" alt="Playwright Logo" style={{ height: '56px', width: 'auto', display: 'block' }} />
+            <Link to="/" style={{ display: 'flex', alignItems: 'center', width: 'auto', height: 'auto', background: 'transparent' }} title="Go to home">
+              <svg width="150" height="32" viewBox="0 0 150 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
+                <rect x="1" y="1" width="26" height="26" rx="6" stroke="var(--accent-primary)" strokeWidth="2.5" fill="none" />
+                <circle cx="6" cy="6" r="1.5" fill="var(--accent-primary)" />
+                <circle cx="11" cy="6" r="1.5" fill="var(--accent-primary)" />
+                <circle cx="16" cy="6" r="1.5" fill="var(--accent-primary)" />
+                <path d="M9 12L13 14L9 16" stroke="var(--text-primary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M14 12L18 14L14 16" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                <text x="36" y="21" fontFamily="Outfit, sans-serif" fontSize="18.5" fontWeight="800" letterSpacing="-0.03em" fill="var(--text-primary)">
+                  Play<tspan fill="var(--accent-primary)">wright</tspan>
+                </text>
+              </svg>
             </Link>
           </div>
         </div>
