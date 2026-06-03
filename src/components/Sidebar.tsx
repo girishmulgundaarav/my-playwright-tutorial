@@ -29,6 +29,45 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
   const navRef = React.useRef<HTMLElement>(null);
 
+  const [sidebarWidth, setSidebarWidth] = React.useState(() => {
+    const saved = localStorage.getItem('sidebar-width');
+    return saved ? parseInt(saved, 10) : 280;
+  });
+
+  const [isResizing, setIsResizing] = React.useState(false);
+
+  React.useEffect(() => {
+    document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
+    localStorage.setItem('sidebar-width', String(sidebarWidth));
+  }, [sidebarWidth]);
+
+  const initResize = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizing(true);
+    const startWidth = sidebarWidth;
+    const startX = e.clientX;
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      const newWidth = startWidth + (moveEvent.clientX - startX);
+      if (newWidth >= 200 && newWidth <= 600) {
+        setSidebarWidth(newWidth);
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      document.body.style.cursor = 'default';
+      document.documentElement.classList.remove('resizing');
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.body.style.cursor = 'col-resize';
+    document.documentElement.classList.add('resizing');
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+  };
+
   React.useEffect(() => {
     const nav = navRef.current;
     if (!nav) return;
@@ -266,6 +305,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             <span className="user-tagline">Test with playwright</span>
           </div>
         </div>
+        <div className={`sidebar-resize-handle ${isResizing ? 'resizing' : ''}`} onMouseDown={initResize} />
       </aside>
     </>
   );

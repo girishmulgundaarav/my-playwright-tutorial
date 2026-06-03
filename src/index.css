@@ -139,6 +139,32 @@ a:hover {
   box-shadow: none;
 }
 
+.sidebar-resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 100;
+  transition: background-color 0.2s;
+  background-color: transparent;
+}
+
+.sidebar-resize-handle:hover,
+.sidebar-resize-handle.resizing {
+  background-color: var(--accent-primary);
+  opacity: 0.8;
+}
+
+/* Global resizing overrides to ensure lag-free dragging */
+.resizing,
+.resizing * {
+  transition: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
 /* Mobile-only Sidebar Header */
 .sidebar-mobile-header {
   display: none;
