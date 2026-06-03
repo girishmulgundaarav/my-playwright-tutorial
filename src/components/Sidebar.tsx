@@ -44,33 +44,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       if (e.button !== 0) return;
       isDown = true;
       hasMoved = false;
-      startX = e.pageX - nav.offsetLeft;
-      startY = e.pageY - nav.offsetTop;
+      startX = e.clientX;
+      startY = e.clientY;
       scrollLeft = nav.scrollLeft;
       scrollTop = nav.scrollTop;
-    };
-
-    const handleMouseLeave = () => {
-      isDown = false;
-      nav.classList.remove('dragging');
-    };
-
-    const handleMouseUp = (e: MouseEvent) => {
-      isDown = false;
-      nav.classList.remove('dragging');
-      if (hasMoved) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
     };
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!isDown) return;
       
-      const x = e.pageX - nav.offsetLeft;
-      const y = e.pageY - nav.offsetTop;
-      const walkX = (x - startX) * 1.5;
-      const walkY = (y - startY) * 1.5;
+      const walkX = (e.clientX - startX) * 1.5;
+      const walkY = (e.clientY - startY) * 1.5;
 
       if (Math.abs(walkX) > 5 || Math.abs(walkY) > 5) {
         hasMoved = true;
@@ -84,6 +68,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       }
     };
 
+    const handleMouseUp = (e: MouseEvent) => {
+      if (!isDown) return;
+      isDown = false;
+      nav.classList.remove('dragging');
+      if (hasMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
     const handleClick = (e: MouseEvent) => {
       if (hasMoved) {
         e.preventDefault();
@@ -91,18 +85,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       }
     };
 
+    const handleDragStart = (e: DragEvent) => {
+      e.preventDefault();
+    };
+
     nav.addEventListener('mousedown', handleMouseDown);
-    nav.addEventListener('mouseleave', handleMouseLeave);
-    nav.addEventListener('mouseup', handleMouseUp);
-    nav.addEventListener('mousemove', handleMouseMove);
+    nav.addEventListener('dragstart', handleDragStart);
     nav.addEventListener('click', handleClick, true);
+    window.addEventListener('mousemove', handleMouseMove, { passive: false });
+    window.addEventListener('mouseup', handleMouseUp, { capture: true });
 
     return () => {
       nav.removeEventListener('mousedown', handleMouseDown);
-      nav.removeEventListener('mouseleave', handleMouseLeave);
-      nav.removeEventListener('mouseup', handleMouseUp);
-      nav.removeEventListener('mousemove', handleMouseMove);
+      nav.removeEventListener('dragstart', handleDragStart);
       nav.removeEventListener('click', handleClick, true);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp, { capture: true });
     };
   }, []);
 
