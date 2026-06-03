@@ -27,7 +27,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const closeSidebar = () => setIsOpen(false);
   const { completedDocs, isCompleted } = useProgress();
   const location = useLocation();
-  const navRef = React.useRef<HTMLElement>(null);
 
   const [sidebarWidth, setSidebarWidth] = React.useState(280);
 
@@ -67,80 +66,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     window.addEventListener('mouseup', handleMouseUp);
   };
 
-  React.useEffect(() => {
-    const nav = navRef.current;
-    if (!nav) return;
 
-    let isDown = false;
-    let startX: number;
-    let startY: number;
-    let scrollLeft: number;
-    let scrollTop: number;
-    let hasMoved = false;
-
-    const handleMouseDown = (e: MouseEvent) => {
-      if (e.button !== 0) return;
-      isDown = true;
-      hasMoved = false;
-      startX = e.clientX;
-      startY = e.clientY;
-      scrollLeft = nav.scrollLeft;
-      scrollTop = nav.scrollTop;
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDown) return;
-      
-      const walkX = (e.clientX - startX) * 1.5;
-      const walkY = (e.clientY - startY) * 1.5;
-
-      if (Math.abs(walkX) > 5 || Math.abs(walkY) > 5) {
-        hasMoved = true;
-        nav.classList.add('dragging');
-      }
-
-      if (hasMoved) {
-        e.preventDefault();
-        nav.scrollLeft = scrollLeft - walkX;
-        nav.scrollTop = scrollTop - walkY;
-      }
-    };
-
-    const handleMouseUp = (e: MouseEvent) => {
-      if (!isDown) return;
-      isDown = false;
-      nav.classList.remove('dragging');
-      if (hasMoved) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    };
-
-    const handleClick = (e: MouseEvent) => {
-      if (hasMoved) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    };
-
-    const handleDragStart = (e: DragEvent) => {
-      e.preventDefault();
-    };
-
-    nav.addEventListener('mousedown', handleMouseDown);
-    nav.addEventListener('dragstart', handleDragStart);
-    nav.addEventListener('click', handleClick, true);
-    window.addEventListener('mousemove', handleMouseMove, { passive: false });
-    window.addEventListener('mouseup', handleMouseUp, { capture: true });
-
-    return () => {
-      nav.removeEventListener('mousedown', handleMouseDown);
-      nav.removeEventListener('dragstart', handleDragStart);
-      nav.removeEventListener('click', handleClick, true);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp, { capture: true });
-    };
-  }, []);
 
   const [collapsedCategories, setCollapsedCategories] = React.useState<Record<string, boolean>>(() => {
     const initial: Record<string, boolean> = {};
@@ -309,7 +235,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           </div>
         </div>
 
-        <nav className="sidebar-nav" ref={navRef}>
+        <nav className="sidebar-nav">
           {sidebars.tutorialSidebar.map(item => renderItem(item))}
         </nav>
 

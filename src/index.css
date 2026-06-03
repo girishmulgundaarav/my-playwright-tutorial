@@ -208,20 +208,13 @@ a:hover {
   width: 100%;
   max-width: 100%;
   overflow-y: auto;
-  overflow-x: auto;
+  overflow-x: hidden;
   padding: 1.5rem 0;
-  cursor: grab;
-  user-select: none;
-  -webkit-user-select: none;
   box-sizing: border-box;
   
   /* Support Firefox scrollbar styling */
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
-}
-
-.sidebar-nav.dragging {
-  cursor: grabbing;
 }
 
 /* Custom Scrollbar for Sidebar Navigation */
@@ -254,6 +247,7 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  min-width: 0;
   box-sizing: border-box;
   background: none;
   border: none;
@@ -290,6 +284,7 @@ a:hover {
   border-left: 3px solid transparent;
   white-space: nowrap;
   width: 100%;
+  min-width: 0;
   box-sizing: border-box;
   overflow: hidden;
 }
