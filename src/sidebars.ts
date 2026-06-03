@@ -234,6 +234,12 @@ const sidebars: SidebarsConfig = {
           label: 'Labs Overview',
           className: 'sidebar-item-labs-overview',
         },
+        {
+          type: 'doc',
+          id: 'Labs/playwright-basic-controls-labs',
+          label: 'Basic UI Controls Lab',
+          className: 'sidebar-item-labs-basic-controls',
+        },
       ],
     },
   ],

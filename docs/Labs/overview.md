@@ -1,52 +1,51 @@
 ---
-title: Playwright Automation Labs Overview
+title: Playwright Sandbox Labs Overview
 ---
 
-# Playwright Automation Labs
+# Playwright Automation Practice Sandbox
 
-Welcome to the **Playwright Automation Labs** section! This is a dedicated environment designed to test and sharpen your web automation skills on real-world scenarios. Each challenge represents a unique, complex UI dynamic that is commonly encountered in modern web applications.
+Welcome to the **Playwright Automation Practice Sandbox**! To help you apply and master your end-to-end (E2E) automation skills, we use a dedicated, premium practice playground: 
+
+🌐 **[Playwright Practice Sandbox (https://playwright-sandbox.vercel.app/)](https://playwright-sandbox.vercel.app/)**
+
+This React-based application is built with modern components, asynchronous states, dynamic layouts, and realistic network conditions to simulate real-world testing challenges.
 
 :::tip
-All code examples in this guide use the latest Playwright test runner features and follow standard best practices.
+For the best learning experience, bookmark the sandbox link and configure it as the `baseURL` in your Playwright configuration.
 :::
 
-## 🚀 The Challenges at a Glance
+---
 
-We have divided the automation exercises into three distinct challenge categories, covering 13 comprehensive labs in total.
+## 🚀 The 13 Automation Challenges
 
-| Challenge Area | Description | Total Labs | Focus Areas |
-| :--- | :--- | :---: | :--- |
-| **Challenge A: Employee Directory** | Grid structures, checkboxes, dynamic search filtering, sorting, pagination, CRUD, and network lag overlays. | 11 Labs | Advanced locators, pagination state, file downloads, wait states |
-| **Challenge B: Infinite Scroll Feed** | Virtual scroll lists and lazy loading feeds. | 1 Lab | Custom scroll events, loading indicator assertions |
-| **Challenge C: Dynamic Columns** | Columns shuffling their order dynamically. | 1 Lab | Index-independent table parsing, locator abstraction |
+The practice sandbox is divided into **13 specialized challenge categories**, each designed to target specific aspects of modern web automation and testing:
+
+| # | Challenge Page | Description | Core Target Areas |
+| :--- | :--- | :--- | :--- |
+| **01** | [Forms & Controls](https://playwright-sandbox.vercel.app/forms) | Form flows with password meters, consent checks, debounced search, format masks, character counters, and drag-and-drop file inputs. | Validation, Async check, Masking, File drops |
+| **02** | [Async Challenges](https://playwright-sandbox.vercel.app/async) | Dealing with asynchronous behaviors, loading spinners, network latency, AJAX data fetching, and race conditions. | Wait states, Loader assertions, Timeouts |
+| **03** | [DOM & Locating](https://playwright-sandbox.vercel.app/dom) | Piercing Shadow DOM boundaries, handling nested frames, iFrames, and automated browser alert dialogs. | iFrames, Shadow DOM, Modal alerts |
+| **04** | [Tables & Grids](https://playwright-sandbox.vercel.app/tables) | Parsing structured table views, sorting columns, handling multi-page pagination, and checking cell validation. | Data extraction, Dynamic tables, Pagination |
+| **05** | [Advanced Actions](https://playwright-sandbox.vercel.app/advanced) | Simulating precise mouse and keyboard events like drag-and-drop, sliders, hovering, double clicking, and key triggers. | Mouse coordinates, Sliders, Drag & Drop |
+| **06** | [Calendars & Pickers](https://playwright-sandbox.vercel.app/calendars) | Interacting with standard date inputs, custom popup date-picker grids, and complex interconnected date-range pickers. | Date manipulation, Month toggles |
+| **07** | [Multi-Type Dropdowns](https://playwright-sandbox.vercel.app/dropdowns) | Selecting options from standard HTML select elements, custom searchable comboboxes, tag selections, and dependent dropdowns. | Comboboxes, Searchable Selects, Multi-tags |
+| **08** | [Basic UI Controls](https://playwright-sandbox.vercel.app/basic-controls) | Basic input elements such as radio button groups, checkbox grids, state toggles, and dynamic visibility checks. | Basic Locators, Checkbox grids, State verification |
+| **09** | [Storage & Auth](https://playwright-sandbox.vercel.app/storage) | E2E authentication strategies, cookie management, LocalStorage, SessionStorage, and handling auto-logout states. | State reuse, Token validation, Cookie caching |
+| **10** | [Multi-Tab & Windows](https://playwright-sandbox.vercel.app/windows) | Managing multiple browser pages, tab switching context, target="_blank" redirects, and popup window hooks. | Target Blank, Popups, Tab context switching |
+| **11** | [Geolocation & Permissions](https://playwright-sandbox.vercel.app/permissions) | Testing permission prompts, mocking device coordinates, and checking camera/geolocation API availability. | Location mocking, Browser permissions |
+| **12** | [API Sandbox](https://playwright-sandbox.vercel.app/api-sandbox) | Combining UI automation with direct API calls. Includes GET/POST requests, checking Bearer tokens, and parsing response headers. | Hybrid testing, REST API validation |
+| **13** | [Form Wizard](https://playwright-sandbox.vercel.app/wizard) | Completing multi-step checkout and wizard registration forms, dealing with back-and-forth screens, validation blocks, and summaries. | Multi-step workflows, State progression |
 
 ---
 
-## 🛠️ Lab Specifications
+## 🛠️ Coming Up Next
 
-Here is a summary of the labs that will be added and explored:
-
-### 📋 Challenge A: Employee Directory Master Grid
-* **Lab 1: Selection & Count Tracking** - Automate checkbox selection and verify sync count badges.
-* **Lab 2: Search Query & Highlighting** - Validate search filter inputs and audit cell-highlighted text.
-* **Lab 3: Expandable Detail Panels** - Expand hidden rows to audit inner text elements.
-* **Lab 4: Dynamic Sorting Auditor** - Verify alphabetical and reverse sorting values.
-* **Lab 5: Dynamic Pagination** - Navigate multi-page tables and assert page indices.
-* **Lab 6: Column Visibility Toggles** - Uncheck columns to assert structural updates in the DOM tree.
-* **Lab 7: Inline Record CRUD: Edit & Update** - Modify rows inline, select dropdown options, and save changes.
-* **Lab 8: Inline Record CRUD: Delete Record** - Verify item deletion and check dynamic grid updates.
-* **Lab 9: Add Employee Form** - Fill and submit sliding-drawer forms to inject new rows.
-* **Lab 10: Network Lag Simulator** - Automate interactions with simulated latency overlays and spinners.
-* **Lab 11: Export to CSV File Download** - Intercept browser downloads to verify generated file metadata.
-
-### 📋 Challenge B: Infinite Scrolling Logs Feed
-* **Lab 12: Infinite Scroll Lazy Loading** - Scroll containers to the bottom and wait for loaded logs.
-
-### 📋 Challenge C: Dynamic Columns Table
-* **Lab 13: Index-Independent Dynamic Table Parser** - Find specific cell values in rows where column order shuffles on load.
-
----
+In the following sections, we will build out detailed, step-by-step labs for each of these sandbox challenges. Each lab will guide you through:
+* Specifying the automation goals and test cases.
+* Formulating the optimal locator strategies (CSS, XPath, Playwright Locators).
+* Implementing robust assertions and waiting mechanisms.
+* Demonstrating the complete, executable Playwright test scripts.
 
 :::warning
-Ensure your Playwright configuration has correct base URLs set up before executing the tests against local environments!
+Before executing any test scripts, make sure your local test suite is correctly configured and has a reasonable test timeout to accommodate slow network responses from remote hosts.
 :::

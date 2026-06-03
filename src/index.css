@@ -2927,4 +2927,85 @@ a:hover {
   100% { transform: scale(1); opacity: 0.9; }
 }
 
+/* Collapsible details & summary styling */
+.markdown-body details {
+  margin: 1.5rem 0;
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  background-color: rgba(230, 95, 43, 0.02);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+[data-theme='dark'] .markdown-body details {
+  background-color: rgba(234, 91, 51, 0.015);
+}
+
+.markdown-body details[open] {
+  background-color: var(--bg-secondary);
+  border-color: rgba(230, 95, 43, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme='dark'] .markdown-body details[open] {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  border-color: rgba(234, 91, 51, 0.3);
+}
+
+.markdown-body details summary {
+  padding: 0.875rem 1.25rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--accent-primary);
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.15s, color 0.15s;
+  outline: none;
+  background-color: rgba(230, 95, 43, 0.04);
+  list-style: none; /* Hide default arrow */
+}
+
+.markdown-body details summary::-webkit-details-marker {
+  display: none; /* Hide default arrow in Safari/Webkit */
+}
+
+[data-theme='dark'] .markdown-body details summary {
+  background-color: rgba(234, 91, 51, 0.05);
+}
+
+.markdown-body details summary:hover {
+  background-color: rgba(230, 95, 43, 0.08);
+  color: var(--accent-primary-hover);
+}
+
+[data-theme='dark'] .markdown-body details summary:hover {
+  background-color: rgba(234, 91, 51, 0.1);
+  color: #f97316;
+}
+
+.markdown-body details summary::before {
+  content: "▶";
+  font-size: 0.75rem;
+  color: inherit;
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.markdown-body details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+/* Solution details interior padding */
+.markdown-body details > :not(summary) {
+  padding: 1.25rem 1.5rem;
+}
+
+.markdown-body details > summary + * {
+  margin-top: 0;
+}
+
 

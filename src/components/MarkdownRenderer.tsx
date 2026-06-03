@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkDirective from 'remark-directive';
+import rehypeRaw from 'rehype-raw';
 import { visit } from 'unist-util-visit';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { Check, Copy, Rocket, Palette, Target, MousePointer2, FlaskConical, BookOpen, ChevronRight, ChevronLeft, Lightbulb, AlertTriangle, Info, AlertOctagon } from 'lucide-react';
@@ -422,6 +423,7 @@ export const MarkdownRenderer: React.FC = () => {
           <div className="markdown-body">
             <Markdown
               remarkPlugins={[remarkGfm, remarkDirective, remarkAdmonitions]}
+              rehypePlugins={[rehypeRaw]}
               components={{ 
                 pre: ({ node, children, ...props }: any) => {
                   const childArray = React.Children.toArray(children);
