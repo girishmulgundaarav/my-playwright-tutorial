@@ -245,8 +245,7 @@ a:hover {
 
 .nav-category {
   margin-bottom: 1.5rem;
-  width: max-content;
-  min-width: 100%;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -254,8 +253,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: max-content;
-  min-width: 100%;
+  width: 100%;
   box-sizing: border-box;
   background: none;
   border: none;
@@ -271,6 +269,7 @@ a:hover {
   text-align: left;
   transition: color 0.2s ease;
   white-space: nowrap;
+  overflow: hidden;
 }
 
 .nav-category-title:hover {
@@ -290,9 +289,9 @@ a:hover {
   margin-bottom: 0.15rem;
   border-left: 3px solid transparent;
   white-space: nowrap;
-  width: max-content;
-  min-width: 100%;
+  width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .nav-item:hover {

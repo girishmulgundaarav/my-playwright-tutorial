@@ -201,20 +201,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             type="button"
             className="nav-category-title" 
             onClick={() => toggleCategory(item.label)}
+            title={item.label}
           >
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              {item.label}
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', overflow: 'hidden', flex: 1, marginRight: '0.5rem' }}>
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flexShrink: 1 }}>
+                {item.label}
+              </span>
               {item.label === 'Labs' && (
-                <span className="labs-badge">HOT</span>
+                <span className="labs-badge" style={{ flexShrink: 0 }}>HOT</span>
               )}
-              {allCompleted && <CheckCircle size={14} color="#10b981" />}
+              {allCompleted && <CheckCircle size={14} color="#10b981" style={{ flexShrink: 0 }} />}
             </span>
             <ChevronRight 
               size={12} 
               style={{ 
                 transform: isCollapsed ? 'rotate(0deg)' : 'rotate(90deg)',
                 transition: 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                marginLeft: 'auto'
+                marginLeft: 'auto',
+                flexShrink: 0
               }} 
             />
           </button>
@@ -237,13 +241,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           to={`/docs/${item.id}`} 
           onClick={closeSidebar}
           className={({ isActive }) => `nav-item ${isActive ? 'active' : ''} ${item.className || ''}`}
+          title={item.label}
         >
           {completed ? (
-            <CheckCircle size={16} color="#10b981" />
+            <CheckCircle size={16} color="#10b981" style={{ flexShrink: 0 }} />
           ) : (
-            <FileText size={16} />
+            <FileText size={16} style={{ flexShrink: 0 }} />
           )}
-          <span style={{ color: completed ? 'var(--sidebar-text-active)' : 'inherit' }}>{item.label}</span>
+          <span 
+            style={{ 
+              color: completed ? 'var(--sidebar-text-active)' : 'inherit',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              flex: 1
+            }}
+          >
+            {item.label}
+          </span>
         </NavLink>
       );
     }
