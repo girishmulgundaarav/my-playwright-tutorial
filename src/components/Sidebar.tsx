@@ -27,6 +27,84 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const closeSidebar = () => setIsOpen(false);
   const { completedDocs, isCompleted } = useProgress();
   const location = useLocation();
+  const navRef = React.useRef<HTMLElement>(null);
+
+  React.useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+
+    let isDown = false;
+    let startX: number;
+    let startY: number;
+    let scrollLeft: number;
+    let scrollTop: number;
+    let hasMoved = false;
+
+    const handleMouseDown = (e: MouseEvent) => {
+      if (e.button !== 0) return;
+      isDown = true;
+      hasMoved = false;
+      startX = e.pageX - nav.offsetLeft;
+      startY = e.pageY - nav.offsetTop;
+      scrollLeft = nav.scrollLeft;
+      scrollTop = nav.scrollTop;
+    };
+
+    const handleMouseLeave = () => {
+      isDown = false;
+      nav.classList.remove('dragging');
+    };
+
+    const handleMouseUp = (e: MouseEvent) => {
+      isDown = false;
+      nav.classList.remove('dragging');
+      if (hasMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDown) return;
+      
+      const x = e.pageX - nav.offsetLeft;
+      const y = e.pageY - nav.offsetTop;
+      const walkX = (x - startX) * 1.5;
+      const walkY = (y - startY) * 1.5;
+
+      if (Math.abs(walkX) > 5 || Math.abs(walkY) > 5) {
+        hasMoved = true;
+        nav.classList.add('dragging');
+      }
+
+      if (hasMoved) {
+        e.preventDefault();
+        nav.scrollLeft = scrollLeft - walkX;
+        nav.scrollTop = scrollTop - walkY;
+      }
+    };
+
+    const handleClick = (e: MouseEvent) => {
+      if (hasMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    nav.addEventListener('mousedown', handleMouseDown);
+    nav.addEventListener('mouseleave', handleMouseLeave);
+    nav.addEventListener('mouseup', handleMouseUp);
+    nav.addEventListener('mousemove', handleMouseMove);
+    nav.addEventListener('click', handleClick, true);
+
+    return () => {
+      nav.removeEventListener('mousedown', handleMouseDown);
+      nav.removeEventListener('mouseleave', handleMouseLeave);
+      nav.removeEventListener('mouseup', handleMouseUp);
+      nav.removeEventListener('mousemove', handleMouseMove);
+      nav.removeEventListener('click', handleClick, true);
+    };
+  }, []);
 
   const [collapsedCategories, setCollapsedCategories] = React.useState<Record<string, boolean>>(() => {
     const initial: Record<string, boolean> = {};
@@ -180,7 +258,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           </div>
         </div>
 
-        <nav className="sidebar-nav">
+        <nav className="sidebar-nav" ref={navRef}>
           {sidebars.tutorialSidebar.map(item => renderItem(item))}
         </nav>
 

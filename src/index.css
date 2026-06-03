@@ -180,16 +180,25 @@ a:hover {
 .sidebar-nav {
   flex: 1;
   overflow-y: auto;
+  overflow-x: auto;
   padding: 1.5rem 0;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
   
   /* Support Firefox scrollbar styling */
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 }
 
+.sidebar-nav.dragging {
+  cursor: grabbing;
+}
+
 /* Custom Scrollbar for Sidebar Navigation */
 .sidebar-nav::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 
 .sidebar-nav::-webkit-scrollbar-track {
@@ -228,6 +237,7 @@ a:hover {
   cursor: pointer;
   text-align: left;
   transition: color 0.2s ease;
+  white-space: nowrap;
 }
 
 .nav-category-title:hover {
@@ -246,6 +256,7 @@ a:hover {
   transition: all 0.2s ease;
   margin-bottom: 0.15rem;
   border-left: 3px solid transparent;
+  white-space: nowrap;
 }
 
 .nav-item:hover {
@@ -960,7 +971,7 @@ a:hover {
 /* Semantic Search UI */
 .search-container {
   position: relative;
-  width: 280px;
+  width: 360px;
 }
 .search-input {
   width: 100%;
