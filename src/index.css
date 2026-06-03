@@ -217,9 +217,11 @@ a:hover {
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* Sidebar Items */
 .nav-category {
   margin-bottom: 1.5rem;
+  width: max-content;
+  min-width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-category-title {
