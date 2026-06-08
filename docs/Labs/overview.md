@@ -16,9 +16,9 @@ For the best learning experience, bookmark the sandbox link and configure it as 
 
 ---
 
-## 🚀 The 13 Automation Challenges
+## 🚀 The 14 Automation Challenges
 
-The practice sandbox is divided into **13 specialized challenge categories**, each designed to target specific aspects of modern web automation and testing:
+The practice sandbox is divided into **14 specialized challenge categories**, each designed to target specific aspects of modern web automation and testing:
 
 | # | Challenge Page | Description | Core Target Areas |
 | :--- | :--- | :--- | :--- |
@@ -35,6 +35,7 @@ The practice sandbox is divided into **13 specialized challenge categories**, ea
 | **11** | [Geolocation & Permissions](https://playwright-sandbox.vercel.app/permissions) | Testing permission prompts, mocking device coordinates, and checking camera/geolocation API availability. | Location mocking, Browser permissions |
 | **12** | [API Sandbox](https://playwright-sandbox.vercel.app/api-sandbox) | Combining UI automation with direct API calls. Includes GET/POST requests, checking Bearer tokens, and parsing response headers. | Hybrid testing, REST API validation |
 | **13** | [Form Wizard](https://playwright-sandbox.vercel.app/wizard) | Completing multi-step checkout and wizard registration forms, dealing with back-and-forth screens, validation blocks, and summaries. | Multi-step workflows, State progression |
+| **14** | [E2E POM & Loops Lab](https://playwright-sandbox.vercel.app/) | Building modular Page Object Model frameworks, custom fixtures (`test.extend`), dynamic data loops (`for` loops), and status polling timers (`while` loops). | E2E Framework, Page Objects, Custom Fixtures, Loops |
 
 ---
 

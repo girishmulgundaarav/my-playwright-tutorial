@@ -312,6 +312,12 @@ const sidebars: SidebarsConfig = {
           label: 'Multi-Step Form Wizard Lab',
           className: 'sidebar-item-labs-wizard',
         },
+        {
+          type: 'doc',
+          id: 'Labs/playwright-e2e-framework-labs',
+          label: 'E2E POM Framework & Loops Lab',
+          className: 'sidebar-item-labs-e2e-framework',
+        },
       ],
     },
   ],

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { PlayCircle, Code, BookOpen, Terminal } from 'lucide-react';
 import { CodeShowcase } from './CodeShowcase';
 import { Newsletter } from './Newsletter';
+import { StatsCounter } from './StatsCounter';
 
 export const LandingPage: React.FC = () => {
   return (
@@ -11,15 +12,15 @@ export const LandingPage: React.FC = () => {
         <div className="landing-panel hero-panel">
           <div className="hero-section">
             <div className="hero-text-container">
-              <div className="badge">Playwright Tutorial 2026</div>
-              <h1 className="hero-title">
+              <div className="badge hero-animate hero-animate-1">Playwright Tutorial 2026</div>
+              <h1 className="hero-title hero-animate hero-animate-2">
                 Master Web Automation with <span className="gradient-text">Playwright</span>
               </h1>
-              <p className="hero-subtitle">
+              <p className="hero-subtitle hero-animate hero-animate-3">
                 From zero to hero. Learn to build robust, reliable, and fast end-to-end tests for modern web applications.
               </p>
 
-              <div className="hero-actions">
+              <div className="hero-actions hero-animate hero-animate-4">
                 <Link to="/docs/Introduction/getting-started" className="cta-button primary">
                   <PlayCircle size={20} />
                   Start Learning
@@ -42,6 +43,8 @@ export const LandingPage: React.FC = () => {
             </div>
           </div>
         </div>
+
+        <StatsCounter />
 
         <div className="features-grid">
           <div className="feature-card tool-card">

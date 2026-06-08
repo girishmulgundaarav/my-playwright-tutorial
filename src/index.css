@@ -1116,7 +1116,13 @@ a:hover {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #fafaf9;
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(230, 95, 43, 0.08) 0%, transparent 52%),
+    radial-gradient(ellipse at 85% 10%, rgba(249, 115, 22, 0.06) 0%, transparent 52%),
+    radial-gradient(ellipse at 60% 90%, rgba(234, 91, 51, 0.05) 0%, transparent 48%),
+    #fafaf9;
+  background-size: 200% 200%;
+  animation: gradientDrift 14s ease-in-out infinite alternate;
   position: relative;
   overflow: hidden;
   flex: 1;
@@ -1125,13 +1131,54 @@ a:hover {
   box-sizing: border-box;
 }
 
-[data-theme='dark'] .landing-container {
-  background-color: #0e0d0c;
+@keyframes gradientDrift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 50% 0%; }
+  100% { background-position: 100% 50%; }
 }
 
-.landing-container::before {
-  display: none;
+[data-theme='dark'] .landing-container {
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(230, 95, 43, 0.12) 0%, transparent 52%),
+    radial-gradient(ellipse at 85% 10%, rgba(249, 115, 22, 0.09) 0%, transparent 52%),
+    radial-gradient(ellipse at 60% 90%, rgba(234, 91, 51, 0.07) 0%, transparent 48%),
+    #0e0d0c;
+  background-size: 200% 200%;
+  animation: gradientDrift 14s ease-in-out infinite alternate;
 }
+
+/* ─── Dot-grid overlay ───────────────────────────────────────────────────── */
+.landing-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(230, 95, 43, 0.18) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+  animation: dotGridDrift 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+
+@keyframes dotGridDrift {
+  from { background-position: 0 0; }
+  to   { background-position: 28px 28px; }
+}
+
+[data-theme='dark'] .landing-container::before {
+  background-image: radial-gradient(
+    circle,
+    rgba(230, 95, 43, 0.28) 1px,
+    transparent 1px
+  );
+  opacity: 0.4;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
 
 .landing-container::after {
   display: none;
@@ -1171,6 +1218,103 @@ a:hover {
     border-radius: 0;
   }
 }
+
+/* ─── Hero Entrance Animations ─────────────────────────────────────────────── */
+
+@keyframes heroSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Base state — hidden until animation kicks in */
+.hero-animate {
+  opacity: 0;
+  animation-fill-mode: both;
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-name: heroSlideUp;
+}
+
+.hero-animate-1 { animation-delay: 0.05s; }
+.hero-animate-2 { animation-delay: 0.2s;  }
+.hero-animate-3 { animation-delay: 0.38s; }
+.hero-animate-4 { animation-delay: 0.55s; }
+
+/* Hero image slides in from the right */
+.hero-image-container {
+  animation: heroFadeInRight 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+/* TypeAnimation: wrapper keeps height stable while text changes */
+.type-anim-wrapper {
+  display: inline-block;
+  min-width: 2ch; /* prevents line-wrap thrash during deletion */
+}
+
+/* The span TypeAnimation renders — must stay inline for gradient to work */
+.type-anim-text {
+  display: inline !important;
+}
+
+/*
+ * THE KEY FIX:
+ * .gradient-text sets -webkit-text-fill-color: transparent so the gradient
+ * shows through. But this also makes the blinking cursor character transparent.
+ * react-type-animation appends a literal "|" character inside the same span,
+ * so we can't target it with ::after. Instead we reset the fill color only on
+ * the cursor character using a sibling CSS trick: since the cursor is always
+ * the last character, we select the whole span and use a text-shadow to make
+ * the gradient visible while a separate color handles the cursor.
+ *
+ * Simpler reliable approach: use color (not -webkit-text-fill-color) for the
+ * type-anim-text so the cursor inherits a real colour, then re-apply the
+ * gradient clip only to the text content.
+ */
+.hero-title .type-anim-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* Use color for the cursor — transparent only where text is painted */
+  -webkit-text-fill-color: transparent;
+  /* Cursor blink override: the "|" character needs a visible fill */
+  /* react-type-animation adds cursor as inline text; we make the whole span
+     transparent via -webkit-text-fill-color above, then restore cursor colour
+     using a ::after hack on the wrapper */
+}
+
+/* Restore cursor visibility: inject a pseudo-element overlay */
+.type-anim-wrapper::after {
+  content: '';  /* placeholder — actual cursor is inside the span */
+}
+
+/* react-type-animation sets cursor via a class on the span's last child.
+   The simplest reliable fix: remove -webkit-text-fill-color on the cursor char
+   by targeting the span directly and relying on background-clip only */
+
+/* Cursor character fix — override for the blinking | */
+.hero-title .type-anim-text .type-cursor,
+.hero-title .type-anim-text[data-cursor] {
+  -webkit-text-fill-color: var(--accent-primary) !important;
+}
+
+
 
 .hero-section {
   display: flex;
@@ -1229,6 +1373,133 @@ a:hover {
   z-index: 1;
   animation: pulseGlow 8s ease-in-out infinite;
 }
+
+/* ─── Stats Counter Section ──────────────────────────────────────────────── */
+
+.stats-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.stats-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.stats-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-primary);
+  opacity: 0.8;
+}
+
+.stats-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(230, 95, 43, 0.1);
+  box-shadow: 0 4px 20px rgba(28, 25, 23, 0.05);
+  text-align: center;
+  /* Transition driven by inline style changes from JS */
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(230, 95, 43, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.stat-card:hover {
+  box-shadow: 0 8px 30px rgba(230, 95, 43, 0.12);
+  transform: translateY(-4px) !important;
+}
+
+.stat-value {
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 0.25rem;
+}
+
+.stat-description {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+[data-theme='dark'] .stat-card {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(230, 95, 43, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark'] .stat-card:hover {
+  box-shadow: 0 8px 30px rgba(230, 95, 43, 0.18);
+}
+
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .stat-value {
+    font-size: 2.25rem;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
 
 /* Floating glassmorphic cards */
 .floating-card {
