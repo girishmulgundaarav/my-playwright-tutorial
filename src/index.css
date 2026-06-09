@@ -2283,23 +2283,24 @@ a:hover {
 /* --- Table of Contents --- */
 .docs-layout-container {
   display: flex;
-  gap: 2.5rem;
-  max-width: 1450px;
-  margin: 0 auto;
-  transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 2rem;
+  width: 100%;
+  transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .docs-main-column {
   flex: 1;
-  min-width: 0;
-  max-width: 1050px;
+  min-width: 0; /* allows flex shrinking below content size */
   transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .docs-toc-column {
-  width: 250px;
+  width: 240px;
+  min-width: 240px;
   flex-shrink: 0;
   display: none;
+  padding-right: 1.5rem;
+  box-sizing: border-box;
 }
 
 @media (min-width: 1280px) {
@@ -2308,19 +2309,23 @@ a:hover {
   }
 }
 
+@media (min-width: 1440px) {
+  .docs-toc-column {
+    width: 240px;
+    min-width: 240px;
+  }
+}
+
 @media (min-width: 1920px) {
   .content-area {
     max-width: 1700px;
   }
   .docs-layout-container {
-    max-width: 1600px;
     gap: 3rem;
-  }
-  .docs-main-column {
-    max-width: 1150px;
   }
   .docs-toc-column {
     width: 280px;
+    min-width: 280px;
   }
 }
 
@@ -2329,8 +2334,6 @@ a:hover {
   top: calc(var(--header-height) + 2rem);
   max-height: calc(100vh - var(--header-height) - 4rem);
   overflow-y: auto;
-  
-  /* Support Firefox scrollbar styling */
   scrollbar-width: thin;
   scrollbar-color: var(--border-glass) transparent;
 }
@@ -2379,10 +2382,13 @@ a:hover {
   font-size: 0.8rem;
   display: block;
   line-height: 1.4;
-  padding: 0.35rem 0 0.35rem 1rem;
+  padding: 0.35rem 0.25rem 0.35rem 1rem;
   margin-left: -1px;
   border-left: 2px solid transparent;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Wrap text rather than clip — better for readability */
+  word-break: break-word;
+  white-space: normal;
 }
 
 .toc-link:hover, .toc-link.active {
