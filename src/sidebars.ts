@@ -250,6 +250,32 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'API Testing',
+      className: 'sidebar-category-api-testing',
+      collapsed: true,
+      items: [
+        {
+          type: 'doc',
+          id: 'API Testing/api-testing-foundations',
+          label: 'API Testing Foundations',
+          className: 'sidebar-item-api-foundations',
+        },
+        {
+          type: 'doc',
+          id: 'API Testing/http-requests-validation',
+          label: 'HTTP Requests & Validation',
+          className: 'sidebar-item-api-requests',
+        },
+        {
+          type: 'doc',
+          id: 'API Testing/auth-schema-validation',
+          label: 'API Auth & JSON Schema Validation',
+          className: 'sidebar-item-api-auth-schema',
+        },
+      ],
+    },
+    {
+      type: 'category',
       label: 'Labs',
       className: 'sidebar-category-labs',
       collapsed: true,
