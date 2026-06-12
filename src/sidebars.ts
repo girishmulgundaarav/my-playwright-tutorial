@@ -224,6 +224,32 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Automation Framework',
+      className: 'sidebar-category-framework',
+      collapsed: true,
+      items: [
+        {
+          type: 'doc',
+          id: 'Automation Framework/building-pom-framework',
+          label: 'Introduction to framework',
+          className: 'sidebar-item-pom-framework',
+        },
+        {
+          type: 'doc',
+          id: 'Automation Framework/data-driven-testing',
+          label: 'Data Driven Tests',
+          className: 'sidebar-item-ddt-tests',
+        },
+        {
+          type: 'doc',
+          id: 'Automation Framework/end-to-end-testing',
+          label: 'End to End Test',
+          className: 'sidebar-item-e2e-test',
+        },
+      ],
+    },
+    {
+      type: 'category',
       label: 'Labs',
       className: 'sidebar-category-labs',
       collapsed: true,
