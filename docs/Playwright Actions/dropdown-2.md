@@ -11,6 +11,15 @@ This chapter covers how to automate these advanced dropdowns using web-first loc
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **jQuery-AZ Demo:** [https://jquery-az.com/boots/demo.php?ex=63.0_2](https://jquery-az.com/boots/demo.php?ex=63.0_2)
+*   **OrangeHRM Demo:** [https://opensource-demo.orangehrmlive.com/](https://opensource-demo.orangehrmlive.com/)
+*   **RedBus:** [https://www.redbus.in/](https://www.redbus.in/)
+
+---
+
 ## 1. Traditional vs. Custom Dropdowns
 
 Understanding the differences between standard select tags and custom UI dropdowns dictates which locator strategies you must use:

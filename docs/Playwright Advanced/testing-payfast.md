@@ -10,6 +10,13 @@ Fintech testing requires special care because it involves secure inputs, third-p
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playfast Finance:** [https://playfast-finance.com/pricing](https://playfast-finance.com/pricing)
+
+---
+
 ## 💳 The Test Scenario
 We want to test a customer purchasing a SaaS subscription. The user journey includes:
 1. Navigating to the pricing page.

@@ -8,6 +8,13 @@ This lab guide covers 10 advanced multi-tab and window automation exercises desi
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Multi-Tab & Windows:** [https://playwright-sandbox.vercel.app/windows](https://playwright-sandbox.vercel.app/windows)
+
+---
+
 ## 🛠️ Global Setup
 
 ```typescript

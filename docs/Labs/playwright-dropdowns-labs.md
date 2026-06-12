@@ -8,6 +8,13 @@ This lab guide covers 15 distinct dropdown exercises categorized into three leve
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Dropdowns:** [https://playwright-sandbox.vercel.app/dropdowns](https://playwright-sandbox.vercel.app/dropdowns)
+
+---
+
 ## 🛠️ Global Setup
 
 ```typescript

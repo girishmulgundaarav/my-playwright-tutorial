@@ -8,6 +8,13 @@ This lab guide covers 12 distinct automation exercises divided across three chal
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Tables:** [https://playwright-sandbox.vercel.app/tables](https://playwright-sandbox.vercel.app/tables)
+
+---
+
 ## 🛠️ Global Setup
 
 ```typescript

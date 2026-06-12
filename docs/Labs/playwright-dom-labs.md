@@ -8,6 +8,13 @@ This lab guide covers 9 essential automation exercises focusing on advanced DOM 
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - DOM & Locating:** [https://playwright-sandbox.vercel.app/dom](https://playwright-sandbox.vercel.app/dom)
+
+---
+
 ## 🛠️ Global Setup
 
 ```typescript

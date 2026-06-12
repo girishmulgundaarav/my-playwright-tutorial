@@ -9,6 +9,15 @@ Modern web applications present tabular datasets that are either **dynamic** (co
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Blazedemo.com:** [https://blazedemo.com/](https://blazedemo.com/)
+*   **DataTables Example:** [https://datatables.net/examples/basic_init/zero_configuration.html](https://datatables.net/examples/basic_init/zero_configuration.html)
+*   **Test Automation Practice:** [https://testautomationpractice.blogspot.com/](https://testautomationpractice.blogspot.com/)
+
+---
+
 ## 1. Handling Dynamic Web Tables
 
 Dynamic tables change content (values, rows, or column orders) in real-time or upon page refresh. Locating cells based on static indices will fail. You must locate rows by scanning for unique text matching cell values.

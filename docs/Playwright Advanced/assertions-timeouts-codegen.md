@@ -11,6 +11,14 @@ This guide covers how to implement auto-retrying and non-retrying assertions, cu
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **DemoBlaze:** [https://demoblaze.com/index.html](https://demoblaze.com/index.html)
+*   **Demo Web Shop:** [https://demowebshop.tricentis.com/](https://demowebshop.tricentis.com/)
+
+---
+
 ## 1. Playwright Auto-Waiting Mechanism
 
 Before performing actions like `.click()`, `.fill()`, or `.hover()`, Playwright automatically waits for target elements to pass a set of **Actionability Checks**. This ensures the element is in a state where the action can succeed, eliminating flaky test runs caused by race conditions.
@@ -39,8 +47,13 @@ In scenarios where you want to perform an action regardless of whether it passes
 
 ```typescript
 // Bypasses non-essential checks (like visibility or pointer event blocking)
-await page.locator('#small-searchterms').fill('Laptop', { force: true });
-await page.locator('.button-1.search-box-button').click({ force: true });
+await page
+  .locator('#small-searchterms')
+  .fill('Laptop', { force: true });
+
+await page
+  .locator('.button-1.search-box-button')
+  .click({ force: true });
 ```
 
 ---
@@ -49,12 +62,12 @@ await page.locator('.button-1.search-box-button').click({ force: true });
 
 Timeouts dictate how long Playwright should wait for an operation to succeed before throwing an error and failing the test.
 
-| Timeout Type | Scope | Default Value | Global Config File Parameter | Inline Override in Test |
+| Timeout Type | Scope | Default Value | Config Parameter | Override in Test |
 | :--- | :--- | :--- | :--- | :--- |
-| **Test Timeout** | Maximum time allowed for a single test block | `30,000 ms` (30s) | `timeout: 60000` | `test.setTimeout(50000)` |
-| **Expect Timeout** | Time allowed for an assertion to be satisfied | `5,000 ms` (5s) | `expect: { timeout: 10000 }` | `expect(locator).toBeVisible({ timeout: 10000 })` |
-| **Action Timeout** | Time allowed for an action (e.g. click, fill) to complete | No default (infinite) | `use: { actionTimeout: 10000 }` | `locator.click({ timeout: 10000 })` |
-| **Navigation Timeout** | Time allowed for page navigation (`goto`, `waitForNavigation`) | No default (infinite) | `use: { navigationTimeout: 15000 }` | `page.goto(url, { timeout: 15000 })` |
+| **Test Timeout** | Max execution for a single test block | `30,000 ms` | `timeout: 60000` | `test.setTimeout(50000)` |
+| **Expect Timeout** | Time allowed for an assertion to pass | `5,000 ms` | `expect: { timeout: 10000 }` | `expect(loc).toBeVisible({ timeout: 10000 })` |
+| **Action Timeout** | Time allowed for an action (click, fill) | Infinite | `actionTimeout: 10000` | `loc.click({ timeout: 10000 })` |
+| **Navigation Timeout**| Time allowed for page navigation (`goto`) | Infinite | `navigationTimeout: 15000` | `page.goto(url, { timeout: 15000 })` |
 
 ### Modifying Timeouts in Code
 
@@ -83,7 +96,8 @@ test('Slow test execution example', async ({ page }) => {
 #### C. Overriding an Assertion (Expect) Timeout
 ```typescript
 // Waits up to 10 seconds for the element to become visible
-await expect(page.locator('text=Welcome to our store')).toBeVisible({ timeout: 10000 });
+const welcomeText = page.locator('text=Welcome to our store');
+await expect(welcomeText).toBeVisible({ timeout: 10000 });
 ```
 
 ---
@@ -106,8 +120,11 @@ await expect(page).toHaveURL("https://demowebshop.tricentis.com/");
 // Waits for the element to become visible
 await expect(page.locator('text=Welcome to our store')).toBeVisible();
 
-// Waits for the element to contain specific text
-await expect(page.locator("div[class='product-grid home-page-product-grid'] strong")).toHaveText('Featured products');
+// Waits for the element to contain specific text (broken down selector)
+const promoHeader = page.locator(
+  "div[class='product-grid home-page-product-grid'] strong"
+);
+await expect(promoHeader).toHaveText('Featured products');
 ```
 
 ### Non-Retrying Assertions (Synchronous)
@@ -120,7 +137,9 @@ Non-retrying assertions are synchronous and do not return Promises. **Do not use
 ```typescript
 // 1. Get the value from the page
 const title = await page.title();
-const welcometext = await page.locator('text=Welcome to our store').textContent();
+const welcometext = await page
+  .locator('text=Welcome to our store')
+  .textContent();
 
 // 2. Perform synchronous assertion
 expect(title.includes('Demo Web Shop')).toBeTruthy();
@@ -157,7 +176,7 @@ In contrast, **Soft Assertions** will record a failure, but allow the test to co
 | :--- | :--- | :--- |
 | **Default Option?** | Yes | No (requires explicit `expect.soft(...)`) |
 | **On Failure...** | Terminates test immediately | Continues executing remaining test steps |
-| **Typical Use Case** | Critical checks (e.g. login success) that block next steps | Layout checks, verifying multiple independent elements |
+| **Typical Use Case** | Critical checks that block next steps | Layout checks, verifying independent sub-items |
 | **Failure Summary** | Stops on first failure | Lists all compiled failures at the end |
 
 ### Code Example: Hard vs Soft Assertions
@@ -168,14 +187,14 @@ import { test, expect } from '@playwright/test';
 test('Verify Landing Page Elements with Soft Assertions', async ({ page }) => {
   await page.goto('https://demowebshop.tricentis.com/');
 
-  // Soft Assertions: even if the title check fails, the test will continue checking URL & visibility
+  // Soft Assertions run completely without stopping on failure
   await expect.soft(page).toHaveTitle('Demo Web Shop2'); // Will fail
   await expect.soft(page).toHaveURL('https://demowebshop.tricentis.com/'); // Will pass
   
   const logo = page.locator("img[alt='Tricentis Demo Web Shop']");
   await expect.soft(logo).toBeVisible(); // Will pass
   
-  // The test is marked as FAILED in reports, but all three assertions were run
+  // The test fails at the end, but all assertions run
 });
 ```
 
@@ -200,7 +219,9 @@ Here is the Playwright Codegen interface showing a live browser and the Inspecto
 #### A. Record and Save Directly to File
 Automatically write the recorded steps into a target file path:
 ```bash
-npx playwright codegen -o tests/codegen-demo.spec.ts https://demoblaze.com/
+npx playwright codegen \
+  -o tests/codegen-demo.spec.ts \
+  https://demoblaze.com/
 ```
 
 #### B. Specify Browser Engine
@@ -209,7 +230,7 @@ Force recording on a specific browser type (`chromium`, `firefox`, or `webkit`):
 # Using Firefox engine
 npx playwright codegen --browser firefox https://example.com
 
-# Short flag variant
+# Using WebKit engine
 npx playwright codegen -b webkit https://example.com
 ```
 
@@ -228,7 +249,11 @@ npx playwright codegen --viewport-size "1280,720" https://example.com
 #### E. Combining Options
 Configure multiple recording constraints simultaneously:
 ```bash
-npx playwright codegen --browser=chromium --output=tests/mytest.spec.ts --viewport-size "1280,720" https://demoblaze.com/
+npx playwright codegen \
+  --browser=chromium \
+  --output=tests/mytest.spec.ts \
+  --viewport-size "1280,720" \
+  https://demoblaze.com/
 ```
 
 ---
@@ -247,9 +272,9 @@ Run your test script with the `--debug` flag to launch the Inspector:
 npx playwright test tests/mytest.spec.ts --debug
 ```
 
-*   The test runs in headed mode.
-*   The Inspector opens side-by-side, pausing at the first line of the test.
-*   You can click **Step over** (`F10`) to execute line-by-line, **Resume** (`F5`) to run, or inspect selector elements dynamically using the **Record/Explore** tool.
+* The test runs in headed mode.
+* The Inspector opens side-by-side, pausing at the first line of the test.
+* You can click **Step over** (`F10`) to execute line-by-line, **Resume** (`F5`) to run, or inspect selector elements dynamically using the **Record/Explore** tool.
 
 ### Adding Breakpoints (`page.pause()`)
 To skip stepping through setup actions (like login pages) and pause the test at a precise line, insert `await page.pause()` directly into your code:
@@ -275,26 +300,26 @@ test('Debug a specific step', async ({ page }) => {
 ## 🏋️ Hands-on Lab Assignments
 
 ### Exercise 1: Assertions and Auto-Wait Challenge
-*   Write a test that navigates to the Demo Web Shop: `https://demowebshop.tricentis.com/`
-*   Add a test-level timeout of `50000ms`.
-*   Use auto-retrying assertions to verify that the URL is correct, and that the search field is visible.
-*   Type "Laptop" in the search input field using a forced action (`{ force: true }`), click the search button, and assert the search results title has the correct text.
+* Write a test that navigates to the Demo Web Shop: `https://demowebshop.tricentis.com/`
+* Add a test-level timeout of `50000ms`.
+* Use auto-retrying assertions to verify that the URL is correct, and that the search field is visible.
+* Type "Laptop" in the search input field using a forced action (`{ force: true }`), click the search button, and assert the search results title has the correct text.
 
 ### Exercise 2: Soft vs Hard Assertions Implementation
-*   Create a test that navigates to `https://demowebshop.tricentis.com/`.
-*   Implement three assertions using `expect.soft`:
-    *   Verify the title is `Demo Web Shop - Invalid` (Expected to Fail).
-    *   Verify the page URL is `https://demowebshop.tricentis.com/` (Expected to Pass).
-    *   Verify the logo image is visible (Expected to Pass).
-*   Add a hard assertion at the end to check if the main header block is visible.
-*   Confirm the test runs all soft checks and fails only at the end.
+* Create a test that navigates to `https://demowebshop.tricentis.com/`.
+* Implement three assertions using `expect.soft`:
+    * Verify the title is `Demo Web Shop - Invalid` (Expected to Fail).
+    * Verify the page URL is `https://demowebshop.tricentis.com/` (Expected to Pass).
+    * Verify the logo image is visible (Expected to Pass).
+* Add a hard assertion at the end to check if the main header block is visible.
+* Confirm the test runs all soft checks and fails only at the end.
 
 ### Exercise 3: Playwright Debugging & Breakpoints
-*   Write a script that:
-    *   Navigates to `https://www.demoblaze.com/index.html`.
-    *   Clicks the "Log in" button.
-    *   Adds a breakpoint `await page.pause()` immediately after the click.
-*   Run the script using `npx playwright test --debug` and verify that the Playwright Inspector pauses at your breakpoint, letting you inspect the DOM.
+* Write a script that:
+    * Navigates to `https://www.demoblaze.com/index.html`.
+    * Clicks the "Log in" button.
+    * Adds a breakpoint `await page.pause()` immediately after the click.
+* Run the script using `npx playwright test --debug` and verify that the Playwright Inspector pauses at your breakpoint, letting you inspect the DOM.
 
 ---
 

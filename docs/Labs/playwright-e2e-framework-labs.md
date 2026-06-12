@@ -8,6 +8,16 @@ This lab guide is designed to help students master **End-to-End (E2E) testing fr
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Async Challenges:** [https://playwright-sandbox.vercel.app/async](https://playwright-sandbox.vercel.app/async)
+*   **Playwright Sandbox - Storage & Auth:** [https://playwright-sandbox.vercel.app/storage](https://playwright-sandbox.vercel.app/storage)
+*   **Playwright Sandbox - Tables:** [https://playwright-sandbox.vercel.app/tables](https://playwright-sandbox.vercel.app/tables)
+*   **Playwright Sandbox - Form Wizard:** [https://playwright-sandbox.vercel.app/wizard](https://playwright-sandbox.vercel.app/wizard)
+
+---
+
 ## 🏗️ Architecture & Framework Setup
 
 In a production-grade test suite, tests should be cleanly separated from direct DOM selectors. To achieve this, we will use the **Page Object Model (POM)** alongside **Custom Fixtures** to automatically instantiate and inject page objects.

@@ -11,6 +11,14 @@ This guide details how to capture page, full-page, and element-specific screensh
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Demo Web Shop:** [https://demowebshop.tricentis.com/](https://demowebshop.tricentis.com/)
+*   **DemoBlaze:** [https://www.demoblaze.com/index.html](https://www.demoblaze.com/index.html)
+
+---
+
 ## 1. Capturing Screenshots
 
 Screenshots capture the visual state of the application at a specific point in time during the test run. Playwright supports page-level, full-page, and element-specific screenshot capturing.

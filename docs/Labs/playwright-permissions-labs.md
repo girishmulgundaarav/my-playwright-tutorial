@@ -8,6 +8,13 @@ This lab guide covers 9 advanced geolocation mocking and browser hardware permis
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Geolocation & Permissions:** [https://playwright-sandbox.vercel.app/permissions](https://playwright-sandbox.vercel.app/permissions)
+
+---
+
 ## 🛠️ Global Setup
 
 When testing browser permissions and geolocation, Playwright requires permissions to be granted at the **BrowserContext** level. You can configure these globally in `playwright.config.ts`, or dynamically inside specific tests or `beforeEach` hooks.

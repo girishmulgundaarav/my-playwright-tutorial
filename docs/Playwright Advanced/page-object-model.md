@@ -11,6 +11,13 @@ The **Page Object Model (POM)** is a design pattern that creates an abstraction 
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **VWO App Login:** [https://app.vwo.com](https://app.vwo.com)
+
+---
+
 ## 1. Architectural Overview
 
 The following diagram illustrates how Playwright runs test scripts through a custom fixture injection model that references organized, modular page objects:

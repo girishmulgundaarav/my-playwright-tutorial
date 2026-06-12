@@ -8,6 +8,13 @@ This lab guide contains hands-on automation challenges for all 12 zones on the *
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Forms & Controls:** [https://playwright-sandbox.vercel.app/forms](https://playwright-sandbox.vercel.app/forms)
+
+---
+
 ## 🛠️ Global Setup
 
 Before writing tests, students should configure their base test block:

@@ -574,7 +574,9 @@ a:hover {
   border-radius: 0;
   padding: 0;
   box-shadow: none;
-  overflow: visible;
+  overflow: hidden;
+  width: 100%;
+  min-width: 0;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -849,6 +851,8 @@ a:hover {
   box-shadow: 0 4px 14px rgba(79, 70, 229, 0.05);
   border: 1px solid var(--border-glass);
   background-color: #1b352f;
+  width: 100%;
+  max-width: 100%;
 }
 
 .code-block-header {
@@ -2291,6 +2295,7 @@ a:hover {
 .docs-main-column {
   flex: 1;
   min-width: 0; /* allows flex shrinking below content size */
+  overflow: hidden;
   transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 

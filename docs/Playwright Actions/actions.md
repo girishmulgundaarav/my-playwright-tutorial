@@ -11,6 +11,13 @@ To handle these challenges, Playwright uses **Actionability Checks**—an automa
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Test Automation Practice:** [https://testautomationpractice.blogspot.com/](https://testautomationpractice.blogspot.com/)
+
+---
+
 ## 1. Playwright Auto-Waiting & Actionability Pipeline
 
 Before Playwright clicks, fills, checks, or interacts with any locator, it runs an internal pipeline of checks. If any check fails, Playwright will continuously retry the pipeline until it passes or the action times out (default is 30 seconds).

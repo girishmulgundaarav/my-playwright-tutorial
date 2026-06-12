@@ -8,6 +8,13 @@ This lab guide covers 9 distinct pointer and keyboard exercises designed to buil
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Advanced Actions:** [https://playwright-sandbox.vercel.app/advanced](https://playwright-sandbox.vercel.app/advanced)
+
+---
+
 ## 🛠️ Global Setup
 
 ```typescript

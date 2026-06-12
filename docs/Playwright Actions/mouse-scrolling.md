@@ -6,6 +6,18 @@ Playwright provides elegant APIs to emulate precise mouse dynamics and scroll ev
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **jQuery Context Menu Demo:** [http://swisnl.github.io/jQuery-contextMenu/demo.html](http://swisnl.github.io/jQuery-contextMenu/demo.html)
+*   **DataTables Example:** [https://datatables.net/examples/basic_init/scroll_xy.html](https://datatables.net/examples/basic_init/scroll_xy.html)
+*   **Guru99 Demo:** [https://demo.guru99.com/test/drag_drop.html](https://demo.guru99.com/test/drag_drop.html)
+*   **Demo Web Shop:** [https://demowebshop.tricentis.com/](https://demowebshop.tricentis.com/)
+*   **Test Automation Practice:** [https://testautomationpractice.blogspot.com/](https://testautomationpractice.blogspot.com/)
+*   **Books by Kilo:** [https://www.booksbykilo.in/new-books?pricerange=201to500](https://www.booksbykilo.in/new-books?pricerange=201to500)
+
+---
+
 ## 1. Playwright Autoscrolling & Actionability
 
 One of Playwright's most powerful features is **Actionability Checks**. Before performing actions like `.click()`, `.hover()`, `.check()`, or `.fill()`, Playwright automatically checks that the target element is:

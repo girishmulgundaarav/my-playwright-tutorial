@@ -9,6 +9,14 @@ In web automation, interacting with tabular data and iterating through lists of 
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Demo Web Shop:** [https://demowebshop.tricentis.com/](https://demowebshop.tricentis.com/)
+*   **Test Automation Practice:** [https://testautomationpractice.blogspot.com/](https://testautomationpractice.blogspot.com/)
+
+---
+
 ## 🗺️ Concept Map: Web Table Automation in Playwright
 
 ![Web Tables & Element Iteration — Full Concept Map](/img/playwright_web_tables_concept_map.png)

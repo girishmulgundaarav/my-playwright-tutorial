@@ -8,6 +8,13 @@ This lab guide covers 10 advanced multi-step form wizard and client-state automa
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Form Wizard:** [https://playwright-sandbox.vercel.app/wizard](https://playwright-sandbox.vercel.app/wizard)
+
+---
+
 ## 🛠️ Global Setup
 
 Multi-step forms require tests to navigate through several sequential page layouts. You can initialize tests to start from the dashboard or directly navigate to the form wizard URL route.

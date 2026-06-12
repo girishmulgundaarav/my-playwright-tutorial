@@ -8,6 +8,13 @@ This lab guide covers 10 advanced hybrid E2E and API testing exercises designed 
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - API Sandbox:** [https://playwright-sandbox.vercel.app/api-sandbox](https://playwright-sandbox.vercel.app/api-sandbox)
+
+---
+
 ## 🛠️ Global Setup
 
 Hybrid E2E testing involves standard UI interactions along with direct REST calls using Playwright's built-in `APIRequestContext`. You can configure global baseURL and tokens, or create custom requests inside tests.

@@ -13,6 +13,14 @@ This guide covers basic test parameterization techniques, reading structured dat
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Demo Web Shop:** [https://demowebshop.tricentis.com/](https://demowebshop.tricentis.com/)
+*   **Demo Web Shop:** [https://demowebshop.tricentis.com/login](https://demowebshop.tricentis.com/login)
+
+---
+
 ## 1. Data-Driven Testing Architecture
 
 In a standard Playwright data-driven execution, external files are loaded and parsed into standard JavaScript objects during the test-runner initial compilation phase. These records are then looped over to instantiate distinct test case scenarios:

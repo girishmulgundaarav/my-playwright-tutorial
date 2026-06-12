@@ -11,6 +11,13 @@ This guide covers how to leverage Codegen, customize recording behavior using CL
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **VWO App Login:** [https://app.vwo.com](https://app.vwo.com)
+
+---
+
 ## 1. Test Generation with Codegen
 
 When you run Playwright's test generator, it launches two windows side-by-side:

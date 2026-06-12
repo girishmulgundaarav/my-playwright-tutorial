@@ -9,6 +9,14 @@ In web applications, dialogs (JavaScript alerts) and iframes (embedded documents
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Test Automation Practice:** [https://testautomationpractice.blogspot.com/](https://testautomationpractice.blogspot.com/)
+*   **UI Vision Frames Demo:** [https://ui.vision/demo/webtest/frames/](https://ui.vision/demo/webtest/frames/)
+
+---
+
 ## 1. Browser Dialogs (Alerts, Confirms, Prompts)
 
 Browser dialogs are native OS-level pop-ups triggered by JavaScript calls like `alert()`, `confirm()`, or `prompt()`.

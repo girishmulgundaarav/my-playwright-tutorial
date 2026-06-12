@@ -11,6 +11,16 @@ Playwright provides native APIs to handle these requirements with high reliabili
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Automation Practice:** [http://www.automationpractice.pl/index.php](http://www.automationpractice.pl/index.php)
+*   **Books PWA Kit:** [https://books-pwakit.appspot.com/](https://books-pwakit.appspot.com/)
+*   **Polymer Shop:** [https://shop.polymer-project.org/](https://shop.polymer-project.org/)
+*   **Google:** [https://www.google.com/](https://www.google.com/)
+
+---
+
 ## 1. Automating Shadow DOM Elements
 
 ### What is the Shadow DOM?

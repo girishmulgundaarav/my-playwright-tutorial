@@ -11,6 +11,15 @@ Playwright provides powerful, native browser APIs to handle keyboard simulation,
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **David Walsh File Upload Demo:** [https://davidwalsh.name/demo/multiple-file-upload.php](https://davidwalsh.name/demo/multiple-file-upload.php)
+*   **Test Automation Practice:** [https://testautomationpractice.blogspot.com/](https://testautomationpractice.blogspot.com/)
+*   **Test Automation Practice:** [https://testautomationpractice.blogspot.com/p/download-files_25.html](https://testautomationpractice.blogspot.com/p/download-files_25.html)
+
+---
+
 ## 1. Simulating Keyboard Actions
 
 Playwright provides a dedicated `Keyboard` API accessible via `page.keyboard`. This allows you to simulate physical keystrokes, modifier keys, and typing sequences just as a real user would.

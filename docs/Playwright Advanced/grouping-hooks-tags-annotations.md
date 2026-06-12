@@ -11,6 +11,14 @@ This guide covers test grouping using `test.describe`, hooks lifecycles, annotat
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **DemoBlaze:** [https://www.demoblaze.com/index.html](https://www.demoblaze.com/index.html)
+*   **Google:** [https://www.google.com/](https://www.google.com/)
+
+---
+
 ## 1. Grouping Tests (`test.describe`)
 
 The `test.describe` block allows you to group related tests together. Grouping organizes your tests by feature, page object, or business workflow, and allows you to apply shared configurations or hooks exclusively to that group.

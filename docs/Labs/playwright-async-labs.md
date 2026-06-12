@@ -8,6 +8,13 @@ This lab guide covers 7 advanced automation exercises corresponding to the diffe
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Async Challenges:** [https://playwright-sandbox.vercel.app/async](https://playwright-sandbox.vercel.app/async)
+
+---
+
 ## 🛠️ Global Setup
 
 ```typescript

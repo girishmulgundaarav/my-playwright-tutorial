@@ -8,6 +8,13 @@ This lab guide covers 8 distinct E2E automation exercises targeting browser cook
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Storage & Auth:** [https://playwright-sandbox.vercel.app/storage](https://playwright-sandbox.vercel.app/storage)
+
+---
+
 ## 🛠️ Global Setup
 
 ```typescript

@@ -9,6 +9,14 @@ Functional tests verify that an application's logic works, but they don't ensure
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Demo Web Shop:** [https://demowebshop.tricentis.com/](https://demowebshop.tricentis.com/)
+*   **W3C Website:** [https://www.w3.org](https://www.w3.org)
+
+---
+
 ## 1. Quality Verification Pipelines
 
 The following diagram illustrates how Playwright runs dual pipelines to verify visual representation and accessibility compliance:

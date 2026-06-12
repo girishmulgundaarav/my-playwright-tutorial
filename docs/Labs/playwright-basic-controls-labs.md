@@ -8,6 +8,13 @@ This lab guide is designed for students learning Playwright. It covers 9 distinc
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Basic UI Controls:** [https://playwright-sandbox.vercel.app/basic-controls](https://playwright-sandbox.vercel.app/basic-controls)
+
+---
+
 ## 🛠️ Global Setup
 
 Before writing tests, students should configure their base test block:

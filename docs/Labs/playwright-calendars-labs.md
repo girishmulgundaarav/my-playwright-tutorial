@@ -8,6 +8,13 @@ This lab guide covers 10 advanced automation exercises focusing on date pickers,
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **Playwright Sandbox - Calendars & Pickers:** [https://playwright-sandbox.vercel.app/calendars](https://playwright-sandbox.vercel.app/calendars)
+
+---
+
 ## 🛠️ Global Setup
 
 ```typescript

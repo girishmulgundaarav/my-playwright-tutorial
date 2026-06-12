@@ -9,6 +9,16 @@ To build scalable, parallelized tests, you must understand Playwright's hierarch
 
 ---
 
+## 🔗 Practice Sites & Test URLs
+
+Before starting, navigate to these practice/test websites to try out the code examples:
+*   **The Internet Herokuapp:** [https://admin:admin@the-internet.herokuapp.com/basic_auth](https://admin:admin@the-internet.herokuapp.com/basic_auth)
+*   **OrangeHRM Demo:** [https://opensource-demo.orangehrmlive.com/web/index.php/auth/login](https://opensource-demo.orangehrmlive.com/web/index.php/auth/login)
+*   **Test Automation Practice:** [https://testautomationpractice.blogspot.com/](https://testautomationpractice.blogspot.com/)
+*   **The Internet Herokuapp:** [https://the-internet.herokuapp.com/basic_auth](https://the-internet.herokuapp.com/basic_auth)
+
+---
+
 ## 1. Playwright Hierarchy: Browser ➔ Context ➔ Page
 
 Playwright isolates test sessions using an architecture that mirrors modern browser profiles:
