@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://playwright-tutorial-by-girish.vercel.app/sitemap.xml
